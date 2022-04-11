@@ -1,5 +1,9 @@
-export function Index() {
-  return <div className="h-screen w-screen bg-black"></div>;
+export function Home() {
+  return (
+    <div className="flex bg-black justify-center items-center">
+      <div>Hello World</div>
+    </div>
+  );
 }
 
-export default Index;
+export default Home;
