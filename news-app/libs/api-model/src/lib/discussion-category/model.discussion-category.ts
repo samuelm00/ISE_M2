@@ -4,6 +4,7 @@ import {
   InferCreationAttributes,
   CreationOptional,
 } from 'sequelize';
+import { IDiscussionThemeProps } from '../discussion-theme/model.discussion-theme';
 import { IUserComplete } from '../user/model.user';
 
 /**
@@ -14,7 +15,7 @@ export interface IDiscussionCategoryComplete {
   description: string;
   name: string;
   users: IUserComplete[];
-  discussionTheme: any[];
+  discussionThemes: IDiscussionThemeProps[];
 }
 
 /**
@@ -31,13 +32,12 @@ export class DiscussionCategory
     InferAttributes<DiscussionCategory>,
     InferCreationAttributes<DiscussionCategory>
   >
-  implements IDiscussionCategoryComplete
+  implements Omit<IDiscussionCategoryComplete, 'discussionThemes'>
 {
   declare id: CreationOptional<number>;
   declare description: string;
   declare name: string;
   declare users: IUserComplete[];
-  declare discussionTheme: any[];
 }
 
 /**
