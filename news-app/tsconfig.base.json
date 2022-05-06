@@ -12,7 +12,9 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@news-app/api-model": ["libs/api-model/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
