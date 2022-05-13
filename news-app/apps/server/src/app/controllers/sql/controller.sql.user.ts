@@ -1,4 +1,4 @@
-import { User } from '@news-app/api-model';
+import { IUserComplete, IUserProps, User } from '@news-app/api-model';
 import { Response, Request } from 'express';
 import { responseJson } from '../../util/util.response';
 
@@ -16,6 +16,23 @@ export async function getAllUsers(
     const users = await User.findAll();
     return res.status(200).json(responseJson({ payload: users }));
   } catch (error) {
-    return res.status(500).json(responseJson({ error: error.message }));
+    return res.status(400).json(responseJson({ error: error.message }));
+  }
+}
+
+/**
+ *
+ * @param param0 The request object {@link Omit<IUserComplete, 'id'>}
+ * @returns The user object if the user is created, otherwise undefined
+ */
+export async function createUser({
+  email,
+  password,
+}: Omit<IUserComplete, 'id'>) {
+  try {
+    const user = await User.create({ email, password });
+    return user;
+  } catch (error) {
+    return undefined;
   }
 }
