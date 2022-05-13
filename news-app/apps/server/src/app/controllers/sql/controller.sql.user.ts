@@ -1,5 +1,6 @@
 import { User } from '@news-app/api-model';
 import { Response, Request } from 'express';
+import { responseJson } from '../../util/util.response';
 
 /**
  *
@@ -13,8 +14,8 @@ export async function getAllUsers(
 ) {
   try {
     const users = await User.findAll();
-    return res.status(200).json(users);
+    return res.status(200).json(responseJson({ payload: users }));
   } catch (error) {
-    return res.status(500).json({ error: "Couldn't get users" });
+    return res.status(500).json(responseJson({ error: error.message }));
   }
 }
