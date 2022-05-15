@@ -7,7 +7,7 @@ export default function Navbar() {
 
   return (
     <>
-      <div className="fixed top-0 right-5 left-5">
+      <div id="navbar" className="fixed top-0 right-5 left-5">
         <div className="navbar bg-neutral rounded-2xl">
           <div className="flex-1">
             <a

@@ -1,15 +1,21 @@
 import './styles.css';
 import { AppProps } from 'next/app';
 import Navbar from '../modules/Navigation/Navbar';
+import PageLayout from '../modules/Page/layout/PageLayout';
+import { RoutePath } from '../modules/Navigation/common/constants/constant.route';
 
-function CustomApp({ Component, pageProps }: AppProps) {
+function CustomApp({ Component, pageProps, router }: AppProps) {
   return (
     <>
-      <nav>
-        <Navbar />
-      </nav>
+      {router.route !== RoutePath.Login ? (
+        <nav>
+          <Navbar />
+        </nav>
+      ) : null}
       <main>
-        <Component {...pageProps} />
+        <PageLayout>
+          <Component {...pageProps} />
+        </PageLayout>
       </main>
     </>
   );
