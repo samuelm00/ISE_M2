@@ -11,5 +11,9 @@ const sequelize = new Sequelize('news_app', 'root', 'password', {
 });
 
 export async function initSqlDb() {
-  await initUserTableSQL(sequelize);
+  await Promise.all([initUserTableSQL(sequelize)]);
+}
+
+export async function initNoSqlDb() {
+  console.log('Nosql not yet defined');
 }
