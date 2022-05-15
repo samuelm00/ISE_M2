@@ -29,9 +29,10 @@ export default function AvatarCard({ user }: AvatarCardProps) {
   return (
     <motion.div
       variants={avatarCardVariants}
+      whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.9 }}
       onClick={handleOnClick}
-      className="avatar hover:scale-110 duration-300 cursor-pointer"
+      className="avatar cursor-pointer"
     >
       <div className="w-24 h-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
         <div className="w-full h-full flex justify-center items-center text-2xl">

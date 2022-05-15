@@ -17,7 +17,7 @@ export default function LoginPage({ possibleUsers }: LoginPageProps) {
         <PageHeader title="Choose your user:" />
         <motion.div
           variants={avatarCardVariants}
-          transition={{ staggerChildren: 0.3, delayChildren: 0.2 }}
+          transition={{ staggerChildren: 0.2, delayChildren: 0.2 }}
           initial="initial"
           animate="animate"
           className="flex justify-center items-center space-x-5"
