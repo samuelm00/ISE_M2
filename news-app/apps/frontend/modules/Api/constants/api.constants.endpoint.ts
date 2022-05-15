@@ -10,3 +10,5 @@ export enum EndpointBasePath {
 export type SqlEndpoint = `${EndpointBasePath.Sql}${Endpoints}`;
 
 export type NoSqlEndpoint = `${EndpointBasePath.NoSql}${Endpoints}`;
+
+export const serverUrl = 'http://localhost:3333';

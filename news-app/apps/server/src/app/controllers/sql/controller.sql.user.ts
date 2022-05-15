@@ -14,7 +14,11 @@ export async function getAllUsers(
 ) {
   try {
     const users = await User.findAll();
-    return res.status(200).json(responseJson({ payload: users }));
+    const response: IUserProps[] = users.map((user) => ({
+      id: user.id,
+      email: user.email,
+    }));
+    return res.status(200).json(responseJson({ payload: response }));
   } catch (error) {
     return res.status(400).json(responseJson({ error: error.message }));
   }
