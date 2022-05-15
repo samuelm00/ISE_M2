@@ -3,10 +3,19 @@ import { useAuthProvider } from 'apps/frontend/provider/Auth/hook.auth';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { RoutePath } from '../Navigation/common/constants/constant.route';
+import { motion } from 'framer-motion';
 
 interface AvatarCardProps {
   user: IUserProps;
 }
+
+export const avatarCardVariants = {
+  animate: { opacity: 1, x: 0 },
+  initial: {
+    opacity: 0,
+    x: -15,
+  },
+};
 
 export default function AvatarCard({ user }: AvatarCardProps) {
   const [_, setUser] = useAuthProvider();
@@ -18,7 +27,9 @@ export default function AvatarCard({ user }: AvatarCardProps) {
   };
 
   return (
-    <div
+    <motion.div
+      variants={avatarCardVariants}
+      whileTap={{ scale: 0.9 }}
       onClick={handleOnClick}
       className="avatar hover:scale-110 duration-300 cursor-pointer"
     >
@@ -27,6 +38,6 @@ export default function AvatarCard({ user }: AvatarCardProps) {
           {user.email.substring(0, 2).toUpperCase()}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
