@@ -20,8 +20,6 @@ export default function AuthProvider({ children }: AuthProviderProps) {
   const router = useRouter();
   const [user, setUser] = useState<IUserProps | undefined>();
 
-  console.log(router);
-
   useEffect(() => {
     if (!user && privateRoutes.some((route) => route === router.pathname)) {
       router.push(RoutePath.Login);
