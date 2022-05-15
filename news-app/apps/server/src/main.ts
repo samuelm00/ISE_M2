@@ -4,11 +4,22 @@
  */
 
 import * as express from 'express';
+import { apiRouter } from './app/routes';
+import * as cors from 'cors';
+import * as bodyParser from 'body-parser';
 
 const app = express();
+app.use(cors({ origin: true }));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get('/api', (req, res) => {
-  res.send({ message: 'Welcome to server!' });
+app.use('/api', apiRouter);
+
+app.get('/halo', (req, res) => {
+  console.log('hrejdklfjlks');
+  return res.json({
+    message: 'Halo',
+  });
 });
 
 const port = process.env.port || 3333;

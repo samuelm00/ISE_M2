@@ -5,11 +5,11 @@ import { userRouterSql } from './sql';
 export const apiRouter = Router();
 
 /**
- * NOSQL
- */
-apiRouter.use(userRouterNoSql);
-
-/**
  * SQL
  */
-apiRouter.use(userRouterSql);
+apiRouter.use('/sql', userRouterSql);
+
+/**
+ * NOSQL
+ */
+apiRouter.use('/nosql', userRouterNoSql);
