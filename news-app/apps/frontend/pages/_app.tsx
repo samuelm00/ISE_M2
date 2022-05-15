@@ -15,9 +15,13 @@ function CustomApp({ Component, pageProps, router }: AppProps) {
           </nav>
         ) : null}
         <main>
-          <PageLayout>
+          {router.route === RoutePath.Login ? (
             <Component {...pageProps} />
-          </PageLayout>
+          ) : (
+            <PageLayout>
+              <Component {...pageProps} />
+            </PageLayout>
+          )}
         </main>
       </AuthProvider>
     </>
