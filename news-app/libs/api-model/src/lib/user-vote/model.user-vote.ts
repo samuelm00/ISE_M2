@@ -3,7 +3,9 @@ import {
   InferAttributes,
   InferCreationAttributes,
   CreationOptional,
+  DataTypes,
   ForeignKey,
+  Sequelize,
 } from 'sequelize';
 import { IDiscussionPostProps } from '../discussion-post/model.discussion-post';
 import { IUserProps, User } from '../user/model.user';

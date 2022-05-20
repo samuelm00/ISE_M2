@@ -3,6 +3,8 @@ import {
   InferAttributes,
   InferCreationAttributes,
   CreationOptional,
+  DataTypes,
+  Sequelize,
 } from 'sequelize';
 import { IDiscussionThemeProps } from '../discussion-theme/model.discussion-theme';
 import { IUserComplete } from '../user/model.user';

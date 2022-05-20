@@ -3,7 +3,9 @@ import {
   InferAttributes,
   InferCreationAttributes,
   CreationOptional,
+  DataTypes,
   ForeignKey,
+  Sequelize,
 } from 'sequelize';
 import {
   DiscussionTheme,
