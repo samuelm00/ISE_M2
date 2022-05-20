@@ -49,6 +49,28 @@ export class DiscussionPost
   declare user: ForeignKey<User['id']>;
 }
 
+export async function initDiscussionPostTableSQL(sequelize: Sequelize) {
+  DiscussionPost.init(
+    {
+      text: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      datetime: {
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
+
+      },
+      id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+      },
+    },
+    { sequelize, tableName: 'discussionPosts' }
+  );
+  await DiscussionPost.sync({ force: true });
+}
 /**
  * NOSQL
  */

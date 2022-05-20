@@ -1,6 +1,6 @@
 import { IDiscussionPostProps } from "@news-app/api-model";
 
-export function createPost (req,res) {
+export async function createPost (req,res) {
     //conversion
     const post = req.body;
     // add post to db
@@ -8,7 +8,7 @@ export function createPost (req,res) {
     res.status(200);
 }
 
-export function getPostsOfTheme (req,res) {
+export async function getPostsOfTheme (req,res) {
     const themeId:number = req.params.id;
     // get all posts of id
     const posts: IDiscussionPostProps[] = [];

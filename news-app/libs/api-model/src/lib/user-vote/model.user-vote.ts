@@ -41,6 +41,29 @@ export class UserVote
   declare user: ForeignKey<User['id']>;
 }
 
+export async function initUserVoteTableSQL(sequelize: Sequelize) {
+  UserVote.init(
+    {
+      isUpvote: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+      },
+      datetime: {
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
+
+      },
+      id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+      },
+    },
+    { sequelize, tableName: 'userVotes' }
+  );
+  await UserVote.sync({ force: true });
+}
+
 /**
  * NOSQL
  */

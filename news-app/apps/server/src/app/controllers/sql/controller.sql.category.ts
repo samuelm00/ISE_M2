@@ -1,16 +1,28 @@
-import { IDiscussionCategoryProps } from "@news-app/api-model";
+import { DiscussionCategory, IDiscussionCategoryProps } from "@news-app/api-model";
 
-export function getAllCategories (req,res) {
-    // load from db
-    const categories: IDiscussionCategoryProps[] = [];
+export async function getAllCategories (req,res) {
+    // load from dd
+    const categories: DiscussionCategory[] = await DiscussionCategory.findAll();
 
-    res.json(categories);
+    const response: IDiscussionCategoryProps[] = categories.map((category) => ({
+        id: category.id,
+        name: category.name,
+        description: category.description
+    }));
+
+    return res.status(200).json(response);
 }
 
-export function getCategoryByID (req,res) {
-    const id:number = req.params.id;
-    // load from db
-    const category: IDiscussionCategoryProps = null;
+export async function getCategoryByID (req,res) {
+    const id = req.params.id;
 
-    res.json(category);
+    const category: DiscussionCategory = await DiscussionCategory.findOne({where:{id: id}});
+
+    const response: IDiscussionCategoryProps =  {
+        id: category.id,
+        name: category.name,
+        description: category.description,
+    };
+
+    return res.status(200).json(response);
 }

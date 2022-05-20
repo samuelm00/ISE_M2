@@ -40,6 +40,29 @@ export class DiscussionCategory
   declare users: IUserComplete[];
 }
 
+export async function initDiscussionCategoryTableSQL(sequelize: Sequelize) {
+  DiscussionCategory.init(
+    {
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true,
+      },
+      description: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+      },
+    },
+    { sequelize, tableName: 'discussionCategories' }
+  );
+  await DiscussionCategory.sync({ force: true });
+}
+
 /**
  * NOSQL
  */
