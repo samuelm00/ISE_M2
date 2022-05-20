@@ -3,7 +3,7 @@ import { IUserVoteProps, UserVote } from "@news-app/api-model";
 export async function getVotesOfPost (req,res) {
     const postId:number = req.params.id;
 
-    const userVotes: UserVote[] = await UserVote.findAll({where:{postId: postId}});
+    const userVotes: UserVote[] = await UserVote.findAll();
 
     const response: IUserVoteProps[] =  userVotes.map((userVote) => ({
         id: userVote.id,
