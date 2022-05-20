@@ -7,7 +7,7 @@ export async function getAllCategories (req,res) {
     const response: IDiscussionCategoryProps[] = categories.map((category) => ({
         id: category.id,
         name: category.name,
-        description: category.description
+        description: category.description,
     }));
 
     return res.status(200).json(response);
