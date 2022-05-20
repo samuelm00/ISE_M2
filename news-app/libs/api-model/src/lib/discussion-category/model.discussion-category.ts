@@ -22,7 +22,7 @@ export interface IDiscussionCategoryComplete {
  * Contains only the user model attributes without the relations.
  */
 export interface IDiscussionCategoryProps
-  extends Omit<IDiscussionCategoryComplete, 'users' | 'discussionTheme'> {}
+  extends Omit<IDiscussionCategoryComplete, 'users' | 'discussionThemes'> {}
 
 /**
  * SQL
