@@ -1,10 +1,8 @@
-import { IUserProps } from '@news-app/api-model';
+import { useAuthProvider } from '../provider/Auth/hook.auth';
 
 export function Home() {
-  const a: IUserProps = {
-    email: 'test',
-    id: 1,
-  };
+  const [user] = useAuthProvider();
+
   return (
     <div className="flex bg-black justify-center items-center">
       <div>Hello World</div>
