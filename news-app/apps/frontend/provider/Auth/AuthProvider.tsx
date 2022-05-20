@@ -29,7 +29,7 @@ export default function AuthProvider({ children }: AuthProviderProps) {
   if (!user && router.pathname !== RoutePath.Login) {
     return (
       <div className={'w-screen h-screen flex justify-center items-center'}>
-        <LoadingSpinner className="h-24 w-24" />
+        <LoadingSpinner />
       </div>
     );
   }
