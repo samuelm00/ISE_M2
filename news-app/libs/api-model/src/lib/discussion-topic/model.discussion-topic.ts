@@ -7,7 +7,7 @@ import {
   Sequelize,
   DataTypes,
 } from 'sequelize';
-import { IUserProps, User } from '../user/model.user';
+import { User } from '../user/model.user';
 
 /**
  * Contains the user model with all its attributes and relations.
@@ -17,7 +17,7 @@ export interface IDiscussionTopicComplete {
   text: string;
   datetime: Date;
   title: string;
-  userId: IUserProps;
+  userId: number;
 }
 
 /**
