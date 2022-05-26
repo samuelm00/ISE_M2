@@ -33,7 +33,7 @@ export async function getTopics(
         id: topic.id,
         text: topic.text,
         title: topic.title,
-        user: topic.user as any,
+        userId: topic.userId as any,
       })),
     };
     return res.status(200).json(responseJson({ payload: response }));
@@ -53,7 +53,7 @@ export async function getTopic(
   res: Response<any, any>
 ) {
   try {
-    const response = DiscussionTopic.findByPk(req.params.id);
+    const response = await DiscussionTopic.findByPk(req.params.id);
     return res.status(200).json(responseJson({ payload: response }));
   } catch (error) {
     return res.status(400).json(responseJson({ error: error.message }));
@@ -77,11 +77,11 @@ export async function createTopic(
   res: Response<any, any>
 ) {
   try {
-    const topic = DiscussionTopic.create({
-      datetime: new Date(),
+    const topic = await DiscussionTopic.create({
+      datetime: req.body.datetime,
       text: req.body.text,
       title: req.body.title,
-      user: req.body.userId,
+      userId: req.body.userId,
     });
     return res.status(200).json(responseJson({ payload: topic }));
   } catch (error) {

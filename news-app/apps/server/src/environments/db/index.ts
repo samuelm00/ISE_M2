@@ -15,11 +15,9 @@ const sequelize = new Sequelize('news_app', 'root', 'password', {
 });
 
 export async function initSqlDb() {
-  await Promise.all([
-    initUserTableSQL(sequelize),
-    initDiscussionCategoryTableSQL(sequelize),
-    initDiscussionTopicTable(sequelize),
-  ]);
+  await initUserTableSQL(sequelize);
+  await initDiscussionCategoryTableSQL(sequelize);
+  await initDiscussionTopicTable(sequelize);
 }
 
 export async function initNoSqlDb() {

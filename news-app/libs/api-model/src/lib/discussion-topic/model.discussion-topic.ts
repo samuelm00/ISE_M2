@@ -17,7 +17,7 @@ export interface IDiscussionTopicComplete {
   text: string;
   datetime: Date;
   title: string;
-  user: IUserProps;
+  userId: IUserProps;
 }
 
 /**
@@ -40,7 +40,7 @@ export class DiscussionTopic
   declare datetime: Date;
   declare title: string;
   // @ts-ignore
-  declare user: ForeignKey<User['id']>;
+  declare userId: ForeignKey<User['id']>;
 }
 
 export async function initDiscussionTopicTable(sequelize: Sequelize) {
@@ -48,7 +48,7 @@ export async function initDiscussionTopicTable(sequelize: Sequelize) {
     {
       datetime: {
         type: DataTypes.DATE,
-        allowNull: false,
+        defaultValue: DataTypes.NOW,
       },
       id: {
         type: DataTypes.INTEGER,
@@ -63,7 +63,7 @@ export async function initDiscussionTopicTable(sequelize: Sequelize) {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      user: {
+      userId: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
@@ -72,8 +72,10 @@ export async function initDiscussionTopicTable(sequelize: Sequelize) {
         },
       },
     },
-    { sequelize, tableName: 'users' }
+    { sequelize, tableName: 'discussion_topics' }
   );
+  User.hasMany(DiscussionTopic, { foreignKey: 'userId' });
+  DiscussionTopic.belongsTo(User, { foreignKey: 'userId' });
   await DiscussionTopic.sync({ force: true });
 }
 
