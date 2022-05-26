@@ -66,7 +66,7 @@ export async function getTopic(
  * @param res
  * @returns
  */
-export async function creteTopic(
+export async function createTopic(
   req: Request<
     {},
     any,

@@ -1,7 +1,8 @@
 import { Router } from 'express';
 import {
   getTopics,
-  creteTopic,
+  createTopic,
+  getTopic,
 } from '../../controllers/sql/controller.sql.topic';
 
 export const topicRouter = Router();
