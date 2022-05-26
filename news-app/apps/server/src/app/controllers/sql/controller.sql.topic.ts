@@ -1,12 +1,11 @@
 import {
   DiscussionTopic,
-  IUserComplete,
-  IUserProps,
   User,
   PaginatedPayload,
   PaginatedResponse,
   IDiscussionTopicProps,
   CreateDiscussionPayload,
+  BaseResponse,
 } from '@news-app/api-model';
 import { Response, Request } from 'express';
 import { responseJson } from '../../util/util.response';
@@ -19,7 +18,7 @@ import { responseJson } from '../../util/util.response';
  */
 export async function getTopics(
   req: Request<{}, any, PaginatedPayload, qs.ParsedQs, Record<string, any>>,
-  res: Response<any, any>
+  res: Response<BaseResponse<PaginatedResponse<IDiscussionTopicProps>>, any>
 ) {
   try {
     const { pageSize, page } = req.body;
@@ -50,7 +49,7 @@ export async function getTopics(
  */
 export async function getTopic(
   req: Request<{ id: string }, any, any, qs.ParsedQs, Record<string, any>>,
-  res: Response<any, any>
+  res: Response<BaseResponse<DiscussionTopic>, any>
 ) {
   try {
     const response = await DiscussionTopic.findByPk(req.params.id);
@@ -74,7 +73,7 @@ export async function createTopic(
     qs.ParsedQs,
     Record<string, any>
   >,
-  res: Response<any, any>
+  res: Response<BaseResponse<DiscussionTopic>, any>
 ) {
   try {
     const topic = await DiscussionTopic.create({

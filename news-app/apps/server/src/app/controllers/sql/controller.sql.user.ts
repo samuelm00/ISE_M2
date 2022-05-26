@@ -1,4 +1,9 @@
-import { IUserComplete, IUserProps, User } from '@news-app/api-model';
+import {
+  BaseResponse,
+  IUserComplete,
+  IUserProps,
+  User,
+} from '@news-app/api-model';
 import { Response, Request } from 'express';
 import { responseJson } from '../../util/util.response';
 
@@ -10,7 +15,7 @@ import { responseJson } from '../../util/util.response';
  */
 export async function getAllUsers(
   req: Request<{}, any, any, qs.ParsedQs, Record<string, any>>,
-  res: Response<any, any>
+  res: Response<BaseResponse<IUserProps[]>, any>
 ) {
   try {
     const users = await User.findAll();

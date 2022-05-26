@@ -12,3 +12,11 @@ export interface PaginatedPayload {
 export interface PaginatedResponse<T> extends PaginatedPayload {
   data: T[];
 }
+
+/**
+ * All endpoints should return this type
+ */
+export interface BaseResponse<T> {
+  res?: T;
+  error?: string;
+}
