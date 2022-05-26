@@ -4,12 +4,9 @@ import {
   InferCreationAttributes,
   CreationOptional,
   ForeignKey,
+  Sequelize,
+  DataTypes,
 } from 'sequelize';
-import {
-  DiscussionCategory,
-  IDiscussionCategoryProps,
-} from '../discussion-category/model.discussion-category';
-import { IDiscussionPostProps } from '../discussion-post/model.discussion-post';
 import { IUserProps, User } from '../user/model.user';
 
 /**
@@ -20,19 +17,13 @@ export interface IDiscussionTopicComplete {
   text: string;
   datetime: Date;
   title: string;
-  discussionPosts: IDiscussionPostProps[];
-  discussionCategory: IDiscussionCategoryProps;
   user: IUserProps;
 }
 
 /**
  * Contains only the user model attributes without the relations.
  */
-export interface IDiscussionTopicProps
-  extends Omit<
-    IDiscussionTopicComplete,
-    'user' | 'discussionPosts' | 'discussionCategory'
-  > {}
+export interface IDiscussionTopicProps extends IDiscussionTopicComplete {}
 
 /**
  * SQL
@@ -50,8 +41,40 @@ export class DiscussionTopic
   declare title: string;
   // @ts-ignore
   declare user: ForeignKey<User['id']>;
-  // @ts-ignore
-  declare discussionCategory: ForeignKey<DiscussionCategory['id']>;
+}
+
+export async function initDiscussionTopicTable(sequelize: Sequelize) {
+  DiscussionTopic.init(
+    {
+      datetime: {
+        type: DataTypes.DATE,
+        allowNull: false,
+      },
+      id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+      },
+      text: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+      },
+      title: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      user: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: User,
+          key: 'id',
+        },
+      },
+    },
+    { sequelize, tableName: 'users' }
+  );
+  await DiscussionTopic.sync({ force: true });
 }
 
 /**

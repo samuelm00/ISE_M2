@@ -1,5 +1,6 @@
 import {
   initDiscussionCategoryTableSQL,
+  initDiscussionTopicTable,
   initUserTableSQL,
 } from '@news-app/api-model';
 import { Sequelize } from 'sequelize';
@@ -17,6 +18,7 @@ export async function initSqlDb() {
   await Promise.all([
     initUserTableSQL(sequelize),
     initDiscussionCategoryTableSQL(sequelize),
+    initDiscussionTopicTable(sequelize),
   ]);
 }
 
