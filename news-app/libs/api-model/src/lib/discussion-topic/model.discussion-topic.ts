@@ -15,7 +15,7 @@ import { IUserProps, User } from '../user/model.user';
 /**
  * Contains the user model with all its attributes and relations.
  */
-export interface IDiscussionThemeComplete {
+export interface IDiscussionTopicComplete {
   id: number;
   text: string;
   datetime: Date;
@@ -28,21 +28,21 @@ export interface IDiscussionThemeComplete {
 /**
  * Contains only the user model attributes without the relations.
  */
-export interface IDiscussionThemeProps
+export interface IDiscussionTopicProps
   extends Omit<
-    IDiscussionThemeComplete,
+    IDiscussionTopicComplete,
     'user' | 'discussionPosts' | 'discussionCategory'
   > {}
 
 /**
  * SQL
  */
-export class DiscussionTheme
+export class DiscussionTopic
   extends Model<
-    InferAttributes<DiscussionTheme>,
-    InferCreationAttributes<DiscussionTheme>
+    InferAttributes<DiscussionTopic>,
+    InferCreationAttributes<DiscussionTopic>
   >
-  implements IDiscussionThemeComplete
+  implements IDiscussionTopicComplete
 {
   declare id: CreationOptional<number>;
   declare text: string;

@@ -6,7 +6,7 @@ import {
   Sequelize,
   DataTypes,
 } from 'sequelize';
-import { IDiscussionThemeProps } from '../discussion-theme/model.discussion-theme';
+import { IDiscussionTopicProps } from '../discussion-topic/model.discussion-topic';
 import { IUserComplete, User } from '../user/model.user';
 
 /**
@@ -17,7 +17,7 @@ export interface IDiscussionCategoryComplete {
   description: string;
   name: string;
   users: IUserComplete[];
-  discussionThemes: IDiscussionThemeProps[];
+  discussionThemes: IDiscussionTopicProps[];
 }
 
 /**
