@@ -11,7 +11,7 @@ import {
   DiscussionTopic,
   IDiscussionTopicProps,
 } from '../discussion-topic/model.discussion-topic';
-import { IUserVoteProps } from '../user-vote/model.user-vote';
+import { IUserVoteProps, UserVote } from '../user-vote/model.user-vote';
 import { IUserProps, User } from '../user/model.user';
 
 /**
@@ -30,7 +30,7 @@ export interface IDiscussionPostComplete {
  * Contains only the user model attributes without the relations.
  */
 export interface IDiscussionPostProps
-  extends Omit<IDiscussionPostComplete, 'user' | 'userVotes'> {}
+  extends Omit<IDiscussionPostComplete, 'user' | 'userVotes' | 'discussionTheme'> {}
 
 /**
  * SQL
@@ -40,18 +40,19 @@ export class DiscussionPost
     InferAttributes<DiscussionPost>,
     InferCreationAttributes<DiscussionPost>
   >
-  implements IDiscussionPostComplete
+  implements IDiscussionPostProps
 {
   declare id: CreationOptional<number>;
   declare text: string;
   declare datetime: Date;
+  declare parentPostId: ForeignKey<DiscussionPost['id']>;
   // @ts-ignore
-  declare discussionTheme: ForeignKey<DiscussionTopic['id']>;
+  declare discussionThemeId: ForeignKey<DiscussionTopic['id']>;
   // @ts-ignore
-  declare user: ForeignKey<User['id']>;
+  declare userId: ForeignKey<User['id']>;
 }
 
-export async function initDiscussionPostTableSQL(sequelize: Sequelize) {
+export  function initDiscussionPostTableSQL(sequelize: Sequelize) {
   DiscussionPost.init(
     {
       text: {
@@ -68,10 +69,40 @@ export async function initDiscussionPostTableSQL(sequelize: Sequelize) {
         primaryKey: true,
         autoIncrement: true,
       },
+      parentPostId: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        references: {
+          model: DiscussionPost,
+          key: 'id',
+        },
+      },
+      discussionThemeId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: DiscussionTopic,
+          key: 'id',
+        },
+      },
+      userId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: User,
+          key: 'id',
+        },
+      },
     },
     { sequelize, tableName: 'discussionPosts' }
   );
-  await DiscussionPost.sync({ force: true });
+
+  DiscussionPost.belongsTo(User,{ foreignKey: 'userId' });
+  User.hasMany(DiscussionPost,{ foreignKey: 'userId' });
+  DiscussionPost.belongsTo(DiscussionTopic,{ foreignKey: 'discussionThemeId' });
+  DiscussionTopic.hasMany(DiscussionPost,{ foreignKey: 'discussionThemeId' });
+  DiscussionPost.belongsTo(DiscussionPost,{ foreignKey: 'parentPostId' });
+
 }
 /**
  * NOSQL

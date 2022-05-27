@@ -1,7 +1,9 @@
 import {
   initDiscussionCategoryTableSQL,
+  initDiscussionPostTableSQL,
   initDiscussionTopicTable,
   initUserTableSQL,
+  initUserVoteTableSQL,
 } from '@news-app/api-model';
 import { Sequelize } from 'sequelize';
 
@@ -15,9 +17,13 @@ const sequelize = new Sequelize('news_app', 'root', 'password', {
 });
 
 export async function initSqlDb() {
-  await initUserTableSQL(sequelize);
-  await initDiscussionCategoryTableSQL(sequelize);
-  await initDiscussionTopicTable(sequelize);
+  initUserTableSQL(sequelize);
+  initDiscussionCategoryTableSQL(sequelize);
+  initDiscussionTopicTable(sequelize);
+  initDiscussionPostTableSQL(sequelize);
+  initUserVoteTableSQL(sequelize);
+
+  await sequelize.sync({force : true});
 }
 
 export async function initNoSqlDb() {

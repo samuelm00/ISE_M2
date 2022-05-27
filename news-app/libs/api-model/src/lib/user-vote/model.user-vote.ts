@@ -7,7 +7,7 @@ import {
   ForeignKey,
   Sequelize,
 } from 'sequelize';
-import { IDiscussionPostProps } from '../discussion-post/model.discussion-post';
+import { DiscussionPost, IDiscussionPostProps } from '../discussion-post/model.discussion-post';
 import { IUserProps, User } from '../user/model.user';
 
 /**
@@ -32,18 +32,18 @@ export interface IUserVoteProps
  */
 export class UserVote
   extends Model<InferAttributes<UserVote>, InferCreationAttributes<UserVote>>
-  implements IUserVote
+  implements IUserVoteProps
 {
   declare id: CreationOptional<number>;
   declare datetime: Date;
   declare isUpvote: boolean;
   // @ts-ignore
-  declare discussionPost: ForeignKey<UserVote['id']>;
+  declare discussionPostId: ForeignKey<DiscussionPost['id']>;
   // @ts-ignore
-  declare user: ForeignKey<User['id']>;
+  declare userId: ForeignKey<User['id']>;
 }
 
-export async function initUserVoteTableSQL(sequelize: Sequelize) {
+export function initUserVoteTableSQL(sequelize: Sequelize) {
   UserVote.init(
     {
       isUpvote: {
@@ -60,10 +60,32 @@ export async function initUserVoteTableSQL(sequelize: Sequelize) {
         primaryKey: true,
         autoIncrement: true,
       },
+      discussionPostId: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        allowNull: false,
+        references: {
+          model: DiscussionPost,
+          key: 'id',
+        },
+      },
+      userId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: User,
+          key: 'id',
+        },
+      },
+  
     },
     { sequelize, tableName: 'userVotes' }
   );
-  await UserVote.sync({ force: true });
+
+  UserVote.belongsTo(DiscussionPost,{ foreignKey: 'discussionPostId' });
+  DiscussionPost.hasMany(UserVote,{ foreignKey: 'discussionPostId' });
+  UserVote.belongsTo(User,{ foreignKey: 'userId' });
+  User.hasMany(UserVote,{ foreignKey: 'userId' });
 }
 
 /**

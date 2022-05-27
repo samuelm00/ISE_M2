@@ -7,6 +7,7 @@ import {
   Sequelize,
   DataTypes,
 } from 'sequelize';
+import { DiscussionCategory } from '../discussion-category/model.discussion-category';
 import { User } from '../user/model.user';
 
 /**
@@ -41,9 +42,10 @@ export class DiscussionTopic
   declare title: string;
   // @ts-ignore
   declare userId: ForeignKey<User['id']>;
+  declare discussionCategoryId: ForeignKey<DiscussionCategory['id']>;
 }
 
-export async function initDiscussionTopicTable(sequelize: Sequelize) {
+export function initDiscussionTopicTable(sequelize: Sequelize) {
   DiscussionTopic.init(
     {
       datetime: {
@@ -71,12 +73,21 @@ export async function initDiscussionTopicTable(sequelize: Sequelize) {
           key: 'id',
         },
       },
+      discussionCategoryId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: DiscussionCategory,
+          key: 'id',
+        },
+      },
     },
     { sequelize, tableName: 'discussion_topics' }
   );
   User.hasMany(DiscussionTopic, { foreignKey: 'userId' });
   DiscussionTopic.belongsTo(User, { foreignKey: 'userId' });
-  await DiscussionTopic.sync({ force: true });
+  DiscussionCategory.hasMany(DiscussionTopic, { foreignKey: 'discussionCategoryId' });
+  DiscussionTopic.belongsTo(DiscussionCategory, { foreignKey: 'discussionCategoryId' });
 }
 
 /**

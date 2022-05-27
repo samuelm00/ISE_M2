@@ -41,7 +41,7 @@ export class DiscussionCategory
   declare name: string;
 }
 
-export async function initDiscussionCategoryTableSQL(sequelize: Sequelize) {
+export function initDiscussionCategoryTableSQL(sequelize: Sequelize) {
   DiscussionCategory.init(
     {
       name: {
@@ -64,8 +64,6 @@ export async function initDiscussionCategoryTableSQL(sequelize: Sequelize) {
 
   DiscussionCategory.belongsToMany(User, { through: 'subscriptions' });
   User.belongsToMany(DiscussionCategory, { through: 'subscriptions' });
-
-  await DiscussionCategory.sync({ force: true });
 }
 
 /**
