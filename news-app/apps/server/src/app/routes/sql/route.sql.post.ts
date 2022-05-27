@@ -3,6 +3,6 @@ import {createPost,getPostsOfTheme} from '../../controllers/sql/controller.sql.p
 
 export const postRouterSql = Router();
 
-postRouterSql.get("/sql/posts/:id",getPostsOfTheme);
+postRouterSql.get("/posts/:id",getPostsOfTheme);
 
-postRouterSql.post("/sql/posts",createPost);
+postRouterSql.post("/posts",createPost);

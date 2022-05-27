@@ -9,11 +9,17 @@ import { Request, Response } from 'express';
  * @param req
  * @param res
  */
-export function getAllCategories(req, res) {
-  // load from db
-  const categories: IDiscussionCategoryProps[] = [];
+ export async function getAllCategories (req,res) {
 
-  res.json(categories);
+  const categories: DiscussionCategory[] = await DiscussionCategory.findAll();
+
+  const response: IDiscussionCategoryProps[] = categories.map((category) => ({
+      id: category.id,
+      name: category.name,
+      description: category.description,
+  }));
+
+  return res.status(200).json(response);
 }
 
 /**
@@ -36,10 +42,16 @@ export function createCategory(
  * @param req
  * @param res
  */
-export function getCategoryByID(req, res) {
-  const id: number = req.params.id;
-  // load from db
-  const category: IDiscussionCategoryProps = null;
+export async function getCategoryByID (req,res) {
+    const id = req.params.id;
 
-  res.json(category);
+    const category: DiscussionCategory = await DiscussionCategory.findByPk(id);
+
+    const response: IDiscussionCategoryProps =  {
+        id: category.id,
+        name: category.name,
+        description: category.description,
+    };
+
+    return res.status(200).json(response);
 }

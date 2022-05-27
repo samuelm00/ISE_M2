@@ -80,6 +80,7 @@ export async function createTopic(
       text: req.body.text,
       title: req.body.title,
       userId: req.body.userId,
+      discussionCategoryId: req.body.discussionCategoryId,
     });
     return res.status(200).json(responseJson({ payload: topic }));
   } catch (error) {

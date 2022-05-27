@@ -34,7 +34,7 @@ export class User
   declare password: string;
 }
 
-export async function initUserTableSQL(sequelize: Sequelize) {
+export function initUserTableSQL(sequelize: Sequelize) {
   User.init(
     {
       email: {
@@ -54,7 +54,6 @@ export async function initUserTableSQL(sequelize: Sequelize) {
     },
     { sequelize, tableName: 'users' }
   );
-  await User.sync({ force: true });
 }
 
 /**
