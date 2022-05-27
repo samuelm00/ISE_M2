@@ -31,7 +31,8 @@ export async function getTopics(
         id: topic.id,
         text: topic.text,
         title: topic.title,
-        userId: topic.userId as any,
+        userId: topic.userId,
+        discussionCategoryId: topic.discussionCategoryId,
       })),
     };
     return res.status(200).json(responseJson({ payload: response }));

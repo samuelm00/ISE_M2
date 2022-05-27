@@ -19,6 +19,7 @@ export interface IDiscussionTopicComplete {
   datetime: Date;
   title: string;
   userId: number;
+  discussionCategoryId: number;
 }
 
 /**
@@ -86,8 +87,12 @@ export function initDiscussionTopicTable(sequelize: Sequelize) {
   );
   User.hasMany(DiscussionTopic, { foreignKey: 'userId' });
   DiscussionTopic.belongsTo(User, { foreignKey: 'userId' });
-  DiscussionCategory.hasMany(DiscussionTopic, { foreignKey: 'discussionCategoryId' });
-  DiscussionTopic.belongsTo(DiscussionCategory, { foreignKey: 'discussionCategoryId' });
+  DiscussionCategory.hasMany(DiscussionTopic, {
+    foreignKey: 'discussionCategoryId',
+  });
+  DiscussionTopic.belongsTo(DiscussionCategory, {
+    foreignKey: 'discussionCategoryId',
+  });
 }
 
 /**
