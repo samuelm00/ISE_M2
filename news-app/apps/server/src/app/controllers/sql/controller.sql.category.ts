@@ -1,28 +1,45 @@
-import { DiscussionCategory, IDiscussionCategoryProps } from "@news-app/api-model";
+import {
+  DiscussionCategory,
+  IDiscussionCategoryProps,
+} from '@news-app/api-model';
+import { Request, Response } from 'express';
 
-export async function getAllCategories (req,res) {
-    // load from dd
-    const categories: DiscussionCategory[] = await DiscussionCategory.findAll();
+/**
+ *
+ * @param req
+ * @param res
+ */
+export function getAllCategories(req, res) {
+  // load from db
+  const categories: IDiscussionCategoryProps[] = [];
 
-    const response: IDiscussionCategoryProps[] = categories.map((category) => ({
-        id: category.id,
-        name: category.name,
-        description: category.description,
-    }));
-
-    return res.status(200).json(response);
+  res.json(categories);
 }
 
-export async function getCategoryByID (req,res) {
-    const id = req.params.id;
+/**
+ *
+ * @param req
+ * @param res
+ * @returns
+ */
+export function createCategory(
+  req: Request<{}, any, any, qs.ParsedQs, Record<string, any>>,
+  res: Response<any, any>
+) {
+  const category: IDiscussionCategoryProps = req.body;
+  DiscussionCategory.create(category);
+  return res.status(200).json(category);
+}
 
-    const category: DiscussionCategory = await DiscussionCategory.findOne({where:{id: id}});
+/**
+ *
+ * @param req
+ * @param res
+ */
+export function getCategoryByID(req, res) {
+  const id: number = req.params.id;
+  // load from db
+  const category: IDiscussionCategoryProps = null;
 
-    const response: IDiscussionCategoryProps =  {
-        id: category.id,
-        name: category.name,
-        description: category.description,
-    };
-
-    return res.status(200).json(response);
+  res.json(category);
 }

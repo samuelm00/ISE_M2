@@ -3,10 +3,10 @@ import {
   InferAttributes,
   InferCreationAttributes,
   CreationOptional,
-  DataTypes,
   Sequelize,
+  DataTypes,
 } from 'sequelize';
-import { IDiscussionThemeProps } from '../discussion-theme/model.discussion-theme';
+import { IDiscussionTopicProps } from '../discussion-topic/model.discussion-topic';
 import { IUserComplete, User } from '../user/model.user';
 
 /**
@@ -17,7 +17,7 @@ export interface IDiscussionCategoryComplete {
   description: string;
   name: string;
   users: IUserComplete[];
-  discussionThemes: IDiscussionThemeProps[];
+  discussionThemes: IDiscussionTopicProps[];
 }
 
 /**
@@ -34,7 +34,7 @@ export class DiscussionCategory
     InferAttributes<DiscussionCategory>,
     InferCreationAttributes<DiscussionCategory>
   >
-  implements Omit<IDiscussionCategoryComplete, 'discussionThemes' | 'users'>
+  implements IDiscussionCategoryProps
 {
   declare id: CreationOptional<number>;
   declare description: string;
@@ -62,7 +62,9 @@ export async function initDiscussionCategoryTableSQL(sequelize: Sequelize) {
     { sequelize, tableName: 'discussionCategories' }
   );
 
-  DiscussionCategory.hasMany(User)
+  DiscussionCategory.belongsToMany(User, { through: 'subscriptions' });
+  User.belongsToMany(DiscussionCategory, { through: 'subscriptions' });
+
   await DiscussionCategory.sync({ force: true });
 }
 

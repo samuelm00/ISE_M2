@@ -8,9 +8,9 @@ import {
   Sequelize,
 } from 'sequelize';
 import {
-  DiscussionTheme,
-  IDiscussionThemeProps,
-} from '../discussion-theme/model.discussion-theme';
+  DiscussionTopic,
+  IDiscussionTopicProps,
+} from '../discussion-topic/model.discussion-topic';
 import { IUserVoteProps } from '../user-vote/model.user-vote';
 import { IUserProps, User } from '../user/model.user';
 
@@ -21,7 +21,7 @@ export interface IDiscussionPostComplete {
   id: number;
   text: string;
   datetime: Date;
-  discussionTheme: IDiscussionThemeProps;
+  discussionTheme: IDiscussionTopicProps;
   user: IUserProps;
   userVotes: IUserVoteProps[];
 }
@@ -46,7 +46,7 @@ export class DiscussionPost
   declare text: string;
   declare datetime: Date;
   // @ts-ignore
-  declare discussionTheme: ForeignKey<DiscussionTheme['id']>;
+  declare discussionTheme: ForeignKey<DiscussionTopic['id']>;
   // @ts-ignore
   declare user: ForeignKey<User['id']>;
 }

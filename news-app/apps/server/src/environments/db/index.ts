@@ -1,4 +1,8 @@
-import { initUserTableSQL } from '@news-app/api-model';
+import {
+  initDiscussionCategoryTableSQL,
+  initDiscussionTopicTable,
+  initUserTableSQL,
+} from '@news-app/api-model';
 import { Sequelize } from 'sequelize';
 
 const sequelize = new Sequelize('news_app', 'root', 'password', {
@@ -11,7 +15,9 @@ const sequelize = new Sequelize('news_app', 'root', 'password', {
 });
 
 export async function initSqlDb() {
-  await Promise.all([initUserTableSQL(sequelize)]);
+  await initUserTableSQL(sequelize);
+  await initDiscussionCategoryTableSQL(sequelize);
+  await initDiscussionTopicTable(sequelize);
 }
 
 export async function initNoSqlDb() {
