@@ -1,15 +1,19 @@
 import { Router } from 'express';
 import { userRouterNoSql } from './nosql';
-import { userRouterSql } from './sql';
+import { userRouterSql, categoryRouterSql, postRouterSql, topicRouter, voteRouterSql } from './sql';
 
 export const apiRouter = Router();
 
 /**
- * NOSQL
- */
-apiRouter.use(userRouterNoSql);
-
-/**
  * SQL
  */
-apiRouter.use(userRouterSql);
+apiRouter.use('/sql', userRouterSql);
+apiRouter.use('/sql', categoryRouterSql);
+apiRouter.use('/sql', topicRouter);
+apiRouter.use('/sql', postRouterSql);
+apiRouter.use('/sql', voteRouterSql);
+
+/**
+ * NOSQL
+ */
+apiRouter.use('/nosql', userRouterNoSql);

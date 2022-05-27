@@ -4,6 +4,7 @@ import {
   InferCreationAttributes,
   CreationOptional,
   DataTypes,
+  Sequelize,
 } from 'sequelize';
 
 /**
@@ -33,7 +34,7 @@ export class User
   declare password: string;
 }
 
-export function initUserTableSQL() {
+export function initUserTableSQL(sequelize: Sequelize) {
   User.init(
     {
       email: {
@@ -51,7 +52,7 @@ export function initUserTableSQL() {
         autoIncrement: true,
       },
     },
-    { sequelize: null as any, tableName: 'users' }
+    { sequelize, tableName: 'users' }
   );
 }
 
