@@ -1,6 +1,5 @@
 import {
   DiscussionTopic,
-  User,
   PaginatedPayload,
   PaginatedResponse,
   IDiscussionTopicProps,
