@@ -1,6 +1,7 @@
 export enum Endpoints {
   getAllUsers = '/users',
-  getAllTopics = '/topic',
+  getTopics = '/topic',
+  createTopics = '/topic',
 }
 
 export enum EndpointBasePath {
