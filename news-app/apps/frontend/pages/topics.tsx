@@ -11,7 +11,7 @@ export default function TopicPage() {
     <div>
       <div className="flex justify-between">
         <PageHeader title="Discussion Topics" />
-        <Button>Create New Topic</Button>
+        <Button className="btn-primary">Create New Topic</Button>
       </div>
     </div>
   );
