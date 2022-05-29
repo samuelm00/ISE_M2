@@ -80,7 +80,6 @@ export async function createTopic(
   res: Response<BaseResponse<DiscussionTopic>, any>
 ) {
   try {
-    console.log(req.body);
     const topic = await DiscussionTopic.create({
       datetime: req.body.datetime,
       text: req.body.text,
