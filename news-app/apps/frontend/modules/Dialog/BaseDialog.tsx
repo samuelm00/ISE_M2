@@ -14,6 +14,7 @@ export default function BaseDialog({ children, id }: BaseDialogProps) {
           {children}
         </label>
       </label>
+      <label className="hidden" htmlFor={id} id="close" />
     </React.Fragment>
   );
 }
