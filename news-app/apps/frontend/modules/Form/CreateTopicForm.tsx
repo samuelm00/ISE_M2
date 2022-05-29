@@ -36,7 +36,6 @@ export default function CreateTopicForm({
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >
   ) => {
-    console.log(e.target.value);
     const { name, value } = e.target;
     setInputs((prevState) => ({
       ...prevState,
