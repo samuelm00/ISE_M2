@@ -1,9 +1,7 @@
 import { BaseResponse } from '@news-app/api-model';
 import { useEffect, useState } from 'react';
 
-export function useFetch<T extends BaseResponse<any>>(
-  fetchFunction: () => Promise<T>
-) {
+export function useFetch<T>(fetchFunction: () => Promise<T>) {
   const [data, setData] = useState<T>(undefined);
   const [error, setError] = useState<string | undefined>(undefined);
   const [isLoading, setIsLoading] = useState(false);

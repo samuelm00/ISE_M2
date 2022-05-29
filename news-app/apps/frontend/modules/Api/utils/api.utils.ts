@@ -1,7 +1,6 @@
-import { BaseResponse } from '@news-app/api-model';
 import { ApiEndpoint, serverUrl } from '../constants/api.constants.endpoint';
 
-export async function baseFetch<T extends BaseResponse<any>>(
+export async function baseFetch<T>(
   endpoint: ApiEndpoint,
   body: any,
   options?: Omit<RequestInit, 'body'>

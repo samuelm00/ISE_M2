@@ -1,6 +1,7 @@
 export enum Endpoints {
   getAllUsers = '/users',
   getTopics = '/topic',
+  getAllCategories = '/categories',
   createTopics = '/topic',
 }
 
