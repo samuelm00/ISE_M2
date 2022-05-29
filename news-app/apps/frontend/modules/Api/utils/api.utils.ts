@@ -1,9 +1,4 @@
-import {
-  ApiEndpoint,
-  NoSqlEndpoint,
-  serverUrl,
-  SqlEndpoint,
-} from '../constants/api.constants.endpoint';
+import { ApiEndpoint, serverUrl } from '../constants/api.constants.endpoint';
 
 export async function baseFetch<T>(
   endpoint: ApiEndpoint,
