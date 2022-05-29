@@ -6,11 +6,20 @@ import CreateTopicDialog, {
   createTopicDialogId,
 } from '../modules/Dialog/Topic/CreateTopicDialog';
 import PageHeader from '../modules/Page/header/PageHeader';
+import LoadingSpinner from '../modules/Spinner/LoadingSpinner';
 
 export default function TopicPage() {
   const getTopicMemo = useCallback(() => getTopics(true), []);
   const { data, isLoading, error } = useFetch<GetTopicResponse>(getTopicMemo);
   console.log(data);
+
+  if (isLoading) {
+    return (
+      <div className="w-full h-full">
+        <LoadingSpinner />
+      </div>
+    );
+  }
 
   return (
     <>

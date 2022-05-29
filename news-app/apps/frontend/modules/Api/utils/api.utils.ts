@@ -8,6 +8,10 @@ export async function baseFetch<T extends BaseResponse<any>>(
 ): Promise<T | undefined> {
   const response = await fetch(`${serverUrl}${endpoint}`, {
     ...options,
+    headers: {
+      ...options.headers,
+      'Content-Type': 'application/json',
+    },
     body: body ? JSON.stringify(body) : undefined,
   });
   const data = await response.json();
