@@ -23,7 +23,7 @@ export function getTopics(sql?: boolean) {
   };
   return baseFetch<GetTopicResponse>(
     `/api/${sql ? 'sql' : 'nosql'}/topic`,
-    body,
+    undefined,
     {
       method: 'GET',
     }

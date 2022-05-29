@@ -1,18 +1,28 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { GetTopicResponse, getTopics } from '../modules/Api/topic/api.topic';
-import Button from '../modules/Button/Button';
+import DialogButton from '../modules/Button/DialogButton';
 import { useFetch } from '../modules/common/hooks/common.hooks';
+import CreateTopicDialog, {
+  createTopicDialogId,
+} from '../modules/Dialog/Topic/CreateTopicDialog';
 import PageHeader from '../modules/Page/header/PageHeader';
 
 export default function TopicPage() {
-  const { data, isLoading, error } = useFetch<GetTopicResponse>(getTopics);
+  const getTopicMemo = useCallback(() => getTopics(true), []);
+  const { data, isLoading, error } = useFetch<GetTopicResponse>(getTopicMemo);
+  console.log(data);
 
   return (
-    <div>
-      <div className="flex justify-between">
-        <PageHeader title="Discussion Topics" />
-        <Button className="btn-primary">Create New Topic</Button>
+    <>
+      <div>
+        <div className="flex justify-between">
+          <PageHeader title="Discussion Topics" />
+          <DialogButton id={createTopicDialogId} className="btn-primary">
+            Creat Topic
+          </DialogButton>
+        </div>
       </div>
-    </div>
+      <CreateTopicDialog />
+    </>
   );
 }

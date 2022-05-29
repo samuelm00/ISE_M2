@@ -16,13 +16,17 @@ import { responseJson } from '../../util/util.response';
  * @returns
  */
 export async function getTopics(
-  req: Request<{}, any, PaginatedPayload, qs.ParsedQs, Record<string, any>>,
+  req: Request<{}, any, {}, qs.ParsedQs, Record<string, any>>,
   res: Response<BaseResponse<PaginatedResponse<IDiscussionTopicProps>>, any>
 ) {
   try {
-    const { pageSize, page } = req.body;
+    const pageSize = Number.parseInt(req.query.pageSize as string) || 100;
+    const page = Number.parseInt(req.query.page as string) || 0;
     const offset = pageSize * page;
-    const topics = await DiscussionTopic.findAll({ limit: pageSize, offset });
+    const topics = await DiscussionTopic.findAll({
+      limit: pageSize,
+      offset: offset,
+    });
     const response: PaginatedResponse<IDiscussionTopicProps> = {
       page: page + 1,
       pageSize: pageSize,
@@ -76,6 +80,7 @@ export async function createTopic(
   res: Response<BaseResponse<DiscussionTopic>, any>
 ) {
   try {
+    console.log(req.body);
     const topic = await DiscussionTopic.create({
       datetime: req.body.datetime,
       text: req.body.text,
