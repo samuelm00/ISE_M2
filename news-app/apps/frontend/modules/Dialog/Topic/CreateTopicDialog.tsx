@@ -59,8 +59,6 @@ export default function CreateTopicDialog({ setData }: CreateTopicDialogProps) {
       category,
     };
 
-    console.log(topicWithCategory);
-
     setData((prev) => ({
       ...prev,
       data: prev.data ? [...prev.data, topicWithCategory] : [topicWithCategory],
