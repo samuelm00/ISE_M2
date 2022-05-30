@@ -35,11 +35,7 @@ export function getTopics(sql?: boolean) {
  * @returns
  */
 export function createTopic(topic: CreateDiscussionPayload) {
-  return baseFetch<BaseResponse<IDiscussionTopicProps>>(
-    '/api/sql/topic',
-    topic,
-    {
-      method: 'POST',
-    }
-  );
+  return baseFetch<IDiscussionTopicProps>('/api/sql/topic', topic, {
+    method: 'POST',
+  });
 }

@@ -1,7 +1,7 @@
 import { IDiscussionTopicProps } from '@news-app/api-model';
 import { useAuthProvider } from 'apps/frontend/provider/Auth/hook.auth';
 import React from 'react';
-import { createTopic } from '../../Api/topic/api.topic';
+import { createTopic, GetTopicResponse } from '../../Api/topic/api.topic';
 import Button from '../../Button/Button';
 import CreateTopicForm from '../../Form/CreateTopicForm';
 import BaseDialog from '../BaseDialog';
@@ -19,20 +19,30 @@ function getDefaultInputs(userId: number): Omit<IDiscussionTopicProps, 'id'> {
   };
 }
 
-export default function CreateTopicDialog() {
+interface CreateTopicDialogProps {
+  setData: React.Dispatch<React.SetStateAction<GetTopicResponse>>;
+}
+
+export default function CreateTopicDialog({ setData }: CreateTopicDialogProps) {
   const [user] = useAuthProvider();
   const [inputs, setInputs] = React.useState<Omit<IDiscussionTopicProps, 'id'>>(
     getDefaultInputs(user.id)
   );
 
   const createNewTopic = async () => {
-    await createTopic({
+    const topic = await createTopic({
       title: inputs.title,
       datetime: new Date(),
       discussionCategoryId: inputs.discussionCategoryId,
       text: inputs.text,
       userId: user.id,
     });
+    if (topic) {
+      setData((prev) => ({
+        ...prev,
+        data: prev.data ? [...prev.data, topic] : [topic],
+      }));
+    }
     setInputs(getDefaultInputs(user.id));
     closeDialog();
   };

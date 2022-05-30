@@ -11,7 +11,7 @@ import LoadingSpinner from '../modules/Spinner/LoadingSpinner';
 
 export default function TopicPage() {
   const getTopicMemo = useCallback(() => getTopics(true), []);
-  const { data, isLoading } = useFetch(getTopicMemo);
+  const { data, isLoading, setData } = useFetch(getTopicMemo);
   console.log(data);
 
   if (isLoading || !data) {
@@ -37,7 +37,7 @@ export default function TopicPage() {
           ))}
         </div>
       </div>
-      <CreateTopicDialog />
+      <CreateTopicDialog setData={setData} />
     </>
   );
 }
