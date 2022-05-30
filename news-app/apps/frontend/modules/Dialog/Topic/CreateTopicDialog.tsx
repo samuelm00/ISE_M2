@@ -54,8 +54,6 @@ export default function CreateTopicDialog({ setData }: CreateTopicDialogProps) {
 
     const category = await getCategory(topic.discussionCategoryId);
 
-    console.log(category);
-
     const topicWithCategory: IDiscussionTopicPropsWithCategory = {
       ...topic,
       category,
