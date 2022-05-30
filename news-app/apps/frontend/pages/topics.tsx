@@ -8,6 +8,8 @@ import CreateTopicDialog, {
 } from '../modules/Dialog/Topic/CreateTopicDialog';
 import PageHeader from '../modules/Page/header/PageHeader';
 import LoadingSpinner from '../modules/Spinner/LoadingSpinner';
+import { motion } from 'framer-motion';
+import { avatarCardVariants } from '../modules/Card/AvatarCard';
 
 export default function TopicPage() {
   const getTopicMemo = useCallback(() => getTopics(true), []);
@@ -31,11 +33,17 @@ export default function TopicPage() {
             Creat Topic
           </DialogButton>
         </div>
-        <div className="space-y-6">
+        <motion.div
+          variants={avatarCardVariants}
+          transition={{ staggerChildren: 0.2, delayChildren: 0.2 }}
+          initial="initial"
+          animate="animate"
+          className="grid grid-cols-3 gap-4"
+        >
           {data.data?.map((topic) => (
             <DiscussionTopicCard topic={topic} key={topic.id} />
           ))}
-        </div>
+        </motion.div>
       </div>
       <CreateTopicDialog setData={setData} />
     </>
