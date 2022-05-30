@@ -30,6 +30,11 @@ export default function CreateTopicDialog({ setData }: CreateTopicDialogProps) {
   );
 
   const createNewTopic = async () => {
+    if (inputs.discussionCategoryId === -1) {
+      alert('Please select a category');
+      return;
+    }
+
     const topic = await createTopic({
       title: inputs.title,
       datetime: new Date(),
@@ -37,12 +42,17 @@ export default function CreateTopicDialog({ setData }: CreateTopicDialogProps) {
       text: inputs.text,
       userId: user.id,
     });
-    if (topic) {
-      setData((prev) => ({
-        ...prev,
-        data: prev.data ? [...prev.data, topic] : [topic],
-      }));
+
+    if (!topic) {
+      alert('Error creating topic');
+      return;
     }
+
+    setData((prev) => ({
+      ...prev,
+      data: prev.data ? [...prev.data, topic] : [topic],
+    }));
+
     setInputs(getDefaultInputs(user.id));
     closeDialog();
   };

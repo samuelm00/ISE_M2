@@ -14,7 +14,6 @@ import { avatarCardVariants } from '../modules/Card/AvatarCard';
 export default function TopicPage() {
   const getTopicMemo = useCallback(() => getTopics(true), []);
   const { data, isLoading, setData } = useFetch(getTopicMemo);
-  console.log(data);
 
   if (isLoading || !data) {
     return (
@@ -27,7 +26,7 @@ export default function TopicPage() {
   return (
     <>
       <div className="space-y-10">
-        <div className="flex justify-between">
+        <div className="flex justify-between items-center">
           <PageHeader title="Discussion Topics" />
           <DialogButton id={createTopicDialogId} className="btn-primary">
             Creat Topic
