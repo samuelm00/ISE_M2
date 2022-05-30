@@ -14,5 +14,5 @@ export function useFetch<T>(fetchFunction: () => Promise<T>) {
       .finally(() => setIsLoading(false));
   }, [fetchFunction]);
 
-  return { data, error, isLoading };
+  return { data, setData, error, isLoading };
 }
