@@ -53,5 +53,5 @@ export async function getCategoryByID(req, res) {
     description: category.description,
   };
 
-  return res.status(200).json(response);
+  return res.status(200).json(responseJson({ payload: response }));
 }

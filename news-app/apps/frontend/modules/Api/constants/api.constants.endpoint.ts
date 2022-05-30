@@ -10,9 +10,9 @@ export enum EndpointBasePath {
   NoSql = '/api/nosql',
 }
 
-export type SqlEndpoint = `${EndpointBasePath.Sql}${Endpoints}`;
+export type SqlEndpoint = `${EndpointBasePath.Sql}${Endpoints}${string}`;
 
-export type NoSqlEndpoint = `${EndpointBasePath.NoSql}${Endpoints}`;
+export type NoSqlEndpoint = `${EndpointBasePath.NoSql}${Endpoints}${string}`;
 
 export type ApiEndpoint = SqlEndpoint | NoSqlEndpoint;
 

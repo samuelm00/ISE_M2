@@ -1,6 +1,10 @@
-import { IDiscussionTopicProps } from '@news-app/api-model';
+import {
+  IDiscussionTopicProps,
+  IDiscussionTopicPropsWithCategory,
+} from '@news-app/api-model';
 import { useAuthProvider } from 'apps/frontend/provider/Auth/hook.auth';
 import React from 'react';
+import { getCategory } from '../../Api/category/api.category';
 import { createTopic, GetTopicResponse } from '../../Api/topic/api.topic';
 import Button from '../../Button/Button';
 import CreateTopicForm from '../../Form/CreateTopicForm';
@@ -48,9 +52,20 @@ export default function CreateTopicDialog({ setData }: CreateTopicDialogProps) {
       return;
     }
 
+    const category = await getCategory(topic.discussionCategoryId);
+
+    console.log(category);
+
+    const topicWithCategory: IDiscussionTopicPropsWithCategory = {
+      ...topic,
+      category,
+    };
+
+    console.log(topicWithCategory);
+
     setData((prev) => ({
       ...prev,
-      data: prev.data ? [...prev.data, topic] : [topic],
+      data: prev.data ? [...prev.data, topicWithCategory] : [topicWithCategory],
     }));
 
     setInputs(getDefaultInputs(user.id));

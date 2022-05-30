@@ -10,3 +10,13 @@ export function getCategories() {
     }
   );
 }
+
+export function getCategory(id: number) {
+  return baseFetch<IDiscussionCategoryProps>(
+    `/api/sql/categories/${id}`,
+    undefined,
+    {
+      method: 'GET',
+    }
+  );
+}
