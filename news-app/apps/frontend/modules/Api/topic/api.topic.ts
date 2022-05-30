@@ -1,5 +1,4 @@
 import {
-  BaseResponse,
   CreateDiscussionPayload,
   IDiscussionTopicProps,
   IDiscussionTopicPropsWithCategory,
