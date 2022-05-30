@@ -2,13 +2,15 @@ import {
   BaseResponse,
   CreateDiscussionPayload,
   IDiscussionTopicProps,
+  IDiscussionTopicPropsWithCategory,
   PaginatedPayload,
   PaginatedResponse,
 } from '@news-app/api-model';
 import { defaultPageSize } from '../constants/api.constants.endpoint';
 import { baseFetch } from '../utils/api.utils';
 
-export type GetTopicResponse = PaginatedResponse<IDiscussionTopicProps>;
+export type GetTopicResponse =
+  PaginatedResponse<IDiscussionTopicPropsWithCategory>;
 
 /**
  *

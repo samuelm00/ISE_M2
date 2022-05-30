@@ -1,14 +1,17 @@
-import { IDiscussionTopicProps } from '@news-app/api-model';
+import {
+  IDiscussionTopicProps,
+  IDiscussionTopicPropsWithCategory,
+} from '@news-app/api-model';
 import React from 'react';
 import { motion } from 'framer-motion';
 import { avatarCardVariants } from './AvatarCard';
 
 interface DiscussionTopicCardProps {
-  topic: IDiscussionTopicProps;
+  topic: IDiscussionTopicPropsWithCategory;
 }
 
 export default function DiscussionTopicCard({
-  topic: { title, text, discussionCategoryId },
+  topic: { title, text, category },
 }: DiscussionTopicCardProps) {
   const getText = () => {
     if (text.length > 50) {
@@ -33,6 +36,7 @@ export default function DiscussionTopicCard({
       </div>
       <div className="card-body">
         <h2 className="card-title">{title}</h2>
+        <h3 className="font-bold">{category.name}</h3>
         <p>{getText()}</p>
       </div>
     </motion.div>

@@ -5,6 +5,8 @@ import {
   IDiscussionTopicProps,
   CreateDiscussionPayload,
   BaseResponse,
+  DiscussionCategory,
+  IDiscussionTopicPropsWithCategory,
 } from '@news-app/api-model';
 import { Response, Request } from 'express';
 import { responseJson } from '../../util/util.response';
@@ -17,7 +19,10 @@ import { responseJson } from '../../util/util.response';
  */
 export async function getTopics(
   req: Request<{}, any, {}, qs.ParsedQs, Record<string, any>>,
-  res: Response<BaseResponse<PaginatedResponse<IDiscussionTopicProps>>, any>
+  res: Response<
+    BaseResponse<PaginatedResponse<IDiscussionTopicPropsWithCategory>>,
+    any
+  >
 ) {
   try {
     const pageSize = Number.parseInt(req.query.pageSize as string) || 100;
@@ -26,8 +31,10 @@ export async function getTopics(
     const topics = await DiscussionTopic.findAll({
       limit: pageSize,
       offset: offset,
+      include: [{ model: DiscussionCategory }],
     });
-    const response: PaginatedResponse<IDiscussionTopicProps> = {
+    console.log(topics);
+    const response: PaginatedResponse<IDiscussionTopicPropsWithCategory> = {
       page: page + 1,
       pageSize: pageSize,
       data: topics.map((topic) => ({
@@ -36,7 +43,8 @@ export async function getTopics(
         text: topic.text,
         title: topic.title,
         userId: topic.userId,
-        discussionCategoryId: topic.discussionCategoryId,
+        // @ts-ignore
+        category: topic.DiscussionCategory,
       })),
     };
     return res.status(200).json(responseJson({ payload: response }));

@@ -7,7 +7,10 @@ import {
   Sequelize,
   DataTypes,
 } from 'sequelize';
-import { DiscussionCategory } from '../discussion-category/model.discussion-category';
+import {
+  DiscussionCategory,
+  IDiscussionCategoryProps,
+} from '../discussion-category/model.discussion-category';
 import { User } from '../user/model.user';
 
 /**
@@ -26,6 +29,11 @@ export interface IDiscussionTopicComplete {
  * Contains only the user model attributes without the relations.
  */
 export interface IDiscussionTopicProps extends IDiscussionTopicComplete {}
+
+export interface IDiscussionTopicPropsWithCategory
+  extends Omit<IDiscussionTopicProps, 'discussionCategoryId'> {
+  category: IDiscussionCategoryProps;
+}
 
 /**
  * SQL
