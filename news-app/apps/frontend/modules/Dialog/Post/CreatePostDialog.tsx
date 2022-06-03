@@ -37,6 +37,11 @@ export default function CreatePostDialog({
   const [inputs, setInputs] = useState(getDefaultInputs(user.id, topicId));
 
   const createNewPost = async () => {
+    if (!inputs.text.length) {
+      alert('Text is required');
+      return;
+    }
+
     const post = await createPost(inputs);
 
     if (!post) {

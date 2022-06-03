@@ -19,6 +19,25 @@ export async function getPostsOfTopic(
 
 /**
  *
+ * @param topicId
+ * @param postId
+ * @returns
+ */
+export async function getRepliesOfPost(
+  topicId: number,
+  postId: number
+): Promise<IDiscussionPostProps[]> {
+  return baseFetch<IDiscussionPostProps[]>(
+    `/api/sql/posts/${topicId}/${postId}`,
+    undefined,
+    {
+      method: 'GET',
+    }
+  );
+}
+
+/**
+ *
  * @param post
  * @returns
  */

@@ -47,7 +47,11 @@ export default function TopicDetailPage() {
           className="space-y-5"
         >
           {data?.map((post) => (
-            <DiscussionPostCard post={post} key={post.id} />
+            <DiscussionPostCard
+              topicId={Number(topicId)}
+              post={post}
+              key={post.id}
+            />
           ))}
         </motion.div>
       </div>

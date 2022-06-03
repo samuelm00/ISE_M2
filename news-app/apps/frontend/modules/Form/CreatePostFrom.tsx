@@ -38,6 +38,7 @@ export default function CreatePostForm({
         value={inputs.text}
         className="textarea textarea-primary w-full"
         name="text"
+        required
         placeholder="Pleans enter a text"
         onChange={handleOnChange}
       />

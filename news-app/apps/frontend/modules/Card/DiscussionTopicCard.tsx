@@ -42,7 +42,7 @@ export default function DiscussionTopicCard({
       </div>
       <div className="card-body">
         <h2 className="card-title">{title}</h2>
-        <h3 className="font-bold">{category.name}</h3>
+        <div className="badge">{category.name}</div>
         <p>{getText()}</p>
       </div>
     </motion.div>
