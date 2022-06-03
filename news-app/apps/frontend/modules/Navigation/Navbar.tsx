@@ -1,12 +1,12 @@
 import Link from 'next/link';
 import React, { useMemo } from 'react';
 import { RoutePath } from './common/constants/constant.route';
-import { getPrivateRoutes } from './common/utils/util.route';
+import { getNavbarRoutes } from './common/utils/util.route';
 import clsx from 'clsx';
 import { useRouter } from 'next/router';
 
 export default function Navbar() {
-  const privateRoutes = useMemo(() => getPrivateRoutes(), []);
+  const privateRoutes = useMemo(() => getNavbarRoutes(), []);
   const router = useRouter();
 
   return (

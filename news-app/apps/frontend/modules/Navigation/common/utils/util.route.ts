@@ -16,6 +16,25 @@ export function getPrivateRoutes(): Route[] {
 
 /**
  *
+ * @returns
+ */
+export function getNavbarRoutes(): Route[] {
+  return privateRoutes
+    .filter((route) => route !== RoutePath.Posts)
+    .map((route) => {
+      return {
+        href: route,
+        label: getLabel(route),
+      };
+    });
+}
+
+export function getRelativeRoute(route: RoutePath, params: string): string {
+  return route.replace(/\[slug\]/, params);
+}
+
+/**
+ *
  * @param href
  * @returns
  */
