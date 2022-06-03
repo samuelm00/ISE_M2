@@ -14,27 +14,35 @@ export const createPostDialogId = 'create-post-dialog';
 
 interface CreatePostDialogProps {
   topicId: number;
+  parentId?: number;
+  id?: string;
   setData: React.Dispatch<React.SetStateAction<IDiscussionPostProps[]>>;
 }
 
 function getDefaultInputs(
   userId: number,
-  topicId: number
+  topicId: number,
+  parentId?: number
 ): IDiscussionPostPropsCreate {
   return {
     text: '',
     datetime: new Date(),
     discussionThemeId: topicId,
     userId,
+    parentPostId: parentId,
   };
 }
 
 export default function CreatePostDialog({
   topicId,
   setData,
+  parentId,
+  id,
 }: CreatePostDialogProps) {
   const [user] = useAuthProvider();
-  const [inputs, setInputs] = useState(getDefaultInputs(user.id, topicId));
+  const [inputs, setInputs] = useState(
+    getDefaultInputs(user.id, topicId, parentId)
+  );
 
   const createNewPost = async () => {
     if (!inputs.text.length) {
@@ -50,13 +58,15 @@ export default function CreatePostDialog({
     }
 
     setData((prevState) => [...prevState, post]);
-    closeDialog();
+    closeDialog(id || createPostDialogId);
   };
 
   return (
-    <BaseDialog id={createPostDialogId}>
+    <BaseDialog id={id || createPostDialogId}>
       <div className="space-y-8">
-        <h2 className="text-2xl">Create a new Post</h2>
+        <h2 className="text-2xl">
+          {parentId ? 'Reply to post' : 'Create a new Post'}
+        </h2>
 
         <CreatePostForm
           inputs={inputs}
@@ -65,7 +75,7 @@ export default function CreatePostDialog({
           submitButton={
             <div className="w-full flex justify-end">
               <Button className="btn-primary" type="submit">
-                Create Post
+                {parentId ? 'Reply' : 'Create Post'}
               </Button>
             </div>
           }

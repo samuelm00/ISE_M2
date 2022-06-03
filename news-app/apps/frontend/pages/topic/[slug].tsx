@@ -20,7 +20,6 @@ export default function TopicDetailPage() {
     [router.query]
   );
   const { data, isLoading, setData } = useFetch(getPostsMemo);
-  console.log(data);
 
   if (isLoading || !data) {
     return (

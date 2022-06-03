@@ -65,7 +65,7 @@ export default function CreateTopicDialog({ setData }: CreateTopicDialogProps) {
     }));
 
     setInputs(getDefaultInputs(user.id));
-    closeDialog();
+    closeDialog(createTopicDialogId);
   };
 
   return (
