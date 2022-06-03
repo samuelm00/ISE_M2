@@ -3,6 +3,7 @@ export enum Endpoints {
   getTopics = '/topic',
   getAllCategories = '/categories',
   createTopics = '/topic',
+  getPosts = '/posts',
 }
 
 export enum EndpointBasePath {
