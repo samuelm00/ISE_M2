@@ -29,7 +29,7 @@ export default function TopicPage() {
         <div className="flex justify-between items-center">
           <PageHeader title="Discussion Topics" />
           <DialogButton id={createTopicDialogId} className="btn-primary">
-            Creat Topic
+            Create Topic
           </DialogButton>
         </div>
         <motion.div
