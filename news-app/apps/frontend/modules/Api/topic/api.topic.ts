@@ -32,6 +32,21 @@ export function getTopics(sql?: boolean) {
 
 /**
  *
+ * @param id
+ * @returns
+ */
+export async function getTopic(id: string) {
+  return baseFetch<IDiscussionTopicPropsWithCategory>(
+    `/api/sql/topic/${id}`,
+    undefined,
+    {
+      method: 'GET',
+    }
+  );
+}
+
+/**
+ *
  * @param topic
  * @returns
  */

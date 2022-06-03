@@ -11,6 +11,7 @@ import { motion } from 'framer-motion';
 import React, { useCallback, useMemo } from 'react';
 import { avatarCardVariants } from 'apps/frontend/modules/Card/AvatarCard';
 import DiscussionPostCard from 'apps/frontend/modules/Card/DiscussionPostCard';
+import { getTopic } from 'apps/frontend/modules/Api/topic/api.topic';
 
 export default function TopicDetailPage() {
   const router = useRouter();
@@ -19,9 +20,11 @@ export default function TopicDetailPage() {
     () => getPostsOfTopic(topicId),
     [router.query]
   );
+  const getTopicMemo = useCallback(() => getTopic(topicId), [topicId]);
+  const { data: topic } = useFetch(getTopicMemo);
   const { data, isLoading, setData } = useFetch(getPostsMemo);
 
-  if (isLoading || !data) {
+  if (isLoading || !data || !topic) {
     return (
       <div className="w-full h-full flex justify-center items-center">
         <LoadingSpinner />
@@ -33,7 +36,7 @@ export default function TopicDetailPage() {
     <>
       <div className="space-y-10">
         <div className="flex justify-between items-center">
-          <PageHeader title="Discussion Posts" />
+          <PageHeader title={`Discussion Posts for Topic: ${topic.title}`} />
           <DialogButton id={createPostDialogId} className="btn-primary">
             Create Post
           </DialogButton>
