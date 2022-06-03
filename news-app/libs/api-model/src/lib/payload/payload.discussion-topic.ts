@@ -1,5 +1,9 @@
-import { DiscussionTopic } from '../discussion-topic/model.discussion-topic';
+import {
+  DiscussionTopic,
+  IDiscussionTopicProps,
+} from '../discussion-topic/model.discussion-topic';
 
-export interface CreateDiscussionPayload extends Omit<DiscussionTopic, 'user'> {
+export interface CreateDiscussionPayload
+  extends Omit<IDiscussionTopicProps, 'id'> {
   userId: number;
 }

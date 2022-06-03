@@ -5,6 +5,8 @@ import {
   IDiscussionTopicProps,
   CreateDiscussionPayload,
   BaseResponse,
+  DiscussionCategory,
+  IDiscussionTopicPropsWithCategory,
 } from '@news-app/api-model';
 import { Response, Request } from 'express';
 import { responseJson } from '../../util/util.response';
@@ -16,14 +18,23 @@ import { responseJson } from '../../util/util.response';
  * @returns
  */
 export async function getTopics(
-  req: Request<{}, any, PaginatedPayload, qs.ParsedQs, Record<string, any>>,
-  res: Response<BaseResponse<PaginatedResponse<IDiscussionTopicProps>>, any>
+  req: Request<{}, any, {}, qs.ParsedQs, Record<string, any>>,
+  res: Response<
+    BaseResponse<PaginatedResponse<IDiscussionTopicPropsWithCategory>>,
+    any
+  >
 ) {
   try {
-    const { pageSize, page } = req.body;
+    const pageSize = Number.parseInt(req.query.pageSize as string) || 100;
+    const page = Number.parseInt(req.query.page as string) || 0;
     const offset = pageSize * page;
-    const topics = await DiscussionTopic.findAll({ limit: pageSize, offset });
-    const response: PaginatedResponse<IDiscussionTopicProps> = {
+    const topics = await DiscussionTopic.findAll({
+      limit: pageSize,
+      offset: offset,
+      include: [{ model: DiscussionCategory }],
+    });
+    console.log(topics);
+    const response: PaginatedResponse<IDiscussionTopicPropsWithCategory> = {
       page: page + 1,
       pageSize: pageSize,
       data: topics.map((topic) => ({
@@ -32,7 +43,8 @@ export async function getTopics(
         text: topic.text,
         title: topic.title,
         userId: topic.userId,
-        discussionCategoryId: topic.discussionCategoryId,
+        // @ts-ignore
+        category: topic.DiscussionCategory,
       })),
     };
     return res.status(200).json(responseJson({ payload: response }));

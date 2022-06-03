@@ -1,5 +1,8 @@
 export enum Endpoints {
   getAllUsers = '/users',
+  getTopics = '/topic',
+  getAllCategories = '/categories',
+  createTopics = '/topic',
 }
 
 export enum EndpointBasePath {
@@ -7,8 +10,12 @@ export enum EndpointBasePath {
   NoSql = '/api/nosql',
 }
 
-export type SqlEndpoint = `${EndpointBasePath.Sql}${Endpoints}`;
+export type SqlEndpoint = `${EndpointBasePath.Sql}${Endpoints}${string}`;
 
-export type NoSqlEndpoint = `${EndpointBasePath.NoSql}${Endpoints}`;
+export type NoSqlEndpoint = `${EndpointBasePath.NoSql}${Endpoints}${string}`;
+
+export type ApiEndpoint = SqlEndpoint | NoSqlEndpoint;
 
 export const serverUrl = 'http://localhost:3333';
+
+export const defaultPageSize = 100;

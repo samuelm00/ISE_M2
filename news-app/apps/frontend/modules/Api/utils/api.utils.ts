@@ -1,16 +1,16 @@
-import {
-  NoSqlEndpoint,
-  serverUrl,
-  SqlEndpoint,
-} from '../constants/api.constants.endpoint';
+import { ApiEndpoint, serverUrl } from '../constants/api.constants.endpoint';
 
 export async function baseFetch<T>(
-  endpoint: SqlEndpoint | NoSqlEndpoint,
+  endpoint: ApiEndpoint,
   body: any,
   options?: Omit<RequestInit, 'body'>
 ): Promise<T | undefined> {
   const response = await fetch(`${serverUrl}${endpoint}`, {
     ...options,
+    headers: {
+      ...options.headers,
+      'Content-Type': 'application/json',
+    },
     body: body ? JSON.stringify(body) : undefined,
   });
   const data = await response.json();
