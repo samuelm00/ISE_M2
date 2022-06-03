@@ -38,8 +38,9 @@ export interface IDiscussionPostProps
 /**
  * Model that is used to create a new discussion post.
  */
-export interface IDiscussionPostPropsCreate extends IDiscussionPostProps {
-  userId: string;
+export interface IDiscussionPostPropsCreate
+  extends Omit<IDiscussionPostProps, 'id'> {
+  userId: number;
   discussionThemeId: number;
   parentPostId?: number;
 }
