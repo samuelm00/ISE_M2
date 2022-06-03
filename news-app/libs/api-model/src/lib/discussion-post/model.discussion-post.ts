@@ -30,7 +30,19 @@ export interface IDiscussionPostComplete {
  * Contains only the user model attributes without the relations.
  */
 export interface IDiscussionPostProps
-  extends Omit<IDiscussionPostComplete, 'user' | 'userVotes' | 'discussionTheme'> {}
+  extends Omit<
+    IDiscussionPostComplete,
+    'user' | 'userVotes' | 'discussionTheme'
+  > {}
+
+/**
+ * Model that is used to create a new discussion post.
+ */
+export interface IDiscussionPostPropsCreate extends IDiscussionPostProps {
+  userId: string;
+  discussionThemeId: number;
+  parentPostId?: number;
+}
 
 /**
  * SQL
@@ -52,7 +64,7 @@ export class DiscussionPost
   declare userId: ForeignKey<User['id']>;
 }
 
-export  function initDiscussionPostTableSQL(sequelize: Sequelize) {
+export function initDiscussionPostTableSQL(sequelize: Sequelize) {
   DiscussionPost.init(
     {
       text: {
@@ -62,7 +74,6 @@ export  function initDiscussionPostTableSQL(sequelize: Sequelize) {
       datetime: {
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW,
-
       },
       id: {
         type: DataTypes.INTEGER,
@@ -97,12 +108,13 @@ export  function initDiscussionPostTableSQL(sequelize: Sequelize) {
     { sequelize, tableName: 'discussionPosts' }
   );
 
-  DiscussionPost.belongsTo(User,{ foreignKey: 'userId' });
-  User.hasMany(DiscussionPost,{ foreignKey: 'userId' });
-  DiscussionPost.belongsTo(DiscussionTopic,{ foreignKey: 'discussionThemeId' });
-  DiscussionTopic.hasMany(DiscussionPost,{ foreignKey: 'discussionThemeId' });
-  DiscussionPost.belongsTo(DiscussionPost,{ foreignKey: 'parentPostId' });
-
+  DiscussionPost.belongsTo(User, { foreignKey: 'userId' });
+  User.hasMany(DiscussionPost, { foreignKey: 'userId' });
+  DiscussionPost.belongsTo(DiscussionTopic, {
+    foreignKey: 'discussionThemeId',
+  });
+  DiscussionTopic.hasMany(DiscussionPost, { foreignKey: 'discussionThemeId' });
+  DiscussionPost.belongsTo(DiscussionPost, { foreignKey: 'parentPostId' });
 }
 /**
  * NOSQL

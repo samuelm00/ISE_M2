@@ -1,5 +1,4 @@
 import { getPostsOfTopic } from 'apps/frontend/modules/Api/post/api.post';
-import { getTopics } from 'apps/frontend/modules/Api/topic/api.topic';
 import DialogButton from 'apps/frontend/modules/Button/DialogButton';
 import { useFetch } from 'apps/frontend/modules/common/hooks/common.hooks';
 import { createTopicDialogId } from 'apps/frontend/modules/Dialog/Topic/CreateTopicDialog';
