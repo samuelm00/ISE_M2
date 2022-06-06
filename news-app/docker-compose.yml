@@ -59,10 +59,9 @@ services:
     container_name: frontend
     restart: always
     ports:
-      - '4200:4200'
+      - '3000:3000'
     depends_on:
       - api
-
 volumes:
   db:
     driver: local
