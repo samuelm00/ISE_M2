@@ -1,0 +1,71 @@
+version: '3.8'
+services:
+  sql:
+    platform: linux/x86_64
+    image: mysql:8.0
+    hostname: mysql
+    cap_add:
+      - SYS_NICE
+    restart: always
+    environment:
+      - MYSQL_DATABASE=news_app
+      - MYSQL_ROOT_PASSWORD=password
+    ports:
+      - '3306:3306'
+    volumes:
+      - db:/mysql-data
+
+  adminer:
+    image: adminer:4.8.1
+    restart: always
+    ports:
+      - 8282:8080
+    depends_on:
+      - sql
+
+  # mongo:
+  #   image: mongo
+  #   hostname: mongo
+  #   container_name: mongo
+  #   environment:
+  #     MONGO_INITDB_ROOT_USERNAME: user
+  #     MONGO_INITDB_ROOT_PASSWORD: password
+  #     MONGO_INITDB_DATABASE: imse_mongo_db
+  #   ports:
+  #     - "27017:27017"
+
+  api:
+    #this tells docker where to look for the Dockerfile to build the image
+    build:
+      context: ./
+      dockerfile: ./apps/server/Dockerfile
+    #name of your container and also the DNS name (nginx will proxy pass to this container from localhost:8000 when using a browser or Postman)
+    container_name: api
+    hostname: api
+    restart: always
+    environment:
+      WAIT_HOSTS: mysql:3306 #, mongo:27017
+    #EXPOSE defines the ports reachable from INSIDE your docker network
+    expose:
+      - 3333
+    ports:
+      - '3333:3333'
+    depends_on:
+      - sql
+
+  frontend:
+    build:
+      context: ./
+      dockerfile: ./apps/frontend/Dockerfile
+    container_name: frontend
+    restart: always
+    expose:
+      - 4200
+    ports:
+      - '4200:4200'
+    depends_on:
+      - api
+
+volumes:
+  db:
+    driver: local

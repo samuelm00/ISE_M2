@@ -8,7 +8,7 @@ import {
 import { Sequelize } from 'sequelize';
 
 const sequelize = new Sequelize('news_app', 'root', 'password', {
-  host: 'localhost',
+  host: 'mysql',
   dialect: 'mysql',
   port: 3306,
   define: {
@@ -23,7 +23,7 @@ export async function initSqlDb() {
   initDiscussionPostTableSQL(sequelize);
   initUserVoteTableSQL(sequelize);
 
-  await sequelize.sync({force : true});
+  await sequelize.sync({ force: true });
 }
 
 export async function initNoSqlDb() {

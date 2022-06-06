@@ -17,6 +17,6 @@ export type NoSqlEndpoint = `${EndpointBasePath.NoSql}${Endpoints}${string}`;
 
 export type ApiEndpoint = SqlEndpoint | NoSqlEndpoint;
 
-export const serverUrl = 'http://localhost:3333';
+export const serverUrl = 'http://api:3333';
 
 export const defaultPageSize = 100;
