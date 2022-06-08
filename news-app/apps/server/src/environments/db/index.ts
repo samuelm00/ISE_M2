@@ -30,7 +30,7 @@ export async function initSqlDb() {
 export async function initNoSqlDb() {
   await connect('mongodb://mongo:27017', {
     dbName: 'news_app',
-    user: 'root',
+    user: 'user',
     pass: 'password',
   });
 }

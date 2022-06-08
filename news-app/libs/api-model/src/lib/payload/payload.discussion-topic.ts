@@ -5,5 +5,5 @@ import {
 
 export interface CreateDiscussionPayload
   extends Omit<IDiscussionTopicProps, 'id'> {
-  userId: number;
+  userId: number | string;
 }

@@ -13,7 +13,9 @@ import { closeDialog } from '../utils/dialog.utils';
 
 export const createTopicDialogId = 'create-topic-dialog';
 
-function getDefaultInputs(userId: number): Omit<IDiscussionTopicProps, 'id'> {
+function getDefaultInputs(
+  userId: number | string
+): Omit<IDiscussionTopicProps, 'id'> {
   return {
     title: '',
     datetime: new Date(),

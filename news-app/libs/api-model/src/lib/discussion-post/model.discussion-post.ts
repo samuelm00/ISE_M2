@@ -40,7 +40,7 @@ export interface IDiscussionPostProps
  */
 export interface IDiscussionPostPropsCreate
   extends Omit<IDiscussionPostProps, 'id'> {
-  userId: number;
+  userId: number | string;
   discussionThemeId: number;
   parentPostId?: number;
 }

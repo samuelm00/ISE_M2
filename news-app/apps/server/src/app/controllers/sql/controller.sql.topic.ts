@@ -1,13 +1,12 @@
 import {
   DiscussionTopic,
-  PaginatedPayload,
   PaginatedResponse,
-  IDiscussionTopicProps,
   CreateDiscussionPayload,
   BaseResponse,
   DiscussionCategory,
   IDiscussionTopicPropsWithCategory,
 } from '@news-app/api-model';
+import assert = require('assert');
 import { Response, Request } from 'express';
 import { responseJson } from '../../util/util.response';
 
@@ -33,7 +32,6 @@ export async function getTopics(
       offset: offset,
       include: [{ model: DiscussionCategory }],
     });
-    console.log(topics);
     const response: PaginatedResponse<IDiscussionTopicPropsWithCategory> = {
       page: page + 1,
       pageSize: pageSize,
@@ -88,6 +86,7 @@ export async function createTopic(
   res: Response<BaseResponse<DiscussionTopic>, any>
 ) {
   try {
+    assert(typeof req.body.userId === 'number');
     const topic = await DiscussionTopic.create({
       datetime: req.body.datetime,
       text: req.body.text,

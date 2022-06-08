@@ -21,7 +21,7 @@ export interface IDiscussionTopicComplete {
   text: string;
   datetime: Date;
   title: string;
-  userId: number;
+  userId: number | string;
   discussionCategoryId: number;
 }
 

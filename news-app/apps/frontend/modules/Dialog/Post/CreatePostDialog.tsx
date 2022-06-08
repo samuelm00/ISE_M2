@@ -20,7 +20,7 @@ interface CreatePostDialogProps {
 }
 
 function getDefaultInputs(
-  userId: number,
+  userId: number | string,
   topicId: number,
   parentId?: number
 ): IDiscussionPostPropsCreate {

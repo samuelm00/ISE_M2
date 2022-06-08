@@ -28,18 +28,16 @@ services:
     hostname: mongo
     container_name: mongo
     environment:
-      MONGO_INITDB_ROOT_USERNAME: user
-      MONGO_INITDB_ROOT_PASSWORD: password
-      MONGO_INITDB_DATABASE: news_app
+      - MONGO_INITDB_ROOT_USERNAME=user
+      - MONGO_INITDB_ROOT_PASSWORD=password
+      - MONGO_INITDB_DATABASE=news_app
     ports:
       - '27017:27017'
 
   api:
-    #this tells docker where to look for the Dockerfile to build the image
     build:
       context: ./
       dockerfile: ./apps/server/Dockerfile
-    #name of your container and also the DNS name (nginx will proxy pass to this container from localhost:8000 when using a browser or Postman)
     container_name: api
     hostname: 'api'
     restart: always
@@ -48,7 +46,7 @@ services:
     ports:
       - '3333:3333'
     environment:
-      WAIT_HOSTS: mysql:3306 #, mongo:27017
+      WAIT_HOSTS: mysql:3306, mongo:27017
     depends_on:
       - sql
 
