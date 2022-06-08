@@ -1,15 +1,9 @@
-import { IUserComplete, User } from '@news-app/api-model';
-import { createUser } from '../../controllers/sql/controller.sql.user';
-
-export const users = [
-  'alex@mail.com',
-  'lisa@mail.com',
-  'noah@mail.com',
-  'markus@mail.com',
-];
+import { IUserComplete } from '@news-app/api-model';
+import { createUser } from '../../controllers/nosql/controller.nosql.user';
+import { users } from '../sql/db-filler.user';
 
 export async function addBaseUsers() {
-  const users: User[] = [];
+  const users: any[] = [];
   for (let i = 1; i <= 4; i++) {
     users.push(await _createUser(i));
   }
