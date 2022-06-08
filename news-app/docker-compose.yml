@@ -25,6 +25,7 @@ services:
 
   mongo:
     image: mongo
+    restart: always
     hostname: mongo
     container_name: mongo
     environment:

@@ -3,11 +3,7 @@ import { createUser } from '../../controllers/nosql/controller.nosql.user';
 import { users } from '../sql/db-filler.user';
 
 export async function addBaseUsers() {
-  const users: any[] = [];
-  for (let i = 1; i <= 4; i++) {
-    users.push(await _createUser(i));
-  }
-  return users;
+  return Promise.all(users.map(async (email) => _createUser(email)));
 }
 
 /**
@@ -15,9 +11,9 @@ export async function addBaseUsers() {
  * @param nr
  * @returns
  */
-async function _createUser(nr: number) {
+async function _createUser(email: string) {
   const user: Omit<IUserComplete, 'id'> = {
-    email: users[nr],
+    email: email,
     password: 'password',
   };
   return createUser(user);

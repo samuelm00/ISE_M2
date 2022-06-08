@@ -2,6 +2,7 @@ import {
   initDiscussionCategoryTableSQL,
   initDiscussionPostTableSQL,
   initDiscussionTopicTable,
+  initUserTableNoSQL,
   initUserTableSQL,
   initUserVoteTableSQL,
 } from '@news-app/api-model';
@@ -33,4 +34,5 @@ export async function initNoSqlDb() {
     user: 'user',
     pass: 'password',
   });
+  initUserTableNoSQL();
 }

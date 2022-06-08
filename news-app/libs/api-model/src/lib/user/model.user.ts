@@ -6,7 +6,7 @@ import {
   DataTypes,
   Sequelize,
 } from 'sequelize';
-import { model, Schema } from 'mongoose';
+import { model, Schema, Model as MongoModel } from 'mongoose';
 
 /**
  * Contains the user model with all its attributes and relations.
@@ -60,9 +60,17 @@ export function initUserTableSQL(sequelize: Sequelize) {
 /**
  * NOSQL
  */
-const userSchema = new Schema<Omit<IUserComplete, 'id'>>({
-  email: { type: String, required: true, unique: true },
-  password: { type: String, required: true },
-});
+export function initUserTableNoSQL() {
+  const userSchema = new Schema<Omit<IUserComplete, 'id'>>({
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
+  });
+  UserNoSql = model<Omit<IUserComplete, 'id'>>('User', userSchema);
+}
 
-export const UserNoSql = model<Omit<IUserComplete, 'id'>>('users', userSchema);
+export let UserNoSql: MongoModel<
+  Omit<IUserComplete, 'id'>,
+  {},
+  {},
+  {}
+> = undefined as any;
