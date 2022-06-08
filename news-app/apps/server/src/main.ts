@@ -9,6 +9,7 @@ import * as cors from 'cors';
 import * as bodyParser from 'body-parser';
 import { initNoSqlDb, initSqlDb } from './environments/db';
 import { fillSqlDb } from './app/db-filler/sql';
+import { fillNoSqlDb } from './app/db-filler/nosql';
 
 const app = express();
 app.use(cors({ origin: true }));
@@ -26,6 +27,8 @@ const server = app.listen(port, async () => {
 
   await initNoSqlDb();
   console.log('NoSQL DB initialized');
+  await fillNoSqlDb();
+  console.log('Finished filling the NoSQL DB');
 
   console.log(`Listening at http://localhost:${port}/api`);
 });

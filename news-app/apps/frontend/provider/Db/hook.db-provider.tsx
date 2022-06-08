@@ -4,7 +4,7 @@ import { DbProviderContext, DbVariant } from './DbProvider';
 /**
  *
  */
-export function useAuthProvider(): [
+export function useDbVariant(): [
   dbVariant: DbVariant,
   setDbVariant: React.Dispatch<React.SetStateAction<DbVariant>>
 ] {

@@ -38,6 +38,6 @@ export async function createUser(user: Omit<IUserComplete, 'id'>) {
   try {
     return UserNoSql.create(user);
   } catch (error) {
-    return Promise.reject(error);
+    return error;
   }
 }
