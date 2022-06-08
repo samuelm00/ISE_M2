@@ -23,16 +23,16 @@ services:
     depends_on:
       - sql
 
-  # mongo:
-  #   image: mongo
-  #   hostname: mongo
-  #   container_name: mongo
-  #   environment:
-  #     MONGO_INITDB_ROOT_USERNAME: user
-  #     MONGO_INITDB_ROOT_PASSWORD: password
-  #     MONGO_INITDB_DATABASE: imse_mongo_db
-  #   ports:
-  #     - "27017:27017"
+  mongo:
+    image: mongo
+    hostname: mongo
+    container_name: mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: user
+      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_DATABASE: news_app
+    ports:
+      - '27017:27017'
 
   api:
     #this tells docker where to look for the Dockerfile to build the image

@@ -6,6 +6,7 @@ import {
   initUserVoteTableSQL,
 } from '@news-app/api-model';
 import { Sequelize } from 'sequelize';
+import { connect } from 'mongoose';
 
 const sequelize = new Sequelize('news_app', 'root', 'password', {
   host: 'mysql',
@@ -27,5 +28,9 @@ export async function initSqlDb() {
 }
 
 export async function initNoSqlDb() {
-  console.log('Nosql not yet defined');
+  await connect('mongodb://mongo:27017', {
+    dbName: 'news_app',
+    user: 'root',
+    pass: 'password',
+  });
 }
