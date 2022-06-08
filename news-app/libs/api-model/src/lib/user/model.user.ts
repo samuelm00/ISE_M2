@@ -12,7 +12,7 @@ import { model, Schema } from 'mongoose';
  * Contains the user model with all its attributes and relations.
  */
 export interface IUserComplete {
-  id: number | number;
+  id: number | string;
   email: string;
   password: string;
 }
