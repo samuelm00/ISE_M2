@@ -5,10 +5,10 @@ import {
   getCategoryByID,
 } from '../../controllers/nosql/controller.nosql.category';
 
-export const categoryRouterSql = Router();
+export const categoryRouterNoSql = Router();
 
-categoryRouterSql.get('/categories', getAllCategories);
+categoryRouterNoSql.get('/categories', getAllCategories);
 
-categoryRouterSql.get('/categories/:id', getCategoryByID);
+categoryRouterNoSql.get('/categories/:id', getCategoryByID);
 
-categoryRouterSql.post('/categories', createCategory);
+categoryRouterNoSql.post('/categories', createCategory);
