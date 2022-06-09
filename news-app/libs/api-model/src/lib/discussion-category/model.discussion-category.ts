@@ -14,7 +14,7 @@ import { IUserComplete, User } from '../user/model.user';
  * Contains the user model with all its attributes and relations.
  */
 export interface IDiscussionCategoryComplete {
-  id: number;
+  id: number | string;
   description: string;
   name: string;
   users: IUserComplete[];
