@@ -18,12 +18,12 @@ import { IUserProps, User } from '../user/model.user';
  * Contains the user model with all its attributes and relations.
  */
 export interface IDiscussionTopicComplete {
-  id: number;
+  id: number | string;
   text: string;
   datetime: Date;
   title: string;
   userId: number | string;
-  discussionCategoryId: number;
+  discussionCategoryId: number | string;
 }
 
 export interface IDiscussionTopicCompleteNoSql
@@ -32,7 +32,7 @@ export interface IDiscussionTopicCompleteNoSql
     'userId' | 'id' | 'discussionCategoryId'
   > {
   discussionCategory: IDiscussionCategoryProps;
-  user: IUserProps;
+  userId: string;
 }
 
 /**
@@ -126,6 +126,7 @@ export function initDiscussionTopicTableNoSql() {
     },
     text: { type: Schema.Types.String, required: true },
     title: { type: Schema.Types.String, required: true },
+    userId: { type: Schema.Types.String, required: true },
   });
   DiscussionTopicNoSql = model<IDiscussionTopicCompleteNoSql>(
     'DiscussionTopic',
