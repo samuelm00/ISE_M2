@@ -63,9 +63,9 @@ export async function getTopic(
   res: Response<BaseResponse<IDiscussionTopicProps>, any>
 ) {
   try {
-    const response = await (
-      await DiscussionTopicNoSql.findById(req.params.id)
-    ).populated('discussionCategory');
+    const response = await DiscussionTopicNoSql.findById(
+      req.params.id
+    ).populate('discussionCategory');
     return res.status(200).json(
       responseJson({
         payload: {
@@ -106,13 +106,13 @@ export async function createTopic(
       text: req.body.text,
       title: req.body.title,
       userId: req.body.userId,
-      discussionCategoryId: req.body.discussionCategoryId,
+      discussionCategory: req.body.discussionCategoryId,
     });
     return res.status(200).json(
       responseJson({
         payload: {
           datetime: topic.datetime,
-          discussionCategoryId: topic.discussionCategory.id,
+          discussionCategoryId: req.body.discussionCategoryId,
           id: topic._id.toString(),
           text: topic.text,
           title: topic.title,
