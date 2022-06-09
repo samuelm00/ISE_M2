@@ -1,8 +1,10 @@
 import {
   initDiscussionCategoryTableNoSql,
   initDiscussionCategoryTableSQL,
+  initDiscussionPostTableNOSQL,
   initDiscussionPostTableSQL,
   initDiscussionTopicTable,
+  initDiscussionTopicTableNoSql,
   initUserTableNoSQL,
   initUserTableSQL,
   initUserVoteTableSQL,
@@ -37,4 +39,6 @@ export async function initNoSqlDb() {
   });
   initUserTableNoSQL();
   initDiscussionCategoryTableNoSql();
+  initDiscussionTopicTableNoSql();
+  initDiscussionPostTableNOSQL();
 }

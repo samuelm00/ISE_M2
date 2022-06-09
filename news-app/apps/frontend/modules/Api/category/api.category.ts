@@ -12,7 +12,7 @@ export function getCategories(dbVariant: DbVariant) {
   );
 }
 
-export function getCategory(dbVariant: DbVariant, id: number) {
+export function getCategory(dbVariant: DbVariant, id: number | string) {
   return baseFetch<IDiscussionCategoryProps>(
     `/api/${dbVariant}/categories/${id}`,
     undefined,

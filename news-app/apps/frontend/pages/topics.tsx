@@ -10,9 +10,11 @@ import PageHeader from '../modules/Page/header/PageHeader';
 import LoadingSpinner from '../modules/Spinner/LoadingSpinner';
 import { motion } from 'framer-motion';
 import { avatarCardVariants } from '../modules/Card/AvatarCard';
+import { useDbVariant } from '../provider/Db/hook.db-provider';
 
 export default function TopicPage() {
-  const getTopicMemo = useCallback(() => getTopics(true), []);
+  const [dbVariant] = useDbVariant();
+  const getTopicMemo = useCallback(() => getTopics(dbVariant), [dbVariant]);
   const { data, isLoading, setData } = useFetch(getTopicMemo);
 
   if (isLoading || !data) {
