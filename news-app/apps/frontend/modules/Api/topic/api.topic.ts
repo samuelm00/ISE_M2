@@ -5,6 +5,7 @@ import {
   PaginatedPayload,
   PaginatedResponse,
 } from '@news-app/api-model';
+import { DbVariant } from 'apps/frontend/provider/Db/DbProvider';
 import { defaultPageSize } from '../constants/api.constants.endpoint';
 import { baseFetch } from '../utils/api.utils';
 
@@ -50,8 +51,11 @@ export async function getTopic(id: string) {
  * @param topic
  * @returns
  */
-export function createTopic(topic: CreateDiscussionPayload) {
-  return baseFetch<IDiscussionTopicProps>('/api/sql/topic', topic, {
+export function createTopic(
+  dbVariant: DbVariant,
+  topic: CreateDiscussionPayload
+) {
+  return baseFetch<IDiscussionTopicProps>(`/api/${dbVariant}/topic`, topic, {
     method: 'POST',
   });
 }

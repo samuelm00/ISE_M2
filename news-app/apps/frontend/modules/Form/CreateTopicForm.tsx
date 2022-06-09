@@ -1,4 +1,5 @@
 import { IDiscussionTopicProps } from '@news-app/api-model';
+import { useDbVariant } from 'apps/frontend/provider/Db/hook.db-provider';
 import React, { useCallback } from 'react';
 import { getCategories } from '../Api/category/api.category';
 import Button from '../Button/Button';
@@ -20,7 +21,11 @@ export default function CreateTopicForm({
   onSubmit,
   submitButton,
 }: CreateTopicFormProps) {
-  const getCategoriesMemo = useCallback(() => getCategories(), []);
+  const [dbVariant] = useDbVariant();
+  const getCategoriesMemo = useCallback(
+    () => getCategories(dbVariant),
+    [dbVariant]
+  );
   const { data, isLoading } = useFetch(getCategoriesMemo);
 
   if (isLoading) {

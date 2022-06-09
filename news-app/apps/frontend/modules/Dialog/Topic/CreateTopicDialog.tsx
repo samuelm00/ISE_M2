@@ -3,6 +3,7 @@ import {
   IDiscussionTopicPropsWithCategory,
 } from '@news-app/api-model';
 import { useAuthProvider } from 'apps/frontend/provider/Auth/hook.auth';
+import { useDbVariant } from 'apps/frontend/provider/Db/hook.db-provider';
 import React from 'react';
 import { getCategory } from '../../Api/category/api.category';
 import { createTopic, GetTopicResponse } from '../../Api/topic/api.topic';
@@ -31,6 +32,7 @@ interface CreateTopicDialogProps {
 
 export default function CreateTopicDialog({ setData }: CreateTopicDialogProps) {
   const [user] = useAuthProvider();
+  const [dbVariant] = useDbVariant();
   const [inputs, setInputs] = React.useState<Omit<IDiscussionTopicProps, 'id'>>(
     getDefaultInputs(user.id)
   );
@@ -41,7 +43,7 @@ export default function CreateTopicDialog({ setData }: CreateTopicDialogProps) {
       return;
     }
 
-    const topic = await createTopic({
+    const topic = await createTopic(dbVariant, {
       title: inputs.title,
       datetime: new Date(),
       discussionCategoryId: inputs.discussionCategoryId,
@@ -54,7 +56,7 @@ export default function CreateTopicDialog({ setData }: CreateTopicDialogProps) {
       return;
     }
 
-    const category = await getCategory(topic.discussionCategoryId);
+    const category = await getCategory(dbVariant, topic.discussionCategoryId);
 
     const topicWithCategory: IDiscussionTopicPropsWithCategory = {
       ...topic,
