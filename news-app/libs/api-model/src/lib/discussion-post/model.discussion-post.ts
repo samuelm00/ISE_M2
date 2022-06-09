@@ -1,3 +1,4 @@
+import { Schema, Model as MongoModel, model } from 'mongoose';
 import {
   Model,
   InferAttributes,
@@ -11,7 +12,7 @@ import {
   DiscussionTopic,
   IDiscussionTopicProps,
 } from '../discussion-topic/model.discussion-topic';
-import { IUserVoteProps, UserVote } from '../user-vote/model.user-vote';
+import { IUserVoteProps, userVoteSchema } from '../user-vote/model.user-vote';
 import { IUserProps, User } from '../user/model.user';
 
 /**
@@ -34,6 +35,12 @@ export interface IDiscussionPostProps
     IDiscussionPostComplete,
     'user' | 'userVotes' | 'discussionTheme'
   > {}
+
+export interface IDiscussionPostCompleteNoSql
+  extends Omit<IDiscussionPostComplete, 'id' | 'discussionTheme' | 'user'> {
+  discussionThemeId: string;
+  parentPostId: string;
+}
 
 /**
  * Model that is used to create a new discussion post.
@@ -120,3 +127,18 @@ export function initDiscussionPostTableSQL(sequelize: Sequelize) {
 /**
  * NOSQL
  */
+export function initDiscussionPostTableNOSQL() {
+  const discussionPostSchema = new Schema<IDiscussionPostCompleteNoSql>({
+    text: { type: Schema.Types.String, required: true },
+    datetime: { type: Schema.Types.Date, default: Date.now },
+    discussionThemeId: { type: Schema.Types.String, required: true },
+    parentPostId: { type: Schema.Types.String, required: false },
+    userVotes: userVoteSchema,
+  });
+  DiscussionPostModel = model<IDiscussionPostCompleteNoSql>(
+    'discussionPost',
+    discussionPostSchema
+  );
+}
+
+export let DiscussionPostModel: MongoModel<IDiscussionPostCompleteNoSql>;

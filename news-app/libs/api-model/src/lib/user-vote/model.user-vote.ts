@@ -1,3 +1,4 @@
+import { Schema, Model as MongoModel, model } from 'mongoose';
 import {
   Model,
   InferAttributes,
@@ -7,7 +8,10 @@ import {
   ForeignKey,
   Sequelize,
 } from 'sequelize';
-import { DiscussionPost, IDiscussionPostProps } from '../discussion-post/model.discussion-post';
+import {
+  DiscussionPost,
+  IDiscussionPostProps,
+} from '../discussion-post/model.discussion-post';
 import { IUserProps, User } from '../user/model.user';
 
 /**
@@ -53,7 +57,6 @@ export function initUserVoteTableSQL(sequelize: Sequelize) {
       datetime: {
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW,
-
       },
       id: {
         type: DataTypes.INTEGER,
@@ -77,17 +80,20 @@ export function initUserVoteTableSQL(sequelize: Sequelize) {
           key: 'id',
         },
       },
-  
     },
     { sequelize, tableName: 'userVotes' }
   );
 
-  UserVote.belongsTo(DiscussionPost,{ foreignKey: 'discussionPostId' });
-  DiscussionPost.hasMany(UserVote,{ foreignKey: 'discussionPostId' });
-  UserVote.belongsTo(User,{ foreignKey: 'userId' });
-  User.hasMany(UserVote,{ foreignKey: 'userId' });
+  UserVote.belongsTo(DiscussionPost, { foreignKey: 'discussionPostId' });
+  DiscussionPost.hasMany(UserVote, { foreignKey: 'discussionPostId' });
+  UserVote.belongsTo(User, { foreignKey: 'userId' });
+  User.hasMany(UserVote, { foreignKey: 'userId' });
 }
 
 /**
  * NOSQL
  */
+export const userVoteSchema = new Schema<IUserVoteProps>({
+  datetime: { type: Schema.Types.Date, default: Date.now },
+  isUpvote: { type: Schema.Types.Boolean, allowNull: false },
+});

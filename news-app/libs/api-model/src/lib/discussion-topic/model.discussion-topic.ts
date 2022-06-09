@@ -34,7 +34,6 @@ export interface IDiscussionTopicCompleteNoSql
   > {
   discussionCategory: IDiscussionCategoryProps;
   user: IUserProps;
-  discussionPosts: string[];
 }
 
 /**
@@ -124,7 +123,6 @@ export function initDiscussionTopicTableNoSql() {
     discussionCategory: { type: DiscussionCategoryNoSql, required: true },
     text: { type: Schema.Types.String, required: true },
     title: { type: Schema.Types.String, required: true },
-    discussionPosts: [{ type: Schema.Types.ObjectId, ref: 'DiscussionPost' }],
   });
   DiscussionTopicNoSql = model<IDiscussionTopicCompleteNoSql>(
     'DiscussionTopic',
