@@ -1,4 +1,5 @@
 import {
+  initDiscussionCategoryTableNoSql,
   initDiscussionCategoryTableSQL,
   initDiscussionPostTableSQL,
   initDiscussionTopicTable,
@@ -35,4 +36,5 @@ export async function initNoSqlDb() {
     pass: 'password',
   });
   initUserTableNoSQL();
+  initDiscussionCategoryTableNoSql();
 }
