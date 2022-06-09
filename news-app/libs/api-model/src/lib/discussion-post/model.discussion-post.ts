@@ -133,7 +133,7 @@ export function initDiscussionPostTableNOSQL() {
     datetime: { type: Schema.Types.Date, default: Date.now },
     discussionThemeId: { type: Schema.Types.String, required: true },
     parentPostId: { type: Schema.Types.String, required: false },
-    userVotes: userVoteSchema,
+    userVotes: [userVoteSchema],
   });
   DiscussionPostModel = model<IDiscussionPostCompleteNoSql>(
     'discussionPost',

@@ -81,7 +81,7 @@ export function initDiscussionCategoryTableNoSql() {
   discussionSchema.index({ name: 1 });
   DiscussionCategoryNoSql = model<
     Omit<IDiscussionCategoryComplete, 'discussionThemes' | 'id'>
-  >('discussionCategories', discussionSchema);
+  >('DiscussionCategories', discussionSchema);
 }
 
 export let DiscussionCategoryNoSql: MongoModel<

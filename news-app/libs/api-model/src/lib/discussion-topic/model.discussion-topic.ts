@@ -10,7 +10,6 @@ import {
 } from 'sequelize';
 import {
   DiscussionCategory,
-  DiscussionCategoryNoSql,
   IDiscussionCategoryProps,
 } from '../discussion-category/model.discussion-category';
 import { IUserProps, User } from '../user/model.user';
@@ -119,8 +118,12 @@ export function initDiscussionTopicTable(sequelize: Sequelize) {
  */
 export function initDiscussionTopicTableNoSql() {
   const discussionTopicSchema = new Schema<IDiscussionTopicCompleteNoSql>({
-    datetime: { type: Schema.Types.Date },
-    discussionCategory: { type: DiscussionCategoryNoSql, required: true },
+    datetime: { type: Schema.Types.Date, default: Date.now },
+    discussionCategory: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: 'DiscussionCategories',
+    },
     text: { type: Schema.Types.String, required: true },
     title: { type: Schema.Types.String, required: true },
   });
