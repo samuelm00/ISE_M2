@@ -32,7 +32,7 @@ export default function LoginPage({ possibleUsers }: LoginPageProps) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const users = await getAllUsers();
+  const users = await getAllUsers(true);
 
   return {
     props: {

@@ -1,0 +1,9 @@
+node_modules
+docker-compose.yaml
+Dockerfile
+.prettierignore
+.prettierrc
+jest.config.js
+jest.preset.js
+.vscode/
+README.md

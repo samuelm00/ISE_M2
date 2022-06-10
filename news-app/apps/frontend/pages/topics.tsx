@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { GetTopicResponse, getTopics } from '../modules/Api/topic/api.topic';
+import { getTopics } from '../modules/Api/topic/api.topic';
 import DialogButton from '../modules/Button/DialogButton';
 import DiscussionTopicCard from '../modules/Card/DiscussionTopicCard';
 import { useFetch } from '../modules/common/hooks/common.hooks';
