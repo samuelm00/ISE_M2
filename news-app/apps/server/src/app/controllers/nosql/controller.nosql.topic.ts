@@ -100,7 +100,6 @@ export async function createTopic(
   res: Response<BaseResponse<IDiscussionTopicProps>, any>
 ) {
   try {
-    assert(typeof req.body.userId === 'number');
     const topic = await DiscussionTopicNoSql.create({
       datetime: req.body.datetime,
       text: req.body.text,
