@@ -19,7 +19,7 @@ export default function TopicDetailPage() {
   const [dbVariant] = useDbVariant();
   const topicId = useMemo(() => router.query.slug as string, [router.query]);
   const getPostsMemo = useCallback(
-    () => getPostsOfTopic(topicId),
+    () => getPostsOfTopic(dbVariant, topicId),
     [router.query]
   );
   const getTopicMemo = useCallback(

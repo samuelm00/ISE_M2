@@ -2,6 +2,7 @@ import {
   IDiscussionPostProps,
   IDiscussionPostPropsCreate,
 } from '@news-app/api-model';
+import { DbVariant } from 'apps/frontend/provider/Db/DbProvider';
 import { baseFetch } from '../utils/api.utils';
 
 /**
@@ -10,11 +11,16 @@ import { baseFetch } from '../utils/api.utils';
  * @returns
  */
 export async function getPostsOfTopic(
+  dbVariant: DbVariant,
   id: string
 ): Promise<IDiscussionPostProps[]> {
-  return baseFetch<IDiscussionPostProps[]>(`/api/sql/posts/${id}`, undefined, {
-    method: 'GET',
-  });
+  return baseFetch<IDiscussionPostProps[]>(
+    `/api/${dbVariant}/posts/${id}`,
+    undefined,
+    {
+      method: 'GET',
+    }
+  );
 }
 
 /**
@@ -24,11 +30,12 @@ export async function getPostsOfTopic(
  * @returns
  */
 export async function getRepliesOfPost(
+  dbVariant: DbVariant,
   topicId: number,
   postId: number
 ): Promise<IDiscussionPostProps[]> {
   return baseFetch<IDiscussionPostProps[]>(
-    `/api/sql/posts/${topicId}/${postId}`,
+    `/api/${dbVariant}/posts/${topicId}/${postId}`,
     undefined,
     {
       method: 'GET',
@@ -41,8 +48,11 @@ export async function getRepliesOfPost(
  * @param post
  * @returns
  */
-export async function createPost(post: IDiscussionPostPropsCreate) {
-  return baseFetch<IDiscussionPostProps>(`/api/sql/posts`, post, {
+export async function createPost(
+  dbVariant: DbVariant,
+  post: IDiscussionPostPropsCreate
+) {
+  return baseFetch<IDiscussionPostProps>(`/api/${dbVariant}/posts`, post, {
     method: 'POST',
   });
 }

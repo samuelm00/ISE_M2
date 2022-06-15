@@ -7,6 +7,7 @@ import { useFetch } from '../common/hooks/common.hooks';
 import LoadingSpinner from '../Spinner/LoadingSpinner';
 import DialogButton from '../Button/DialogButton';
 import CreatePostDialog from '../Dialog/Post/CreatePostDialog';
+import { useDbVariant } from 'apps/frontend/provider/Db/hook.db-provider';
 
 interface DiscussionPostCardProps {
   topicId: number;
@@ -17,8 +18,9 @@ export default function DiscussionPostCard({
   post,
   topicId,
 }: DiscussionPostCardProps) {
+  const [dbVariant] = useDbVariant();
   const getRepliesMemo = useCallback(
-    () => getRepliesOfPost(topicId, post.id),
+    () => getRepliesOfPost(dbVariant, topicId, post.id),
     [topicId, post.id]
   );
   const { data, isLoading, setData } = useFetch(getRepliesMemo);

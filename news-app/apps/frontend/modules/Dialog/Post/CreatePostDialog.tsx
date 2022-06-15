@@ -3,6 +3,7 @@ import {
   IDiscussionPostPropsCreate,
 } from '@news-app/api-model';
 import { useAuthProvider } from 'apps/frontend/provider/Auth/hook.auth';
+import { useDbVariant } from 'apps/frontend/provider/Db/hook.db-provider';
 import React, { useState } from 'react';
 import { createPost } from '../../Api/post/api.post';
 import Button from '../../Button/Button';
@@ -40,6 +41,7 @@ export default function CreatePostDialog({
   id,
 }: CreatePostDialogProps) {
   const [user] = useAuthProvider();
+  const [dbVariant] = useDbVariant();
   const [inputs, setInputs] = useState(
     getDefaultInputs(user.id, topicId, parentId)
   );
@@ -50,7 +52,7 @@ export default function CreatePostDialog({
       return;
     }
 
-    const post = await createPost(inputs);
+    const post = await createPost(dbVariant, inputs);
 
     if (!post) {
       alert('Error creating post');
