@@ -135,10 +135,10 @@ export function initDiscussionPostTableNOSQL() {
     parentPostId: { type: Schema.Types.String, required: false },
     userVotes: [userVoteSchema],
   });
-  DiscussionPostModel = model<IDiscussionPostCompleteNoSql>(
+  DiscussionPostNoSql = model<IDiscussionPostCompleteNoSql>(
     'discussionPost',
     discussionPostSchema
   );
 }
 
-export let DiscussionPostModel: MongoModel<IDiscussionPostCompleteNoSql>;
+export let DiscussionPostNoSql: MongoModel<IDiscussionPostCompleteNoSql>;

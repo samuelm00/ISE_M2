@@ -3,6 +3,7 @@ import {
   userRouterNoSql,
   categoryRouterNoSql,
   topicRouterNoSql,
+  postRouterNoSql,
 } from './nosql';
 import {
   userRouterSql,
@@ -29,3 +30,4 @@ apiRouter.use('/sql', voteRouterSql);
 apiRouter.use('/nosql', userRouterNoSql);
 apiRouter.use('/nosql', categoryRouterNoSql);
 apiRouter.use('/nosql', topicRouterNoSql);
+apiRouter.use('/noSql', postRouterNoSql);
