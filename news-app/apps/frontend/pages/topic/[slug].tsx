@@ -55,14 +55,19 @@ export default function TopicDetailPage() {
         >
           {data?.map((post) => (
             <DiscussionPostCard
-              topicId={Number(topicId)}
+              topicId={
+                Number.isNaN(Number(topicId)) ? topicId : Number(topicId)
+              }
               post={post}
               key={post.id}
             />
           ))}
         </motion.div>
       </div>
-      <CreatePostDialog topicId={Number(topicId)} setData={setData} />
+      <CreatePostDialog
+        topicId={Number.isNaN(Number(topicId)) ? topicId : Number(topicId)}
+        setData={setData}
+      />
     </>
   );
 }

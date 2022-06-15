@@ -10,7 +10,7 @@ import CreatePostDialog from '../Dialog/Post/CreatePostDialog';
 import { useDbVariant } from 'apps/frontend/provider/Db/hook.db-provider';
 
 interface DiscussionPostCardProps {
-  topicId: number;
+  topicId: number | string;
   post: IDiscussionPostProps;
 }
 

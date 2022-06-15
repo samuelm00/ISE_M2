@@ -14,16 +14,16 @@ import { closeDialog } from '../utils/dialog.utils';
 export const createPostDialogId = 'create-post-dialog';
 
 interface CreatePostDialogProps {
-  topicId: number;
-  parentId?: number;
+  topicId: number | string;
+  parentId?: number | string;
   id?: string;
   setData: React.Dispatch<React.SetStateAction<IDiscussionPostProps[]>>;
 }
 
 function getDefaultInputs(
   userId: number | string,
-  topicId: number,
-  parentId?: number
+  topicId: number | string,
+  parentId?: number | string
 ): IDiscussionPostPropsCreate {
   return {
     text: '',
@@ -52,7 +52,10 @@ export default function CreatePostDialog({
       return;
     }
 
-    const post = await createPost(dbVariant, inputs);
+    const post = await createPost(dbVariant, {
+      ...inputs,
+      parentPostId: parentId,
+    });
 
     if (!post) {
       alert('Error creating post');

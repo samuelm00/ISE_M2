@@ -3,7 +3,6 @@ import {
   IDiscussionPostProps,
   DiscussionPostNoSql,
 } from '@news-app/api-model';
-import { Op } from 'sequelize';
 import { responseJson } from '../../util/util.response';
 
 export async function createPost(req, res) {
@@ -16,7 +15,12 @@ export async function createPost(req, res) {
       parentPostId: req.body.parentPostId,
       userVotes: [],
     });
-    return res.status(200).json(responseJson({ payload: post }));
+    const response: IDiscussionPostProps = {
+      datetime: post.datetime,
+      id: post._id.toString(),
+      text: post.text,
+    };
+    return res.status(200).json(responseJson({ payload: response }));
   } catch (error) {
     return res.status(400).json(responseJson({ error: error.message }));
   }
@@ -24,12 +28,12 @@ export async function createPost(req, res) {
 
 export async function getPostsOfTheme(req, res) {
   try {
-    const posts: DiscussionPost[] = await DiscussionPostNoSql.find({
+    const posts = await DiscussionPostNoSql.find({
       $and: [{ discussionThemeId: req.params.id }, { parentPostId: null }],
     });
 
     const response: IDiscussionPostProps[] = posts.map((post) => ({
-      id: post.id,
+      id: post._id.toString(),
       text: post.text,
       datetime: post.datetime,
     }));
@@ -42,15 +46,15 @@ export async function getPostsOfTheme(req, res) {
 
 export async function getRepliesOfPost(req, res) {
   try {
-    const posts: DiscussionPost[] = await DiscussionPostNoSql.find({
+    const posts = await DiscussionPostNoSql.find({
       $and: [
         { discussionThemeId: req.params.id },
         { parentPostId: req.params.postId },
       ],
     });
 
-    const response: IDiscussionPostProps[] = posts.map((post) => ({
-      id: post.id,
+    const response = posts.map((post) => ({
+      id: post._id.toString(),
       text: post.text,
       datetime: post.datetime,
     }));

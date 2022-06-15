@@ -31,8 +31,8 @@ export async function getPostsOfTopic(
  */
 export async function getRepliesOfPost(
   dbVariant: DbVariant,
-  topicId: number,
-  postId: number
+  topicId: number | string,
+  postId: number | string
 ): Promise<IDiscussionPostProps[]> {
   return baseFetch<IDiscussionPostProps[]>(
     `/api/${dbVariant}/posts/${topicId}/${postId}`,

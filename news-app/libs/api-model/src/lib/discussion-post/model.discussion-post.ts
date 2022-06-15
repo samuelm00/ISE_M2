@@ -19,7 +19,7 @@ import { IUserProps, User } from '../user/model.user';
  * Contains the user model with all its attributes and relations.
  */
 export interface IDiscussionPostComplete {
-  id: number;
+  id: number | string;
   text: string;
   datetime: Date;
   discussionTheme: IDiscussionTopicProps;
@@ -48,8 +48,8 @@ export interface IDiscussionPostCompleteNoSql
 export interface IDiscussionPostPropsCreate
   extends Omit<IDiscussionPostProps, 'id'> {
   userId: number | string;
-  discussionThemeId: number;
-  parentPostId?: number;
+  discussionThemeId: number | string;
+  parentPostId?: number | string;
 }
 
 /**
