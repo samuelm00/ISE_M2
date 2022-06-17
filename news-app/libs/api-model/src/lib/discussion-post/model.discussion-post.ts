@@ -1,3 +1,4 @@
+import { Schema, Model as MongoModel, model } from 'mongoose';
 import {
   Model,
   InferAttributes,
@@ -11,14 +12,14 @@ import {
   DiscussionTopic,
   IDiscussionTopicProps,
 } from '../discussion-topic/model.discussion-topic';
-import { IUserVoteProps, UserVote } from '../user-vote/model.user-vote';
+import { IUserVoteProps, userVoteSchema } from '../user-vote/model.user-vote';
 import { IUserProps, User } from '../user/model.user';
 
 /**
  * Contains the user model with all its attributes and relations.
  */
 export interface IDiscussionPostComplete {
-  id: number;
+  id: number | string;
   text: string;
   datetime: Date;
   discussionTheme: IDiscussionTopicProps;
@@ -35,14 +36,20 @@ export interface IDiscussionPostProps
     'user' | 'userVotes' | 'discussionTheme'
   > {}
 
+export interface IDiscussionPostCompleteNoSql
+  extends Omit<IDiscussionPostComplete, 'id' | 'discussionTheme' | 'user'> {
+  discussionThemeId: string;
+  parentPostId: string;
+}
+
 /**
  * Model that is used to create a new discussion post.
  */
 export interface IDiscussionPostPropsCreate
   extends Omit<IDiscussionPostProps, 'id'> {
-  userId: number;
-  discussionThemeId: number;
-  parentPostId?: number;
+  userId: number | string;
+  discussionThemeId: number | string;
+  parentPostId?: number | string;
 }
 
 /**
@@ -120,3 +127,18 @@ export function initDiscussionPostTableSQL(sequelize: Sequelize) {
 /**
  * NOSQL
  */
+export function initDiscussionPostTableNOSQL() {
+  const discussionPostSchema = new Schema<IDiscussionPostCompleteNoSql>({
+    text: { type: Schema.Types.String, required: true },
+    datetime: { type: Schema.Types.Date, default: Date.now },
+    discussionThemeId: { type: Schema.Types.String, required: true },
+    parentPostId: { type: Schema.Types.String, required: false },
+    userVotes: [userVoteSchema],
+  });
+  DiscussionPostNoSql = model<IDiscussionPostCompleteNoSql>(
+    'discussionPost',
+    discussionPostSchema
+  );
+}
+
+export let DiscussionPostNoSql: MongoModel<IDiscussionPostCompleteNoSql>;

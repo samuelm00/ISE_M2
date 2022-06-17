@@ -32,7 +32,7 @@ export function createCategory(
   req: Request<{}, any, any, qs.ParsedQs, Record<string, any>>,
   res: Response<any, any>
 ) {
-  const category: IDiscussionCategoryProps = req.body;
+  const category: Omit<IDiscussionCategoryProps, 'id'> = req.body;
   DiscussionCategory.create(category);
   return res.status(200).json(category);
 }

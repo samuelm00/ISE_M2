@@ -1,12 +1,6 @@
-import { IUserComplete, User } from '@news-app/api-model';
-import { createUser } from '../../controllers/sql/controller.sql.user';
-
-export const users = [
-  'alex@mail.com',
-  'lisa@mail.com',
-  'noah@mail.com',
-  'markus@mail.com',
-];
+import { IUserComplete } from '@news-app/api-model';
+import { createUser } from '../../controllers/nosql/controller.nosql.user';
+import { users } from '../sql/db-filler.user';
 
 export async function addBaseUsers() {
   return Promise.all(users.map(async (email) => _createUser(email)));

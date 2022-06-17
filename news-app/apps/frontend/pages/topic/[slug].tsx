@@ -12,15 +12,20 @@ import React, { useCallback, useMemo } from 'react';
 import { avatarCardVariants } from 'apps/frontend/modules/Card/AvatarCard';
 import DiscussionPostCard from 'apps/frontend/modules/Card/DiscussionPostCard';
 import { getTopic } from 'apps/frontend/modules/Api/topic/api.topic';
+import { useDbVariant } from 'apps/frontend/provider/Db/hook.db-provider';
 
 export default function TopicDetailPage() {
   const router = useRouter();
+  const [dbVariant] = useDbVariant();
   const topicId = useMemo(() => router.query.slug as string, [router.query]);
   const getPostsMemo = useCallback(
-    () => getPostsOfTopic(topicId),
+    () => getPostsOfTopic(dbVariant, topicId),
     [router.query]
   );
-  const getTopicMemo = useCallback(() => getTopic(topicId), [topicId]);
+  const getTopicMemo = useCallback(
+    () => getTopic(dbVariant, topicId),
+    [topicId, dbVariant]
+  );
   const { data: topic } = useFetch(getTopicMemo);
   const { data, isLoading, setData } = useFetch(getPostsMemo);
 
@@ -50,14 +55,19 @@ export default function TopicDetailPage() {
         >
           {data?.map((post) => (
             <DiscussionPostCard
-              topicId={Number(topicId)}
+              topicId={
+                Number.isNaN(Number(topicId)) ? topicId : Number(topicId)
+              }
               post={post}
               key={post.id}
             />
           ))}
         </motion.div>
       </div>
-      <CreatePostDialog topicId={Number(topicId)} setData={setData} />
+      <CreatePostDialog
+        topicId={Number.isNaN(Number(topicId)) ? topicId : Number(topicId)}
+        setData={setData}
+      />
     </>
   );
 }

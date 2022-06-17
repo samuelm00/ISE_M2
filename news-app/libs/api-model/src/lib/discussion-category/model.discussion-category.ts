@@ -1,3 +1,4 @@
+import { model, Schema, Model as MongoModel } from 'mongoose';
 import {
   Model,
   InferAttributes,
@@ -13,7 +14,7 @@ import { IUserComplete, User } from '../user/model.user';
  * Contains the user model with all its attributes and relations.
  */
 export interface IDiscussionCategoryComplete {
-  id: number;
+  id: number | string;
   description: string;
   name: string;
   users: IUserComplete[];
@@ -69,3 +70,23 @@ export function initDiscussionCategoryTableSQL(sequelize: Sequelize) {
 /**
  * NOSQL
  */
+export function initDiscussionCategoryTableNoSql() {
+  const discussionSchema = new Schema<
+    Omit<IDiscussionCategoryComplete, 'discussionThemes' | 'id'>
+  >({
+    description: { type: String, required: true },
+    users: [{ type: Schema.Types.ObjectId, ref: 'User', required: true }],
+    name: { type: String, required: true },
+  });
+  discussionSchema.index({ name: 1 });
+  DiscussionCategoryNoSql = model<
+    Omit<IDiscussionCategoryComplete, 'discussionThemes' | 'id'>
+  >('DiscussionCategories', discussionSchema);
+}
+
+export let DiscussionCategoryNoSql: MongoModel<
+  Omit<IDiscussionCategoryComplete, 'discussionThemes' | 'id'>,
+  {},
+  {},
+  {}
+> = undefined as any;

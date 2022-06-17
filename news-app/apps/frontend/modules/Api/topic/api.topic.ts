@@ -5,6 +5,7 @@ import {
   PaginatedPayload,
   PaginatedResponse,
 } from '@news-app/api-model';
+import { DbVariant } from 'apps/frontend/provider/Db/DbProvider';
 import { defaultPageSize } from '../constants/api.constants.endpoint';
 import { baseFetch } from '../utils/api.utils';
 
@@ -16,18 +17,10 @@ export type GetTopicResponse =
  * @param sql
  * @returns
  */
-export function getTopics(sql?: boolean) {
-  const body: PaginatedPayload = {
-    page: 0,
-    pageSize: defaultPageSize,
-  };
-  return baseFetch<GetTopicResponse>(
-    `/api/${sql ? 'sql' : 'nosql'}/topic`,
-    undefined,
-    {
-      method: 'GET',
-    }
-  );
+export function getTopics(dbVariant: DbVariant) {
+  return baseFetch<GetTopicResponse>(`/api/${dbVariant}/topic`, undefined, {
+    method: 'GET',
+  });
 }
 
 /**
@@ -35,9 +28,9 @@ export function getTopics(sql?: boolean) {
  * @param id
  * @returns
  */
-export async function getTopic(id: string) {
+export async function getTopic(dbVariant: DbVariant, id: string) {
   return baseFetch<IDiscussionTopicPropsWithCategory>(
-    `/api/sql/topic/${id}`,
+    `/api/${dbVariant}/topic/${id}`,
     undefined,
     {
       method: 'GET',
@@ -50,8 +43,11 @@ export async function getTopic(id: string) {
  * @param topic
  * @returns
  */
-export function createTopic(topic: CreateDiscussionPayload) {
-  return baseFetch<IDiscussionTopicProps>('/api/sql/topic', topic, {
+export function createTopic(
+  dbVariant: DbVariant,
+  topic: CreateDiscussionPayload
+) {
+  return baseFetch<IDiscussionTopicProps>(`/api/${dbVariant}/topic`, topic, {
     method: 'POST',
   });
 }

@@ -1,11 +1,16 @@
 import {
+  initDiscussionCategoryTableNoSql,
   initDiscussionCategoryTableSQL,
+  initDiscussionPostTableNOSQL,
   initDiscussionPostTableSQL,
   initDiscussionTopicTable,
+  initDiscussionTopicTableNoSql,
+  initUserTableNoSQL,
   initUserTableSQL,
   initUserVoteTableSQL,
 } from '@news-app/api-model';
 import { Sequelize } from 'sequelize';
+import { connect } from 'mongoose';
 
 const sequelize = new Sequelize('news_app', 'root', 'password', {
   host: 'mysql',
@@ -27,5 +32,13 @@ export async function initSqlDb() {
 }
 
 export async function initNoSqlDb() {
-  console.log('Nosql not yet defined');
+  await connect('mongodb://mongo:27017', {
+    dbName: 'news_app',
+    user: 'user',
+    pass: 'password',
+  });
+  initUserTableNoSQL();
+  initDiscussionCategoryTableNoSql();
+  initDiscussionTopicTableNoSql();
+  initDiscussionPostTableNOSQL();
 }

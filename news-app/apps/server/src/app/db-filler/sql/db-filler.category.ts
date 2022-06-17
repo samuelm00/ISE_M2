@@ -1,6 +1,6 @@
 import { DiscussionCategory } from '@news-app/api-model';
 
-const cateogryNames = [
+export const cateogryNames = [
   'Local News',
   'World News',
   'Business',

@@ -1,3 +1,4 @@
+import { Schema, Model as MongoModel, model } from 'mongoose';
 import {
   Model,
   InferAttributes,
@@ -11,18 +12,27 @@ import {
   DiscussionCategory,
   IDiscussionCategoryProps,
 } from '../discussion-category/model.discussion-category';
-import { User } from '../user/model.user';
+import { IUserProps, User } from '../user/model.user';
 
 /**
  * Contains the user model with all its attributes and relations.
  */
 export interface IDiscussionTopicComplete {
-  id: number;
+  id: number | string;
   text: string;
   datetime: Date;
   title: string;
-  userId: number;
-  discussionCategoryId: number;
+  userId: number | string;
+  discussionCategoryId: number | string;
+}
+
+export interface IDiscussionTopicCompleteNoSql
+  extends Omit<
+    IDiscussionTopicComplete,
+    'userId' | 'id' | 'discussionCategoryId'
+  > {
+  discussionCategory: IDiscussionCategoryProps;
+  userId: string;
 }
 
 /**
@@ -106,3 +116,22 @@ export function initDiscussionTopicTable(sequelize: Sequelize) {
 /**
  * NOSQL
  */
+export function initDiscussionTopicTableNoSql() {
+  const discussionTopicSchema = new Schema<IDiscussionTopicCompleteNoSql>({
+    datetime: { type: Schema.Types.Date, default: Date.now },
+    discussionCategory: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: 'DiscussionCategories',
+    },
+    text: { type: Schema.Types.String, required: true },
+    title: { type: Schema.Types.String, required: true },
+    userId: { type: Schema.Types.String, required: true },
+  });
+  DiscussionTopicNoSql = model<IDiscussionTopicCompleteNoSql>(
+    'DiscussionTopic',
+    discussionTopicSchema
+  );
+}
+
+export let DiscussionTopicNoSql: MongoModel<IDiscussionTopicCompleteNoSql>;

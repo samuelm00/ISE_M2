@@ -3,8 +3,9 @@ import {
   PaginatedResponse,
   CreateDiscussionPayload,
   BaseResponse,
-  DiscussionCategory,
   IDiscussionTopicPropsWithCategory,
+  DiscussionTopicNoSql,
+  IDiscussionTopicProps,
 } from '@news-app/api-model';
 import assert = require('assert');
 import { Response, Request } from 'express';
@@ -27,22 +28,22 @@ export async function getTopics(
     const pageSize = Number.parseInt(req.query.pageSize as string) || 100;
     const page = Number.parseInt(req.query.page as string) || 0;
     const offset = pageSize * page;
-    const topics = await DiscussionTopic.findAll({
-      limit: pageSize,
-      offset: offset,
-      include: [{ model: DiscussionCategory }],
-    });
+    const topics = await DiscussionTopicNoSql.find(
+      {},
+      {},
+      { skip: offset, limit: pageSize }
+    ).populate('discussionCategory');
     const response: PaginatedResponse<IDiscussionTopicPropsWithCategory> = {
       page: page + 1,
       pageSize: pageSize,
       data: topics.map((topic) => ({
         datetime: topic.datetime,
-        id: topic.id,
+        id: topic._id.toString(),
         text: topic.text,
         title: topic.title,
         userId: topic.userId,
         // @ts-ignore
-        category: topic.DiscussionCategory,
+        category: topic.discussionCategory,
       })),
     };
     return res.status(200).json(responseJson({ payload: response }));
@@ -59,11 +60,24 @@ export async function getTopics(
  */
 export async function getTopic(
   req: Request<{ id: string }, any, any, qs.ParsedQs, Record<string, any>>,
-  res: Response<BaseResponse<DiscussionTopic>, any>
+  res: Response<BaseResponse<IDiscussionTopicProps>, any>
 ) {
   try {
-    const response = await DiscussionTopic.findByPk(req.params.id);
-    return res.status(200).json(responseJson({ payload: response }));
+    const response = await DiscussionTopicNoSql.findById(
+      req.params.id
+    ).populate('discussionCategory');
+    return res.status(200).json(
+      responseJson({
+        payload: {
+          datetime: response.datetime,
+          discussionCategoryId: response.discussionCategory.id,
+          id: response._id.toString(),
+          text: response.text,
+          title: response.title,
+          userId: response.userId,
+        },
+      })
+    );
   } catch (error) {
     return res.status(400).json(responseJson({ error: error.message }));
   }
@@ -83,18 +97,28 @@ export async function createTopic(
     qs.ParsedQs,
     Record<string, any>
   >,
-  res: Response<BaseResponse<DiscussionTopic>, any>
+  res: Response<BaseResponse<IDiscussionTopicProps>, any>
 ) {
   try {
-    assert(typeof req.body.userId === 'number');
-    const topic = await DiscussionTopic.create({
+    const topic = await DiscussionTopicNoSql.create({
       datetime: req.body.datetime,
       text: req.body.text,
       title: req.body.title,
       userId: req.body.userId,
-      discussionCategoryId: req.body.discussionCategoryId as number,
+      discussionCategory: req.body.discussionCategoryId,
     });
-    return res.status(200).json(responseJson({ payload: topic }));
+    return res.status(200).json(
+      responseJson({
+        payload: {
+          datetime: topic.datetime,
+          discussionCategoryId: req.body.discussionCategoryId,
+          id: topic._id.toString(),
+          text: topic.text,
+          title: topic.title,
+          userId: topic.userId,
+        },
+      })
+    );
   } catch (error) {
     return res.status(400).json(responseJson({ error: error.message }));
   }

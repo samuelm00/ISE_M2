@@ -1,9 +1,10 @@
-import { BaseResponse, IDiscussionCategoryProps } from '@news-app/api-model';
+import { IDiscussionCategoryProps } from '@news-app/api-model';
+import { DbVariant } from 'apps/frontend/provider/Db/DbProvider';
 import { baseFetch } from '../utils/api.utils';
 
-export function getCategories() {
+export function getCategories(dbVariant: DbVariant) {
   return baseFetch<IDiscussionCategoryProps[]>(
-    '/api/sql/categories',
+    `/api/${dbVariant}/categories`,
     undefined,
     {
       method: 'GET',
@@ -11,9 +12,9 @@ export function getCategories() {
   );
 }
 
-export function getCategory(id: number) {
+export function getCategory(dbVariant: DbVariant, id: number | string) {
   return baseFetch<IDiscussionCategoryProps>(
-    `/api/sql/categories/${id}`,
+    `/api/${dbVariant}/categories/${id}`,
     undefined,
     {
       method: 'GET',
