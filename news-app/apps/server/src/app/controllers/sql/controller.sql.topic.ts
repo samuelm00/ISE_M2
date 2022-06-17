@@ -131,7 +131,6 @@ export async function getTopicsByNumberOfPosts (req,res) {
       offset: offset,*/
     });
 
-    console.log(topics);
     const response: PaginatedResponse<IDiscussionTopicPropsWithCategory> = {
       page: page + 1,
       pageSize: pageSize,

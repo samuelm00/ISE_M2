@@ -2,6 +2,7 @@ import { Router } from 'express';
 import {
   getAllUsers,
   createUser,
+  getWrittenTopics,
 } from '../../controllers/sql/controller.sql.user';
 import { responseJson } from '../../util/util.response';
 
@@ -22,3 +23,5 @@ userRouterSql.post('/users', (req, res) => {
       return res.status(400).json(responseJson({ error: error.message }));
     });
 });
+
+userRouterSql.get('/users/:id/topics', getWrittenTopics);
