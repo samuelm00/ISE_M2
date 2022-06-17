@@ -54,13 +54,11 @@ export async function createUser({
 export async function getWrittenTopics(req,res) {
 
   try {
-    console.log(req.params.id);
-    const id = Number.parseInt(req.params.id as string);
+    const id = req.params.id;
     const pageSize = Number.parseInt(req.query.pageSize as string) || 100;
     const page = Number.parseInt(req.query.page as string) || 0;
     const offset = pageSize * page;
-    console.log("Before Query");
-    console.log(typeof(id));
+
     const topics = await DiscussionTopic.findAll({
       where: {
         userId: id,
@@ -77,7 +75,6 @@ export async function getWrittenTopics(req,res) {
       offset: offset,
     });
 
-    console.log("After Query");
     const response: PaginatedResponse<IDiscussionTopicPropsWithCategory> = {
       page: page + 1,
       pageSize: pageSize,
