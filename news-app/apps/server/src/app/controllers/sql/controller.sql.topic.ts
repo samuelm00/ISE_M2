@@ -106,7 +106,7 @@ export async function getTopicsByNumberOfPosts (req,res) {
   const ownyearafter = new Date();
   ownyearafter.setFullYear(ownyearafter.getFullYear()-1);
 
-  try {
+  //try {
     const pageSize = Number.parseInt(req.query.pageSize as string) || 100;
     const page = Number.parseInt(req.query.page as string) || 0;
     const offset = pageSize * page;
@@ -146,7 +146,7 @@ export async function getTopicsByNumberOfPosts (req,res) {
       })),
     };
     return res.status(200).json(responseJson({ payload: response }));
-  } catch (error) {
+  /*} catch (error) {
     return res.status(400).json(responseJson({ error: error.message }));
-  }
+  }*/
 }
