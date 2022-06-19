@@ -10,8 +10,9 @@ export const topicRouter = Router();
 
 topicRouter.get('/topic', getTopics);
 
+topicRouter.get('/topic/count', getTopicsByNumberOfPosts)
+
 topicRouter.get('/topic/:id', getTopic);
 
 topicRouter.post('/topic', createTopic);
 
-topicRouter.get('/topics/count', getTopicsByNumberOfPosts)
