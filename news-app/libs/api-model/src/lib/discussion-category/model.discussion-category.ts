@@ -76,7 +76,7 @@ export function initDiscussionCategoryTableNoSql() {
   >({
     description: { type: String, required: true },
     users: [{ type: Schema.Types.ObjectId, ref: 'User', required: true }],
-    name: { type: String, required: true },
+    name: { type: String, required: true, unique: true },
   });
   discussionSchema.index({ name: 1 });
   DiscussionCategoryNoSql = model<

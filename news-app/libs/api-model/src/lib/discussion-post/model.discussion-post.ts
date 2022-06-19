@@ -135,6 +135,8 @@ export function initDiscussionPostTableNOSQL() {
     parentPostId: { type: Schema.Types.String, required: false },
     userVotes: [userVoteSchema],
   });
+  discussionPostSchema.index({discussionThemeId : 1});
+  discussionPostSchema.index({parentPostId : 1});
   DiscussionPostNoSql = model<IDiscussionPostCompleteNoSql>(
     'discussionPost',
     discussionPostSchema
