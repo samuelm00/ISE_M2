@@ -1,4 +1,4 @@
-import { Subscription, User } from "@news-app/api-model";
+import { Subscription } from "@news-app/api-model";
 import { categoriesSql } from "./db-filler.category";
 import { userSql } from "./db-filler.user";
 
