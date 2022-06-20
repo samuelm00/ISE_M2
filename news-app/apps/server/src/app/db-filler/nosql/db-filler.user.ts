@@ -1,8 +1,8 @@
-import { IUserComplete } from '@news-app/api-model';
+import { IUserComplete, User } from '@news-app/api-model';
 import { createUser } from '../../controllers/nosql/controller.nosql.user';
-import { users } from '../sql/db-filler.user';
 
 export async function addBaseUsers() {
+  const users = await User.findAll();
   return Promise.all(users.map(async (user) => _createUser(user)));
 }
 

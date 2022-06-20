@@ -1,12 +1,12 @@
-import { DiscussionCategoryNoSql } from '@news-app/api-model';
-import { cateogryNames } from '../sql/db-filler.category';
+import { DiscussionCategory, DiscussionCategoryNoSql } from '@news-app/api-model';
 
 export async function fillCategoryTable() {
+  const categories = await DiscussionCategory.findAll();
   return Promise.all(
-    cateogryNames.map(async (name) => {
+    categories.map(async (category) => {
       return await DiscussionCategoryNoSql.create({
-        name,
-        description: `${name} description`,
+        name:category.name,
+        description: category.description,
         users: [],
       });
     })
