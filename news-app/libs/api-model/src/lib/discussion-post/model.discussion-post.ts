@@ -40,6 +40,7 @@ export interface IDiscussionPostCompleteNoSql
   extends Omit<IDiscussionPostComplete, 'id' | 'discussionTheme' | 'user'> {
   discussionThemeId: string;
   parentPostId: string;
+  userId: string;
 }
 
 /**
@@ -133,6 +134,7 @@ export function initDiscussionPostTableNOSQL() {
     datetime: { type: Schema.Types.Date, default: Date.now },
     discussionThemeId: { type: Schema.Types.String, required: true },
     parentPostId: { type: Schema.Types.String, required: false },
+    userId: { type: Schema.Types.String, required: true },
     userVotes: [userVoteSchema],
   });
   discussionPostSchema.index({discussionThemeId : 1});

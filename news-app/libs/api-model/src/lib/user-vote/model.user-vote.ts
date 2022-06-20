@@ -31,6 +31,10 @@ export interface IUserVote {
 export interface IUserVoteProps
   extends Omit<IUserVote, 'user' | 'discussionPost'> {}
 
+export interface IUserVoteNoSql extends IUserVoteProps {
+  userId: string,
+}  
+
 /**
  * SQL
  */
@@ -93,7 +97,8 @@ export function initUserVoteTableSQL(sequelize: Sequelize) {
 /**
  * NOSQL
  */
-export const userVoteSchema = new Schema<IUserVoteProps>({
+export const userVoteSchema = new Schema<IUserVoteNoSql>({
   datetime: { type: Schema.Types.Date, default: Date.now },
   isUpvote: { type: Schema.Types.Boolean, allowNull: false },
+  userId: { type: Schema.Types.String, required: true },
 });
