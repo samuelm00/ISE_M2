@@ -13,8 +13,8 @@ export async function fillTopicTable() {
 
 function generateRandomTopics() {
     userSql.forEach((user) => {
-        const numberOfTopics = Math.floor(Math.random()*7)
-        for (let i = 0; i < numberOfTopics; i++) {
+        const numberOfTopicsPerUser = Math.floor(Math.random()*7)
+        for (let i = 0; i < numberOfTopicsPerUser; i++) {
             const categoryId: number = categoriesSql[Math.floor(Math.random()*categoriesSql.length)].id;
             const userId : number = user.id
             const topic: Omit<IDiscussionTopicComplete,'id'> = {
