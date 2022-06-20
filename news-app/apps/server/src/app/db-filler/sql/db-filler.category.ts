@@ -1,6 +1,6 @@
-import { DiscussionCategory } from '@news-app/api-model';
+import { DiscussionCategory, IDiscussionCategoryProps } from '@news-app/api-model';
 
-export const cateogryNames = [
+const categoryNames = [
   'Local News',
   'World News',
   'Business',
@@ -14,13 +14,19 @@ export const cateogryNames = [
   'Arts',
 ];
 
+const categories:Omit<IDiscussionCategoryProps,'id'>[] = []
+
 export async function fillCategoryTable() {
-  return Promise.all(
-    cateogryNames.map(async (name) => {
-      return await DiscussionCategory.create({
-        name,
-        description: `${name} description`,
-      });
-    })
-  );
+  createCategories();
+  return await DiscussionCategory.bulkCreate(categories);
+}
+
+function createCategories() {
+  categoryNames.forEach((name) => {
+    const category = {
+      name : name,
+      description: `${name} description`
+    } 
+    categories.push(category);
+  })
 }
