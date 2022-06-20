@@ -11,7 +11,7 @@ import {
   initUserVoteTableSQL,
 } from '@news-app/api-model';
 import { Sequelize } from 'sequelize';
-import { connect } from 'mongoose';
+import { connect, connection } from 'mongoose';
 
 const sequelize = new Sequelize('news_app', 'root', 'password', {
   host: 'mysql',
@@ -39,6 +39,14 @@ export async function initNoSqlDb() {
     user: 'user',
     pass: 'password',
   });
+  try {
+    await connection.db.dropCollection('users');
+    await connection.db.dropCollection('discussioncategories');
+    await connection.db.dropCollection('discussionposts');
+    await connection.db.dropCollection('discussiontopics');
+  }catch (err) {
+    console.log(err)
+  }
   initUserTableNoSQL();
   initDiscussionCategoryTableNoSql();
   initDiscussionTopicTableNoSql();
