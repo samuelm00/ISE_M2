@@ -1,12 +1,12 @@
-import { DiscussionCategory, Subscription, User } from "@news-app/api-model";
+import { Subscription, User } from "@news-app/api-model";
+import { categoriesSql } from "./db-filler.category";
+import { userSql } from "./db-filler.user";
 
 const subscriptions = [];
 export async function fillSubscriptionTable() {
-    const users = await User.findAll();
-    const categories = await DiscussionCategory.findAll();
 
-    users.forEach(async (user) => {
-        categories.forEach( async (category) => {
+    userSql.forEach(async (user) => {
+        categoriesSql.forEach( async (category) => {
             if(Math.floor(Math.random()*100) > 50) {
                 subscriptions.push({
                     UserId: user.id,

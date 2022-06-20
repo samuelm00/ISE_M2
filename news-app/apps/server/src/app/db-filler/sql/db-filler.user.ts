@@ -2,10 +2,11 @@ import { IUserComplete, User } from '@news-app/api-model';
 import { faker } from '@faker-js/faker';
 
 const users: Omit<IUserComplete,"id">[] = [];
+export let userSql: User[];
 
 export async function addBaseUsers() {
   generateRandomUsers();
-  return await User.bulkCreate(users);
+  return Promise.all(userSql = await User.bulkCreate(users));
 }
 
 

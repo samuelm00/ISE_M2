@@ -16,9 +16,11 @@ const categoryNames = [
 
 const categories:Omit<IDiscussionCategoryProps,'id'>[] = []
 
+export let categoriesSql: DiscussionCategory[];
+
 export async function fillCategoryTable() {
   createCategories();
-  return await DiscussionCategory.bulkCreate(categories);
+  return Promise.all(categoriesSql = await DiscussionCategory.bulkCreate(categories));
 }
 
 function createCategories() {
