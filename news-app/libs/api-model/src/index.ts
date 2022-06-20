@@ -5,3 +5,4 @@ export * from './lib/user/model.user';
 export * from './lib/user-vote/model.user-vote';
 export * from './lib/payload/payload';
 export * from './lib/payload/payload.discussion-topic';
+export * from './lib/subscription/model.subscription';

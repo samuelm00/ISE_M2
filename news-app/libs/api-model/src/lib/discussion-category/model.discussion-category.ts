@@ -8,6 +8,7 @@ import {
   DataTypes,
 } from 'sequelize';
 import { IDiscussionTopicProps } from '../discussion-topic/model.discussion-topic';
+import { Subscription } from '../subscription/model.subscription';
 import { IUserComplete, User } from '../user/model.user';
 
 /**
@@ -63,8 +64,8 @@ export function initDiscussionCategoryTableSQL(sequelize: Sequelize) {
     { sequelize, tableName: 'discussionCategories' }
   );
 
-  DiscussionCategory.belongsToMany(User, { through: 'subscriptions' });
-  User.belongsToMany(DiscussionCategory, { through: 'subscriptions' });
+  DiscussionCategory.belongsToMany(User, { through: Subscription });
+  User.belongsToMany(DiscussionCategory, { through: Subscription });
 }
 
 /**

@@ -5,6 +5,7 @@ import {
   initDiscussionPostTableSQL,
   initDiscussionTopicTable,
   initDiscussionTopicTableNoSql,
+  initSubscriptionTableSQL,
   initUserTableNoSQL,
   initUserTableSQL,
   initUserVoteTableSQL,
@@ -23,6 +24,7 @@ const sequelize = new Sequelize('news_app', 'root', 'password', {
 
 export async function initSqlDb() {
   initUserTableSQL(sequelize);
+  initSubscriptionTableSQL(sequelize)
   initDiscussionCategoryTableSQL(sequelize);
   initDiscussionTopicTable(sequelize);
   initDiscussionPostTableSQL(sequelize);
