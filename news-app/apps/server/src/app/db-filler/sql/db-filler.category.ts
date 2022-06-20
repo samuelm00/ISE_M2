@@ -20,7 +20,7 @@ export let categoriesSql: DiscussionCategory[];
 
 export async function fillCategoryTable() {
   createCategories();
-  return Promise.all(categoriesSql = await DiscussionCategory.bulkCreate(categories));
+  categoriesSql = await DiscussionCategory.bulkCreate(categories)
 }
 
 function createCategories() {

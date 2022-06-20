@@ -8,12 +8,12 @@ export let topicsSql: DiscussionTopic[];
 
 export async function fillTopicTable() {
     generateRandomTopics()
-    return Promise.all(topicsSql = await DiscussionTopic.bulkCreate(topics));
+    topicsSql = await DiscussionTopic.bulkCreate(topics)
 }
 
 function generateRandomTopics() {
     userSql.forEach((user) => {
-        const numberOfTopicsPerUser = Math.floor(Math.random()*7)
+        const numberOfTopicsPerUser = Math.floor(Math.random()*7)+1
         for (let i = 0; i < numberOfTopicsPerUser; i++) {
             const categoryId: number = categoriesSql[Math.floor(Math.random()*categoriesSql.length)].id;
             const userId : number = user.id
