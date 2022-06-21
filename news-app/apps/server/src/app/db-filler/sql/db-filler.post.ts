@@ -12,7 +12,7 @@ export async function fillPostTable() {
     const parentPostsSql = await DiscussionPost.bulkCreate(posts);
     generateResponsePosts(parentPostsSql);
     const responsePostsSql = await DiscussionPost.bulkCreate(responsePosts)
-    postsSql =  parentPostsSql.concat(responsePostsSql)
+    return Promise.all(postsSql =  parentPostsSql.concat(responsePostsSql))
 }
 
 function generateRandomPosts() {

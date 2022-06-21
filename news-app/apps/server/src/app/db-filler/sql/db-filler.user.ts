@@ -6,7 +6,7 @@ export let userSql: User[];
 
 export async function addBaseUsers() {
   generateRandomUsers();
-  userSql = await User.bulkCreate(users)
+  return Promise.all(userSql = await User.bulkCreate(users));
 }
 
 

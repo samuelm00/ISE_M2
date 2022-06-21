@@ -8,7 +8,7 @@ export let topicsSql: DiscussionTopic[];
 
 export async function fillTopicTable() {
     generateRandomTopics()
-    topicsSql = await DiscussionTopic.bulkCreate(topics)
+    return Promise.all(topicsSql = await DiscussionTopic.bulkCreate(topics))
 }
 
 function generateRandomTopics() {
