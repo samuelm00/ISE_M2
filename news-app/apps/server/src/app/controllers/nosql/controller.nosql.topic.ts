@@ -1,5 +1,4 @@
 import {
-  DiscussionTopic,
   PaginatedResponse,
   CreateDiscussionPayload,
   BaseResponse,
@@ -135,7 +134,8 @@ export async function getTopicsByNumberOfPosts (req,res) {
     const topics = await DiscussionTopicNoSql.aggregate()
       .match({datetime: { $gte: oneyearafter}})
       .sort({postsCount : -1, title: 1}, )
-      .lookup({ from: 'discussioncategories', localField: 'discussionCategory', foreignField: '_id', as: 'discussionCategory' }).unwind('discussionCategory');
+      .lookup({ from: 'discussioncategories', localField: 'discussionCategory', foreignField: '_id', as: 'discussionCategory' })
+      .unwind('discussionCategory');
     
       const response: PaginatedResponse<IDiscussionTopicPropsWithCategory> = {
         page: page + 1,

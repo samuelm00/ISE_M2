@@ -11,7 +11,7 @@ import {
   initUserVoteTableSQL,
 } from '@news-app/api-model';
 import { Sequelize } from 'sequelize';
-import { connect, connection } from 'mongoose';
+import { connect } from 'mongoose';
 
 const sequelize = new Sequelize('news_app', 'root', 'password', {
   host: 'mysql',

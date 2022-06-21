@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import {
   getAllUsers,
-  createUser,
+  //createUser,
   getWrittenTopics,
 } from '../../controllers/sql/controller.sql.user';
 import { responseJson } from '../../util/util.response';
@@ -10,6 +10,7 @@ export const userRouterSql = Router();
 
 userRouterSql.get('/users', getAllUsers);
 
+/*
 userRouterSql.post('/users', (req, res) => {
   const { email, password } = req.body;
   createUser({ email, password })
@@ -23,5 +24,5 @@ userRouterSql.post('/users', (req, res) => {
       return res.status(400).json(responseJson({ error: error.message }));
     });
 });
-
+*/
 userRouterSql.get('/users/:id/topics', getWrittenTopics);

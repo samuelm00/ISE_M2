@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import {
-  createCategory,
+  //createCategory,
   getAllCategories,
   getCategoryByID,
 } from '../../controllers/sql/controller.sql.category';
@@ -11,4 +11,4 @@ categoryRouterSql.get('/categories', getAllCategories);
 
 categoryRouterSql.get('/categories/:id', getCategoryByID);
 
-categoryRouterSql.post('/categories', createCategory);
+//categoryRouterSql.post('/categories', createCategory);

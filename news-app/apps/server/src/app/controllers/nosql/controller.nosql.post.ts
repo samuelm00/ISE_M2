@@ -1,5 +1,4 @@
 import {
-  DiscussionPost,
   IDiscussionPostProps,
   DiscussionPostNoSql,
   DiscussionTopicNoSql,

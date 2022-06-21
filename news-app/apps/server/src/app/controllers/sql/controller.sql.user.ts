@@ -39,6 +39,7 @@ export async function getAllUsers(
  * @param param0 The request object {@link Omit<IUserComplete, 'id'>}
  * @returns The user object if the user is created, otherwise undefined
  */
+/*
 export async function createUser({
   email,
   password,
@@ -50,6 +51,7 @@ export async function createUser({
     return undefined;
   }
 }
+*/
 
 export async function getWrittenTopics(req,res) {
 

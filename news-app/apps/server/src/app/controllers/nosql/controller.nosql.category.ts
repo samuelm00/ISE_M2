@@ -59,6 +59,7 @@ export async function getCategoryByID(
  * @param res
  * @returns
  */
+/*
 export async function createCategory(
   req: Request<
     {},
@@ -82,3 +83,4 @@ export async function createCategory(
     return res.status(400).json(responseJson({ error: error.message }));
   }
 }
+*/

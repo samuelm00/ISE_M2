@@ -37,6 +37,7 @@ export async function getAllUsers(
  * @param user
  * @returns
  */
+/*
 export async function createUser(user: Omit<IUserComplete, 'id'>) {
   try {
     return UserNoSql.create(user);
@@ -44,6 +45,7 @@ export async function createUser(user: Omit<IUserComplete, 'id'>) {
     return undefined;
   }
 }
+*/
 
 export async function getWrittenTopics(req,res) {
 
