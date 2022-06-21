@@ -2,6 +2,7 @@ import { Router } from 'express';
 import {
   createUser,
   getAllUsers,
+  getWrittenTopics,
 } from '../../controllers/nosql/controller.nosql.user';
 import { responseJson } from '../../util/util.response';
 
@@ -22,3 +23,5 @@ userRouterNoSql.post('/users', (req, res) => {
       return res.status(400).json(responseJson({ error: error.message }));
     });
 });
+
+userRouterNoSql.get('/users/:id/topics', getWrittenTopics);

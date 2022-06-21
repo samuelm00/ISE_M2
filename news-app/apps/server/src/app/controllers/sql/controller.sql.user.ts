@@ -70,7 +70,7 @@ export async function getWrittenTopics(req,res) {
           attributes: [],
         }
       ],
-      order: [[col("DiscussionCategory.name"), "ASC"]],
+      order: [[col("DiscussionCategory.name"), "ASC"],[col("title"), 'ASC']],
       limit: pageSize,
       offset: offset,
     });

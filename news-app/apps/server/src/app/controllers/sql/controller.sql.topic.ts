@@ -127,8 +127,6 @@ export async function getTopicsByNumberOfPosts (req,res) {
       ],
       group: ["DiscussionTopic.id"],
       order: [[col("PostCount"), "DESC"], [col("title"), 'ASC']],
-      /*limit: pageSize,
-      offset: offset,*/
     });
 
     const response: PaginatedResponse<IDiscussionTopicPropsWithCategory> = {
