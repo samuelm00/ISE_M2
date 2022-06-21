@@ -131,7 +131,7 @@ export function initDiscussionTopicTableNoSql() {
     postsCount: {type: Schema.Types.Number, default: 0}
   });
   discussionTopicSchema.index({userId:1});
-  discussionTopicSchema.index({datetime: 1}, {expireAfterSeconds : 31536000})
+  discussionTopicSchema.index({datetime: -1})
   DiscussionTopicNoSql = model<IDiscussionTopicCompleteNoSql>(
     'DiscussionTopic',
     discussionTopicSchema
