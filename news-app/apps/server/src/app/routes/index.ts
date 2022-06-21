@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { connection } from 'mongoose';
 import { fillNoSqlDb } from '../db-filler/nosql';
 import { responseJson } from '../util/util.response';
 import {
@@ -35,6 +36,10 @@ apiRouter.use('/nosql', topicRouterNoSql);
 apiRouter.use('/noSql', postRouterNoSql);
 apiRouter.get('/noSql/migration', async (req,res) => {
   try {
+    await connection.db.dropCollection('users');
+    await connection.db.dropCollection('discussioncategories');
+    await connection.db.dropCollection('discussionposts');
+    await connection.db.dropCollection('discussiontopics');
     await fillNoSqlDb();
     return res.sendStatus(200);
   }catch (error) {

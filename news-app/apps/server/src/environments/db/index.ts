@@ -39,14 +39,6 @@ export async function initNoSqlDb() {
     user: 'user',
     pass: 'password',
   });
-  try {
-    await connection.db.dropCollection('users');
-    await connection.db.dropCollection('discussioncategories');
-    await connection.db.dropCollection('discussionposts');
-    await connection.db.dropCollection('discussiontopics');
-  }catch (err) {
-    console.log(err)
-  }
   initUserTableNoSQL();
   initDiscussionCategoryTableNoSql();
   initDiscussionTopicTableNoSql();
