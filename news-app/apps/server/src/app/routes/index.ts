@@ -33,8 +33,8 @@ apiRouter.use('/sql', postRouterSql);
 apiRouter.use('/nosql', userRouterNoSql);
 apiRouter.use('/nosql', categoryRouterNoSql);
 apiRouter.use('/nosql', topicRouterNoSql);
-apiRouter.use('/noSql', postRouterNoSql);
-apiRouter.get('/noSql/migration', async (req, res) => {
+apiRouter.use('/nosql', postRouterNoSql);
+apiRouter.get('/nosql/migration', async (req, res) => {
   try {
     await connection.db.dropCollection('users');
     await connection.db.dropCollection('discussioncategories');
