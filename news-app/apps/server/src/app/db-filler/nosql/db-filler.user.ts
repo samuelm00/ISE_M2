@@ -7,7 +7,8 @@ export async function migrateBaseUsers() {
   return Promise.all(users.map(async (user) => {
     const userNoSql = await UserNoSql.create({
         email: user.email,
-        password: user.password
+        password: user.password,
+        subscriptions: []
       });
       usersIdMap.set(user.id, userNoSql._id);
       return user;

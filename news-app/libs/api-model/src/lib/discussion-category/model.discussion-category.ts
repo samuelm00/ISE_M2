@@ -73,20 +73,20 @@ export function initDiscussionCategoryTableSQL(sequelize: Sequelize) {
  */
 export function initDiscussionCategoryTableNoSql() {
   const discussionSchema = new Schema<
-    Omit<IDiscussionCategoryComplete, 'discussionThemes' | 'id'>
+    Omit<IDiscussionCategoryProps, 'id'>
   >({
     description: { type: String, required: true },
-    users: [{ type: Schema.Types.ObjectId, ref: 'User', required: true }],
+    //users: [{ type: Schema.Types.ObjectId, ref: 'User', required: true }],
     name: { type: String, required: true, unique: true },
   });
   discussionSchema.index({ name: 1 });
   DiscussionCategoryNoSql = model<
-    Omit<IDiscussionCategoryComplete, 'discussionThemes' | 'id'>
+    Omit<IDiscussionCategoryProps, 'id'>
   >('DiscussionCategories', discussionSchema);
 }
 
 export let DiscussionCategoryNoSql: MongoModel<
-  Omit<IDiscussionCategoryComplete, 'discussionThemes' | 'id'>,
+  Omit<IDiscussionCategoryProps, 'id'>,
   {},
   {},
   {}

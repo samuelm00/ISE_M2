@@ -7,8 +7,7 @@ export async function fillCategoryTable() {
     return Promise.all(categories.map(async (category) => {
       const categoryNoSql =  await DiscussionCategoryNoSql.create({
         name:category.name,
-        description: category.description,
-        users: [],
+        description: category.description
       });
       categoriesIdMap.set(category.id, categoryNoSql._id);
       return category;
