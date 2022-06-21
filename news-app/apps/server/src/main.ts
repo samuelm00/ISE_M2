@@ -27,8 +27,8 @@ const server = app.listen(port, async () => {
 
   await initNoSqlDb();
   console.log('NoSQL DB initialized');
-  await fillNoSqlDb();
-  console.log('Finished filling the NoSQL DB');
+  /*await fillNoSqlDb();
+  console.log('Finished filling the NoSQL DB');*/
 
   console.log(`Listening at http://localhost:${port}/api`);
 });
