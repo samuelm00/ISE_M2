@@ -26,18 +26,17 @@ export interface IDiscussionCategoryComplete {
  * Contains only the user model attributes without the relations.
  */
 export interface IDiscussionCategoryProps
-  extends Omit<IDiscussionCategoryComplete, 'users' | 'discussionThemes'> {}
+  extends Omit<IDiscussionCategoryComplete, 'users' | 'discussionThemes'> { }
 
 /**
  * SQL
  */
 export class DiscussionCategory
   extends Model<
-    InferAttributes<DiscussionCategory>,
-    InferCreationAttributes<DiscussionCategory>
+  InferAttributes<DiscussionCategory>,
+  InferCreationAttributes<DiscussionCategory>
   >
-  implements IDiscussionCategoryProps
-{
+  implements IDiscussionCategoryProps {
   declare id: CreationOptional<number>;
   declare description: string;
   declare name: string;

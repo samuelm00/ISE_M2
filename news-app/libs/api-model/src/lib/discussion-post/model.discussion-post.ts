@@ -32,9 +32,9 @@ export interface IDiscussionPostComplete {
  */
 export interface IDiscussionPostProps
   extends Omit<
-    IDiscussionPostComplete,
-    'user' | 'userVotes' | 'discussionTheme'
-  > {}
+  IDiscussionPostComplete,
+  'user' | 'userVotes' | 'discussionTheme'
+  > { }
 
 export interface IDiscussionPostCompleteNoSql
   extends Omit<IDiscussionPostComplete, 'id' | 'discussionTheme' | 'user'> {
@@ -58,11 +58,10 @@ export interface IDiscussionPostPropsCreate
  */
 export class DiscussionPost
   extends Model<
-    InferAttributes<DiscussionPost>,
-    InferCreationAttributes<DiscussionPost>
+  InferAttributes<DiscussionPost>,
+  InferCreationAttributes<DiscussionPost>
   >
-  implements IDiscussionPostProps
-{
+  implements IDiscussionPostProps {
   declare id: CreationOptional<number>;
   declare text: string;
   declare datetime: Date;
@@ -137,8 +136,8 @@ export function initDiscussionPostTableNOSQL() {
     userId: { type: Schema.Types.String, required: true },
     userVotes: [userVoteSchema],
   });
-  discussionPostSchema.index({discussionThemeId : 1});
-  discussionPostSchema.index({parentPostId : 1});
+  discussionPostSchema.index({ discussionThemeId: 1 });
+  discussionPostSchema.index({ parentPostId: 1 });
   DiscussionPostNoSql = model<IDiscussionPostCompleteNoSql>(
     'discussionPost',
     discussionPostSchema

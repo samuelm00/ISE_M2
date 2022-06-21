@@ -102,23 +102,23 @@ export async function createTopic(
   }
 }
 
-export async function getTopicsByNumberOfPosts (req,res) {
+export async function getTopicsByNumberOfPosts(req, res) {
   const oneyearafter = new Date();
-  oneyearafter.setFullYear(oneyearafter.getFullYear()-1);
+  oneyearafter.setFullYear(oneyearafter.getFullYear() - 1);
 
   try {
     const pageSize = Number.parseInt(req.query.pageSize as string) || 100;
     const page = Number.parseInt(req.query.page as string) || 0;
     const offset = pageSize * page;
     const topics = await DiscussionTopic.findAll({
-     attributes: {
+      attributes: {
         include: [[fn('count', col('DiscussionPosts.id')), "PostCount"]]
       },
       where: {
-        datetime: {[Op.gte]: oneyearafter}
+        datetime: { [Op.gte]: oneyearafter }
       },
       include: [
-        { model: DiscussionCategory }, 
+        { model: DiscussionCategory },
         {
           model: DiscussionPost,
           attributes: [],
@@ -126,7 +126,7 @@ export async function getTopicsByNumberOfPosts (req,res) {
         }
       ],
       group: ["DiscussionTopic.id"],
-      order: [[col("PostCount"), "DESC"], [col("title"), 'ASC']],
+      order: [[col("PostCount"), "DESC"]],
     });
 
     const response: PaginatedResponse<IDiscussionTopicPropsWithCategory> = {

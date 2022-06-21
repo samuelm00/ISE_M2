@@ -1,7 +1,7 @@
 import { IUserComplete, User } from '@news-app/api-model';
 import { faker } from '@faker-js/faker';
 
-const users: Omit<IUserComplete,"id">[] = [];
+const users: Omit<IUserComplete, "id">[] = [];
 export let userSql: User[];
 
 export async function addBaseUsers() {
@@ -11,7 +11,7 @@ export async function addBaseUsers() {
 
 
 function generateRandomUsers() {
-  const numberOfUsers = Math.floor(Math.random() * 3)+4;
+  const numberOfUsers = Math.floor(Math.random() * 3) + 4;
 
   Array.from({ length: numberOfUsers }).forEach(() => {
     const user = {

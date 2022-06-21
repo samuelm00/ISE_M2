@@ -12,17 +12,17 @@ export async function fillPostTable() {
     const parentPostsSql = await DiscussionPost.bulkCreate(posts);
     generateResponsePosts(parentPostsSql);
     const responsePostsSql = await DiscussionPost.bulkCreate(responsePosts)
-    return Promise.all(postsSql =  parentPostsSql.concat(responsePostsSql))
+    return Promise.all(postsSql = parentPostsSql.concat(responsePostsSql))
 }
 
 function generateRandomPosts() {
     topicsSql.forEach((topic) => {
-        const numberOfPosts = Math.floor(Math.random()*3)
-        for(let i = 0; i < numberOfPosts; i++) {
-            const userId: number = userSql[Math.floor(Math.random()*userSql.length)].id;
+        const numberOfPosts = Math.floor(Math.random() * 3)
+        for (let i = 0; i < numberOfPosts; i++) {
+            const userId: number = userSql[Math.floor(Math.random() * userSql.length)].id;
             const post = {
                 text: faker.lorem.sentence(),
-                datetime: faker.date.between(topic.datetime,Date.now()),
+                datetime: faker.date.between(topic.datetime, Date.now()),
                 discussionThemeId: topic.id,
                 userId: userId
             }
@@ -31,14 +31,14 @@ function generateRandomPosts() {
     });
 }
 function generateResponsePosts(parentPostsSql) {
-    parentPostsSql.forEach( (post) => {
-        if(Math.floor(Math.random()*100) > 50) {
-            const numberOfPosts = Math.floor(Math.random()*2)+1;
-            for(let i = 0; i < numberOfPosts; i++) {
-                const userId: number = userSql[Math.floor(Math.random()*userSql.length)].id;
+    parentPostsSql.forEach((post) => {
+        if (Math.floor(Math.random() * 100) > 50) {
+            const numberOfPosts = Math.floor(Math.random() * 2) + 1;
+            for (let i = 0; i < numberOfPosts; i++) {
+                const userId: number = userSql[Math.floor(Math.random() * userSql.length)].id;
                 const responsePost = {
                     text: faker.lorem.sentence(),
-                    datetime: faker.date.between(post.datetime,Date.now()),
+                    datetime: faker.date.between(post.datetime, Date.now()),
                     discussionThemeId: post.discussionThemeId,
                     userId: userId,
                     parentPostId: post.id,

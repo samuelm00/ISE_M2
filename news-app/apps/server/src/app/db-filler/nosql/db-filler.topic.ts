@@ -13,8 +13,8 @@ export async function fillTopicTable() {
             datetime: topic.datetime,
             userId: usersIdMap.get(topic.userId),
             discussionCategory: categoriesIdMap.get(topic.discussionCategoryId),
-          });
-          topicsIdMap.set(topic.id, topicNoSql._id);
-          return topic;
-      }));
+        });
+        topicsIdMap.set(topic.id, topicNoSql._id);
+        return topic;
+    }));
 }

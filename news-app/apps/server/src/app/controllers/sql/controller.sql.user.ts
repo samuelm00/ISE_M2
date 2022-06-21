@@ -53,7 +53,7 @@ export async function createUser({
 }
 */
 
-export async function getWrittenTopics(req,res) {
+export async function getWrittenTopics(req, res) {
 
   try {
     const id = req.params.id;
@@ -66,13 +66,13 @@ export async function getWrittenTopics(req,res) {
         userId: id,
       },
       include: [
-        { model: DiscussionCategory}, 
+        { model: DiscussionCategory },
         {
           model: User,
           attributes: [],
         }
       ],
-      order: [[col("DiscussionCategory.name"), "ASC"],[col("title"), 'ASC']],
+      order: [[col("DiscussionCategory.name"), "ASC"]],
       limit: pageSize,
       offset: offset,
     });

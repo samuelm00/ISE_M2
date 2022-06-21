@@ -133,7 +133,7 @@ export async function getTopicsByNumberOfPosts (req,res) {
     const offset = pageSize * page;
     const topics = await DiscussionTopicNoSql.aggregate()
       .match({datetime: { $gte: oneyearafter}})
-      .sort({postsCount : -1, title: 1}, )
+      .sort({postsCount : -1}, )
       .lookup({ from: 'discussioncategories', localField: 'discussionCategory', foreignField: '_id', as: 'discussionCategory' })
       .unwind('discussionCategory');
     

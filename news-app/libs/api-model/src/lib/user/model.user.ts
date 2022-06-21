@@ -22,7 +22,7 @@ export interface IUserComplete {
  * Contains only the user model attributes without the relations.
  */
 export interface IUserProps
-  extends Omit<IUserComplete, 'userVotes' | 'password'> {}
+  extends Omit<IUserComplete, 'userVotes' | 'password'> { }
 
 export interface IUserCompleteNoSql extends IUserComplete {
   subscriptions: IDiscussionCategoryProps[]
@@ -33,8 +33,7 @@ export interface IUserCompleteNoSql extends IUserComplete {
  */
 export class User
   extends Model<InferAttributes<User>, InferCreationAttributes<User>>
-  implements IUserComplete
-{
+  implements IUserComplete {
   declare id: CreationOptional<number>;
   declare email: string;
   declare password: string;

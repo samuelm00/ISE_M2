@@ -14,7 +14,7 @@ const categoryNames = [
   'Arts',
 ];
 
-const categories:Omit<IDiscussionCategoryProps,'id'>[] = []
+const categories: Omit<IDiscussionCategoryProps, 'id'>[] = []
 
 export let categoriesSql: DiscussionCategory[];
 
@@ -26,9 +26,9 @@ export async function fillCategoryTable() {
 function createCategories() {
   categoryNames.forEach((name) => {
     const category = {
-      name : name,
+      name: name,
       description: `${name} description`
-    } 
+    }
     categories.push(category);
   })
 }

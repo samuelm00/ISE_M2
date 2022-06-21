@@ -59,7 +59,7 @@ export async function getWrittenTopics(req,res) {
       .match({userId: id})
       .lookup({ from: 'discussioncategories', localField: 'discussionCategory', foreignField: '_id', as: 'discussionCategory' })
       .unwind('discussionCategory')
-      .sort({'discussionCategory.name': 1, title:1})
+      .sort({'discussionCategory.name': 1})
       .skip(offset)
       .limit(pageSize);
     

@@ -1,15 +1,15 @@
 import { IUserVoteProps, UserVote } from "@news-app/api-model";
 import { responseJson } from "../../util/util.response";
 
-export async function getVotesOfPost (req,res) {
+export async function getVotesOfPost(req, res) {
 
     try {
         const userVotes: UserVote[] = await UserVote.findAll({
-            where: 
-                {discussionPostId: req.params.id},
+            where:
+                { discussionPostId: req.params.id },
         });
-    
-        const response: IUserVoteProps[] =  userVotes.map((userVote) => ({
+
+        const response: IUserVoteProps[] = userVotes.map((userVote) => ({
             id: userVote.id,
             datetime: userVote.datetime,
             isUpvote: userVote.isUpvote,

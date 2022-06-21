@@ -7,8 +7,8 @@ import { responseJson } from '../../util/util.response';
 
 export async function createPost(req, res) {
   try {
-    await DiscussionTopicNoSql.findOneAndUpdate({_id :req.body.discussionThemeId}, {$inc : {'postsCount' : 1}})
-    
+    await DiscussionTopicNoSql.findOneAndUpdate({ _id: req.body.discussionThemeId }, { $inc: { 'postsCount': 1 } })
+
     const post = await DiscussionPostNoSql.create({
       datetime: req.body.datetime,
       text: req.body.text,

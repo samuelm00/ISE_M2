@@ -13,11 +13,11 @@ export async function fillVoteTable() {
 function generateUserVotes() {
     userSql.forEach((user) => {
         postsSql.forEach((post) => {
-            const randomNumber = Math.floor(Math.random()*100);
+            const randomNumber = Math.floor(Math.random() * 100);
 
-            if(randomNumber > 35) {
+            if (randomNumber > 35) {
                 const vote = {
-                    datetime: faker.date.between(post.datetime,Date.now()),
+                    datetime: faker.date.between(post.datetime, Date.now()),
                     isUpvote: randomNumber > 67,
                     discussionPostId: post.id,
                     userId: user.id
