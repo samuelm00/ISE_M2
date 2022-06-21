@@ -123,3 +123,35 @@ export async function createTopic(
     return res.status(400).json(responseJson({ error: error.message }));
   }
 }
+
+export async function getTopicsByNumberOfPosts (req,res) {
+  const oneyearafter = new Date();
+  oneyearafter.setFullYear(oneyearafter.getFullYear()-1);
+
+  try{
+    const pageSize = Number.parseInt(req.query.pageSize as string) || 100;
+    const page = Number.parseInt(req.query.page as string) || 0;
+    const offset = pageSize * page;
+    const topics = await DiscussionTopicNoSql.aggregate()
+      .match({datetime: { $gte: oneyearafter}})
+      .sort({postsCount : -1, title: 1}, )
+      .lookup({ from: 'discussioncategories', localField: 'discussionCategory', foreignField: '_id', as: 'discussionCategory' }).unwind('discussionCategory');
+    
+      const response: PaginatedResponse<IDiscussionTopicPropsWithCategory> = {
+        page: page + 1,
+        pageSize: pageSize,
+        data: topics.map((topic) => ({
+          datetime: topic.datetime,
+          id: topic._id.toString(),
+          text: topic.text,
+          title: topic.title,
+          userId: topic.userId,
+          // @ts-ignore
+          category: topic.discussionCategory,
+        })),
+      };
+      return res.status(200).json(responseJson({ payload: response }));
+  } catch (error) {
+    return res.status(400).json(responseJson({ error: error.message }));
+  }
+}

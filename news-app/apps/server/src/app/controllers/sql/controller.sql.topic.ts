@@ -103,8 +103,8 @@ export async function createTopic(
 }
 
 export async function getTopicsByNumberOfPosts (req,res) {
-  const ownyearafter = new Date();
-  ownyearafter.setFullYear(ownyearafter.getFullYear()-1);
+  const oneyearafter = new Date();
+  oneyearafter.setFullYear(oneyearafter.getFullYear()-1);
 
   try {
     const pageSize = Number.parseInt(req.query.pageSize as string) || 100;
@@ -115,7 +115,7 @@ export async function getTopicsByNumberOfPosts (req,res) {
         include: [[fn('count', col('DiscussionPosts.id')), "PostCount"]]
       },
       where: {
-        datetime: {[Op.gte]: ownyearafter}
+        datetime: {[Op.gte]: oneyearafter}
       },
       include: [
         { model: DiscussionCategory }, 
@@ -126,7 +126,7 @@ export async function getTopicsByNumberOfPosts (req,res) {
         }
       ],
       group: ["DiscussionTopic.id"],
-      order: [[col("PostCount"), "DESC"]],
+      order: [[col("PostCount"), "DESC"], [col("title"), 'ASC']],
       /*limit: pageSize,
       offset: offset,*/
     });
