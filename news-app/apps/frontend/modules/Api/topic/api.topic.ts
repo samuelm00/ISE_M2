@@ -56,10 +56,11 @@ export function createTopic(
  */
 export async function getTopicsGroupedByCategory(
   dbVariant: DbVariant,
-  userId: string
+  userId: string | number
 ) {
   return baseFetch<GetTopicResponse>(
     `/api/${dbVariant}/users/${userId}/topics`,
+    undefined,
     {
       method: 'GET',
     }

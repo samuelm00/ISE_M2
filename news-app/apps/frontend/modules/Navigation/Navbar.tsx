@@ -11,7 +11,7 @@ export default function Navbar() {
 
   return (
     <>
-      <div id="navbar" className="fixed top-0 right-5 left-5">
+      <div id="navbar" className="fixed top-0 right-5 left-5 z-20">
         <div className="navbar bg-base-200 rounded-2xl shadow-md">
           <div className="flex-1">
             <Link href={RoutePath.Home}>
