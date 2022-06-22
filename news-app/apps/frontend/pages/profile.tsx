@@ -1,12 +1,14 @@
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 import React, { useCallback } from 'react';
+import { migrate } from '../modules/Api/migrate/api.migrate';
 import { getTopicsGroupedByCategory } from '../modules/Api/topic/api.topic';
 import Button from '../modules/Button/Button';
 import { avatarCardVariants } from '../modules/Card/AvatarCard';
 import DiscussionTopicCard from '../modules/Card/DiscussionTopicCard';
 import { useFetch } from '../modules/common/hooks/common.hooks';
 import { RoutePath } from '../modules/Navigation/common/constants/constant.route';
+import PageHeader from '../modules/Page/header/PageHeader';
 import LoadingSpinner from '../modules/Spinner/LoadingSpinner';
 import { useAuthProvider } from '../provider/Auth/hook.auth';
 import { useDbVariant } from '../provider/Db/hook.db-provider';
@@ -20,6 +22,14 @@ export default function ProfilePage() {
     [dbVariant, user.id]
   );
   const { data, isLoading } = useFetch(getTopicMemo);
+  console.error(user, dbVariant);
+
+  const startMigration = async () => {
+    await migrate();
+    setDbVariant((prev) => (prev === 'sql' ? 'nosql' : 'sql'));
+    setUser(undefined);
+    await router.push(RoutePath.Login);
+  };
 
   if (isLoading || !data) {
     return (
@@ -31,14 +41,8 @@ export default function ProfilePage() {
 
   return (
     <div className="space-y-10">
-      <Button
-        className="btn-primary"
-        onClick={() => {
-          setDbVariant((prev) => (prev === 'sql' ? 'nosql' : 'sql'));
-          setUser(undefined);
-          router.push(RoutePath.Login);
-        }}
-      >
+      <PageHeader title={`My Topics`} />
+      <Button className="btn-primary" onClick={startMigration}>
         SwitchDB
       </Button>
       <motion.div

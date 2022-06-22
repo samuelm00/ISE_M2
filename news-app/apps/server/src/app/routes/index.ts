@@ -34,14 +34,14 @@ apiRouter.use('/nosql', userRouterNoSql);
 apiRouter.use('/nosql', categoryRouterNoSql);
 apiRouter.use('/nosql', topicRouterNoSql);
 apiRouter.use('/nosql', postRouterNoSql);
-apiRouter.get('/nosql/migration', async (req, res) => {
+apiRouter.post('/nosql/migration', async (req, res) => {
   try {
     await connection.db.dropCollection('users');
     await connection.db.dropCollection('discussioncategories');
     await connection.db.dropCollection('discussionposts');
     await connection.db.dropCollection('discussiontopics');
     await fillNoSqlDb();
-    return res.sendStatus(200);
+    return res.status(200).json(responseJson({ payload: 'Success' }));
   } catch (error) {
     return res.status(404).json(responseJson({ error: error.message }));
   }
