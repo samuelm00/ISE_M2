@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import {
   getAllCategories,
-  createCategory,
+  //createCategory,
   getCategoryByID,
 } from '../../controllers/nosql/controller.nosql.category';
 
@@ -11,4 +11,4 @@ categoryRouterNoSql.get('/categories', getAllCategories);
 
 categoryRouterNoSql.get('/categories/:id', getCategoryByID);
 
-categoryRouterNoSql.post('/categories', createCategory);
+//categoryRouterNoSql.post('/categories', createCategory);

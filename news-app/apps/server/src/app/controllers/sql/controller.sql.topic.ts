@@ -5,9 +5,11 @@ import {
   BaseResponse,
   DiscussionCategory,
   IDiscussionTopicPropsWithCategory,
+  DiscussionPost,
 } from '@news-app/api-model';
 import assert = require('assert');
 import { Response, Request } from 'express';
+import { col, fn, Op } from 'sequelize';
 import { responseJson } from '../../util/util.response';
 
 /**
@@ -95,6 +97,52 @@ export async function createTopic(
       discussionCategoryId: req.body.discussionCategoryId as number,
     });
     return res.status(200).json(responseJson({ payload: topic }));
+  } catch (error) {
+    return res.status(400).json(responseJson({ error: error.message }));
+  }
+}
+
+export async function getTopicsByNumberOfPosts(req, res) {
+  const oneyearafter = new Date();
+  oneyearafter.setFullYear(oneyearafter.getFullYear() - 1);
+
+  try {
+    const pageSize = Number.parseInt(req.query.pageSize as string) || 100;
+    const page = Number.parseInt(req.query.page as string) || 0;
+    const offset = pageSize * page;
+    const topics = await DiscussionTopic.findAll({
+      attributes: {
+        include: [[fn('count', col('DiscussionPosts.id')), "PostCount"]]
+      },
+      where: {
+        datetime: { [Op.gte]: oneyearafter }
+      },
+      include: [
+        { model: DiscussionCategory },
+        {
+          model: DiscussionPost,
+          attributes: [],
+          required: false
+        }
+      ],
+      group: ["DiscussionTopic.id"],
+      order: [[col("PostCount"), "DESC"]],
+    });
+
+    const response: PaginatedResponse<IDiscussionTopicPropsWithCategory> = {
+      page: page + 1,
+      pageSize: pageSize,
+      data: topics.map((topic) => ({
+        datetime: topic.datetime,
+        id: topic.id,
+        text: topic.text,
+        title: topic.title,
+        userId: topic.userId,
+        // @ts-ignore
+        category: topic.DiscussionCategory,
+      })),
+    };
+    return res.status(200).json(responseJson({ payload: response }));
   } catch (error) {
     return res.status(400).json(responseJson({ error: error.message }));
   }

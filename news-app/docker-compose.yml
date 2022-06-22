@@ -7,17 +7,19 @@ services:
     cap_add:
       - SYS_NICE
     restart: always
+    networks:
+      - sql-server
     environment:
       - MYSQL_DATABASE=news_app
       - MYSQL_ROOT_PASSWORD=password
-    ports:
-      - '3306:3306'
     volumes:
       - db:/mysql-data
 
   adminer:
     image: adminer:4.8.1
     restart: always
+    networks:
+      - sql-server
     ports:
       - 8282:8080
     depends_on:
@@ -28,12 +30,26 @@ services:
     restart: always
     hostname: mongo
     container_name: mongo
+    networks:
+      - mongodb-server
     environment:
       - MONGO_INITDB_ROOT_USERNAME=user
       - MONGO_INITDB_ROOT_PASSWORD=password
       - MONGO_INITDB_DATABASE=news_app
+
+  mongo-express:
+    image: mongo-express
+    restart: always
     ports:
-      - '27017:27017'
+      - 8081:8081
+    networks:
+      - mongodb-server
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: user
+      ME_CONFIG_MONGODB_ADMINPASSWORD: password
+      ME_CONFIG_MONGODB_URL: mongodb://user:password@mongo:27017/
+    depends_on:
+      - mongo
 
   api:
     build:
@@ -44,23 +60,45 @@ services:
     restart: always
     expose:
       - 3333
+    networks:
+      - mongodb-server
+      - sql-server
     ports:
       - '3333:3333'
     environment:
       WAIT_HOSTS: mysql:3306, mongo:27017
     depends_on:
       - sql
+      - mongo
 
   frontend:
     build:
       context: ./
       dockerfile: ./apps/frontend/Dockerfile
     container_name: frontend
+    hostname: 'frontend'
     restart: always
-    ports:
-      - '3000:3000'
+    networks:
+      - nginx-server
     depends_on:
       - api
+
+  nginx:
+    build: ./apps/nginx
+    restart: always
+    networks:
+      - nginx-server
+    ports:
+      - '8080:80'
+      - '443:443'
+    depends_on:
+      - frontend
+
 volumes:
   db:
     driver: local
+
+networks:
+  sql-server:
+  mongodb-server:
+  nginx-server:

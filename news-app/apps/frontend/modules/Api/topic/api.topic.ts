@@ -2,11 +2,9 @@ import {
   CreateDiscussionPayload,
   IDiscussionTopicProps,
   IDiscussionTopicPropsWithCategory,
-  PaginatedPayload,
   PaginatedResponse,
 } from '@news-app/api-model';
 import { DbVariant } from 'apps/frontend/provider/Db/DbProvider';
-import { defaultPageSize } from '../constants/api.constants.endpoint';
 import { baseFetch } from '../utils/api.utils';
 
 export type GetTopicResponse =
@@ -50,4 +48,31 @@ export function createTopic(
   return baseFetch<IDiscussionTopicProps>(`/api/${dbVariant}/topic`, topic, {
     method: 'POST',
   });
+}
+
+/**
+ *
+ * @param dbVariant
+ */
+export async function getTopicsGroupedByCategory(
+  dbVariant: DbVariant,
+  userId: string | number
+) {
+  return baseFetch<GetTopicResponse>(
+    `/api/${dbVariant}/users/${userId}/topics`,
+    undefined,
+    {
+      method: 'GET',
+    }
+  );
+}
+
+export async function getTopicsSortedByPost(dbVariant: DbVariant) {
+  return baseFetch<GetTopicResponse>(
+    `/api/${dbVariant}/topic/count`,
+    undefined,
+    {
+      method: 'GET',
+    }
+  );
 }

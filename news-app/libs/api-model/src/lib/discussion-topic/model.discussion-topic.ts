@@ -28,17 +28,18 @@ export interface IDiscussionTopicComplete {
 
 export interface IDiscussionTopicCompleteNoSql
   extends Omit<
-    IDiscussionTopicComplete,
-    'userId' | 'id' | 'discussionCategoryId'
+  IDiscussionTopicComplete,
+  'userId' | 'id' | 'discussionCategoryId'
   > {
   discussionCategory: IDiscussionCategoryProps;
   userId: string;
+  postsCount: number;
 }
 
 /**
  * Contains only the user model attributes without the relations.
  */
-export interface IDiscussionTopicProps extends IDiscussionTopicComplete {}
+export interface IDiscussionTopicProps extends IDiscussionTopicComplete { }
 
 export interface IDiscussionTopicPropsWithCategory
   extends Omit<IDiscussionTopicProps, 'discussionCategoryId'> {
@@ -50,11 +51,10 @@ export interface IDiscussionTopicPropsWithCategory
  */
 export class DiscussionTopic
   extends Model<
-    InferAttributes<DiscussionTopic>,
-    InferCreationAttributes<DiscussionTopic>
+  InferAttributes<DiscussionTopic>,
+  InferCreationAttributes<DiscussionTopic>
   >
-  implements IDiscussionTopicComplete
-{
+  implements IDiscussionTopicComplete {
   declare id: CreationOptional<number>;
   declare text: string;
   declare datetime: Date;
@@ -127,7 +127,11 @@ export function initDiscussionTopicTableNoSql() {
     text: { type: Schema.Types.String, required: true },
     title: { type: Schema.Types.String, required: true },
     userId: { type: Schema.Types.String, required: true },
+    postsCount: { type: Schema.Types.Number, default: 0 }
   });
+  discussionTopicSchema.index({ userId: 1 });
+  discussionTopicSchema.index({ datetime: -1 })
+  discussionTopicSchema.index({ postsCount: -1 })
   DiscussionTopicNoSql = model<IDiscussionTopicCompleteNoSql>(
     'DiscussionTopic',
     discussionTopicSchema

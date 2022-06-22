@@ -1,26 +1,23 @@
 import { IUserComplete, User } from '@news-app/api-model';
-import { createUser } from '../../controllers/sql/controller.sql.user';
+import { faker } from '@faker-js/faker';
 
-export const users = [
-  'alex@mail.com',
-  'lisa@mail.com',
-  'noah@mail.com',
-  'markus@mail.com',
-];
+const users: Omit<IUserComplete, "id">[] = [];
+export let userSql: User[];
 
 export async function addBaseUsers() {
-  return Promise.all(users.map(async (email) => _createUser(email)));
+  generateRandomUsers();
+  return Promise.all(userSql = await User.bulkCreate(users));
 }
 
-/**
- *
- * @param nr
- * @returns
- */
-async function _createUser(email: string) {
-  const user: Omit<IUserComplete, 'id'> = {
-    email: email,
-    password: 'password',
-  };
-  return createUser(user);
+
+function generateRandomUsers() {
+  const numberOfUsers = Math.floor(Math.random() * 3) + 4;
+
+  Array.from({ length: numberOfUsers }).forEach(() => {
+    const user = {
+      email: faker.internet.email(),
+      password: faker.internet.password()
+    }
+    users.push(user);
+  });
 }

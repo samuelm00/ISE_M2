@@ -1,14 +1,15 @@
-import { DiscussionCategoryNoSql } from '@news-app/api-model';
-import { cateogryNames } from '../sql/db-filler.category';
+import { DiscussionCategory, DiscussionCategoryNoSql } from '@news-app/api-model';
+
+export const categoriesIdMap = new Map();
 
 export async function fillCategoryTable() {
-  return Promise.all(
-    cateogryNames.map(async (name) => {
-      return await DiscussionCategoryNoSql.create({
-        name,
-        description: `${name} description`,
-        users: [],
-      });
-    })
-  );
+  const categories = await DiscussionCategory.findAll();
+  return Promise.all(categories.map(async (category) => {
+    const categoryNoSql = await DiscussionCategoryNoSql.create({
+      name: category.name,
+      description: category.description
+    });
+    categoriesIdMap.set(category.id, categoryNoSql._id);
+    return category;
+  }));
 }

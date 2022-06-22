@@ -1,11 +1,13 @@
 import { fillCategoryTable } from './db-filler.category';
-import { addBaseUsers } from './db-filler.user';
+import { fillPostTable } from './db-filler.post';
+import { fillSubscriptionTable } from './db-filler.subscription';
+import { fillTopicTable } from './db-filler.topic';
+import { migrateBaseUsers } from './db-filler.user';
 
 export async function fillNoSqlDb() {
-  try {
-    await addBaseUsers();
+    await migrateBaseUsers();
     await fillCategoryTable();
-  } catch (error) {
-    console.log(error);
-  }
+    await fillSubscriptionTable();
+    await fillTopicTable();
+    await fillPostTable();
 }

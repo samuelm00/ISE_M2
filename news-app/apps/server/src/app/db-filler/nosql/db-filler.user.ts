@@ -1,20 +1,17 @@
-import { IUserComplete } from '@news-app/api-model';
-import { createUser } from '../../controllers/nosql/controller.nosql.user';
-import { users } from '../sql/db-filler.user';
+import { User, UserNoSql } from '@news-app/api-model';
 
-export async function addBaseUsers() {
-  return Promise.all(users.map(async (email) => _createUser(email)));
+export const usersIdMap = new Map();
+
+export async function migrateBaseUsers() {
+  const users = await User.findAll();
+  return Promise.all(users.map(async (user) => {
+    const userNoSql = await UserNoSql.create({
+      email: user.email,
+      password: user.password,
+      subscriptions: []
+    });
+    usersIdMap.set(user.id, userNoSql._id);
+    return user;
+  }));
 }
 
-/**
- *
- * @param nr
- * @returns
- */
-async function _createUser(email: string) {
-  const user: Omit<IUserComplete, 'id'> = {
-    email: email,
-    password: 'password',
-  };
-  return createUser(user);
-}

@@ -1,5 +1,8 @@
-import React, { useCallback } from 'react';
-import { getTopics } from '../modules/Api/topic/api.topic';
+import React, { useCallback, useState } from 'react';
+import {
+  getTopics,
+  getTopicsSortedByPost,
+} from '../modules/Api/topic/api.topic';
 import DialogButton from '../modules/Button/DialogButton';
 import DiscussionTopicCard from '../modules/Card/DiscussionTopicCard';
 import { useFetch } from '../modules/common/hooks/common.hooks';
@@ -14,8 +17,14 @@ import { useDbVariant } from '../provider/Db/hook.db-provider';
 
 export default function TopicPage() {
   const [dbVariant] = useDbVariant();
+  const [sortByMostPosts, setSortByMostPosts] = useState(false);
   const getTopicMemo = useCallback(() => getTopics(dbVariant), [dbVariant]);
+  const getTopicReport = useCallback(
+    () => getTopicsSortedByPost(dbVariant),
+    [dbVariant]
+  );
   const { data, isLoading, setData } = useFetch(getTopicMemo);
+  const { data: dataByPosts } = useFetch(getTopicReport);
 
   if (isLoading || !data) {
     return (
@@ -34,6 +43,19 @@ export default function TopicPage() {
             Create Topic
           </DialogButton>
         </div>
+        <div className="w-full flex justify-center">
+          <div className="form-control">
+            <label className="label cursor-pointer">
+              <span className="label-text">Show most popular Topics</span>
+              <input
+                type="checkbox"
+                checked={sortByMostPosts}
+                onChange={() => setSortByMostPosts((prev) => !prev)}
+                className="checkbox"
+              />
+            </label>
+          </div>
+        </div>
         <motion.div
           variants={avatarCardVariants}
           transition={{ staggerChildren: 0.2, delayChildren: 0.2 }}
@@ -41,9 +63,13 @@ export default function TopicPage() {
           animate="animate"
           className="grid grid-cols-3 gap-4"
         >
-          {data.data?.map((topic) => (
-            <DiscussionTopicCard topic={topic} key={topic.id} />
-          ))}
+          {sortByMostPosts
+            ? dataByPosts.data?.map((topic) => (
+                <DiscussionTopicCard topic={topic} key={topic.id} />
+              ))
+            : data.data?.map((topic) => (
+                <DiscussionTopicCard topic={topic} key={topic.id} />
+              ))}
         </motion.div>
       </div>
       <CreateTopicDialog setData={setData} />

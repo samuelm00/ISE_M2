@@ -29,15 +29,18 @@ export interface IUserVote {
  * Contains only the user model attributes without the relations.
  */
 export interface IUserVoteProps
-  extends Omit<IUserVote, 'user' | 'discussionPost'> {}
+  extends Omit<IUserVote, 'user' | 'discussionPost'> { }
+
+export interface IUserVoteNoSql extends IUserVoteProps {
+  userId: string,
+}
 
 /**
  * SQL
  */
 export class UserVote
   extends Model<InferAttributes<UserVote>, InferCreationAttributes<UserVote>>
-  implements IUserVoteProps
-{
+  implements IUserVoteProps {
   declare id: CreationOptional<number>;
   declare datetime: Date;
   declare isUpvote: boolean;
@@ -93,7 +96,8 @@ export function initUserVoteTableSQL(sequelize: Sequelize) {
 /**
  * NOSQL
  */
-export const userVoteSchema = new Schema<IUserVoteProps>({
+export const userVoteSchema = new Schema<IUserVoteNoSql>({
   datetime: { type: Schema.Types.Date, default: Date.now },
   isUpvote: { type: Schema.Types.Boolean, allowNull: false },
+  userId: { type: Schema.Types.String, required: true },
 });
