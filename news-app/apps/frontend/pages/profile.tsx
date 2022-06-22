@@ -41,10 +41,11 @@ export default function ProfilePage() {
 
   return (
     <div className="space-y-10">
-      <PageHeader title={`My Topics`} />
+      <PageHeader title={`Profile Page: ${user.email}`} />
       <Button className="btn-primary" onClick={startMigration}>
         SwitchDB
       </Button>
+      <PageHeader title={`My Topics`} />
       <motion.div
         variants={avatarCardVariants}
         transition={{ staggerChildren: 0.2, delayChildren: 0.2 }}
