@@ -66,3 +66,13 @@ export async function getTopicsGroupedByCategory(
     }
   );
 }
+
+export async function getTopicsSortedByPost(dbVariant: DbVariant) {
+  return baseFetch<GetTopicResponse>(
+    `/api/${dbVariant}/topic/count`,
+    undefined,
+    {
+      method: 'GET',
+    }
+  );
+}
