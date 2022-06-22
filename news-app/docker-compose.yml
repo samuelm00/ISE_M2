@@ -76,11 +76,23 @@ services:
       context: ./
       dockerfile: ./apps/frontend/Dockerfile
     container_name: frontend
+    hostname: 'frontend'
     restart: always
-    ports:
-      - '3000:3000'
+    networks:
+      - nginx-server
     depends_on:
       - api
+
+  nginx:
+    build: ./apps/nginx
+    restart: always
+    networks:
+      - nginx-server
+    ports:
+      - '8080:80'
+    depends_on:
+      - frontend
+
 volumes:
   db:
     driver: local
@@ -88,3 +100,4 @@ volumes:
 networks:
   sql-server:
   mongodb-server:
+  nginx-server:
