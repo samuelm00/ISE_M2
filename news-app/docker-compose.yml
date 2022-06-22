@@ -63,8 +63,8 @@ services:
     networks:
       - mongodb-server
       - sql-server
-    ports:
-      - '3333:3333'
+    #ports:
+    #  - '3333:3333'
     environment:
       WAIT_HOSTS: mysql:3306, mongo:27017
     depends_on:
