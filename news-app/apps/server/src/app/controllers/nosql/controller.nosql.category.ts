@@ -52,35 +52,3 @@ export async function getCategoryByID(
     return res.status(400).json(responseJson({ error: error.message }));
   }
 }
-
-/**
- *
- * @param req
- * @param res
- * @returns
- */
-/*
-export async function createCategory(
-  req: Request<
-    {},
-    any,
-    Omit<IDiscussionCategoryProps, 'id'>,
-    qs.ParsedQs,
-    Record<string, any>
-  >,
-  res: Response<BaseResponse<IDiscussionCategoryProps>, any>
-) {
-  try {
-    const category = req.body;
-    const newCategory = await DiscussionCategoryNoSql.create(category);
-    const response: IDiscussionCategoryProps = {
-      id: newCategory._id.toString(),
-      description: newCategory.description,
-      name: newCategory.name,
-    };
-    return res.status(200).json(responseJson({ payload: response }));
-  } catch (error) {
-    return res.status(400).json(responseJson({ error: error.message }));
-  }
-}
-*/

@@ -2,7 +2,6 @@ import {
   BaseResponse,
   DiscussionTopicNoSql,
   IDiscussionTopicPropsWithCategory,
-  IUserComplete,
   IUserProps,
   PaginatedResponse,
   UserNoSql,
@@ -31,21 +30,6 @@ export async function getAllUsers(
     return res.status(400).json(responseJson({ error: error.message }));
   }
 }
-
-/**
- *
- * @param user
- * @returns
- */
-/*
-export async function createUser(user: Omit<IUserComplete, 'id'>) {
-  try {
-    return UserNoSql.create(user);
-  } catch (error) {
-    return undefined;
-  }
-}
-*/
 
 export async function getWrittenTopics(req,res) {
 

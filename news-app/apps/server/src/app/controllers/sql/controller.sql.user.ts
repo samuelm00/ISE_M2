@@ -3,7 +3,6 @@ import {
   DiscussionCategory,
   DiscussionTopic,
   IDiscussionTopicPropsWithCategory,
-  IUserComplete,
   IUserProps,
   PaginatedResponse,
   User,
@@ -33,25 +32,6 @@ export async function getAllUsers(
     return res.status(400).json(responseJson({ error: error.message }));
   }
 }
-
-/**
- *
- * @param param0 The request object {@link Omit<IUserComplete, 'id'>}
- * @returns The user object if the user is created, otherwise undefined
- */
-/*
-export async function createUser({
-  email,
-  password,
-}: Omit<IUserComplete, 'id'>) {
-  try {
-    const user = await User.create({ email, password });
-    return user;
-  } catch (error) {
-    return undefined;
-  }
-}
-*/
 
 export async function getWrittenTopics(req, res) {
 
